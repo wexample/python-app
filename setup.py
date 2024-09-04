@@ -16,6 +16,7 @@ setup(
         'Operating System :: OS Independent',
     ],
     install_requires=[
+        'dotenv',
         'pydantic',
         'wexample-helpers',
     ],
