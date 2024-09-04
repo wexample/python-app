@@ -16,9 +16,11 @@ setup(
         'Operating System :: OS Independent',
     ],
     install_requires=[
-        'dotenv',
+        'python-dotenv',
         'pydantic',
+        'wexample-filestate',
         'wexample-helpers',
+        'wexample-prompt',
     ],
     python_requires='>=3.6',
 )

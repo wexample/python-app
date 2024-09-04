@@ -2,9 +2,13 @@ from typing import Any, Optional, Dict
 
 from pydantic import BaseModel, Field
 from wexample_helpers.const.types import StringsList
+from wexample_prompt.io_manager import IOManager
+from wexample_filestate.file_state_manager import FileStateManager
 
 
 class AbstractKernel(BaseModel):
+    io: Optional[IOManager] = None
+    directory: Optional[FileStateManager] = None
     entrypoint_path: str = Field(description="The main file placed at application root directory")
     root_path: Optional[str] = None
     env_config: Dict[str, Optional[str]] = None
@@ -15,9 +19,12 @@ class AbstractKernel(BaseModel):
     def __init__(self, /, **data: Any) -> None:
         super().__init__(**data)
 
+        self.io = IOManager()
+
         import os
-        # TODO Use a directory manager
         self.root_path = os.path.dirname(os.path.realpath(self.entrypoint_path)) + os.sep
+        # TODO Use a directory manager like
+        # self.directory = (self.directory_structure_class)(path=root_path)
 
         self._init_env_values()
         self._check_env_values()
