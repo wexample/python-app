@@ -5,11 +5,11 @@ from wexample_helpers.const.types import StringsList
 from wexample_helpers_app.exception.kernel_exception import KernelException
 from wexample_prompt.io_manager import IOManager
 from wexample_filestate.file_state_manager import FileStateManager
-from wexample_helpers_app.utils.command_request import CommandRequest
 
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
+    from wexample_helpers_app.utils.command_request import CommandRequest
     from wexample_helpers_app.utils.abstract_command_resolver import AbstractCommandResolver
 
 
@@ -63,7 +63,9 @@ class AbstractKernel(BaseModel):
     def _get_workdir_state_manager_class(self) -> Type[FileStateManager]:
         return FileStateManager
 
-    def _get_command_request_class(self) -> Type[CommandRequest]:
+    def _get_command_request_class(self) -> Type["CommandRequest"]:
+        from wexample_helpers_app.utils.command_request import CommandRequest
+
         return CommandRequest
 
     def _check_env_values(self):
@@ -78,5 +80,5 @@ class AbstractKernel(BaseModel):
     def _get_command_resolvers(self) -> list["AbstractCommandResolver"]:
         return []
 
-    def execute_kernel_command(self, request: CommandRequest) -> None:
+    def execute_kernel_command(self, request: "CommandRequest") -> None:
         return request.execute()

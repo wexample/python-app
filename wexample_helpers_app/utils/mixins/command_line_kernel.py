@@ -47,6 +47,7 @@ class CommandLineKernel:
     def _build_single_command_request_from_arguments(self, arguments: CommandLineArgumentsList):
         return [
             (self._get_command_request_class())(
+                kernel=self,
                 name=arguments[0],
                 arguments=arguments[1:])
         ]
