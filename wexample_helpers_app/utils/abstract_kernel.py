@@ -8,6 +8,8 @@ from wexample_filestate.file_state_manager import FileStateManager
 
 from typing import TYPE_CHECKING
 
+from wexample_prompt.utils.prompt_response import PromptResponse
+
 if TYPE_CHECKING:
     from wexample_helpers_app.utils.command_request import CommandRequest
     from wexample_helpers_app.utils.abstract_command_resolver import AbstractCommandResolver
@@ -80,5 +82,5 @@ class AbstractKernel(BaseModel):
     def _get_command_resolvers(self) -> list["AbstractCommandResolver"]:
         return []
 
-    def execute_kernel_command(self, request: "CommandRequest") -> None:
+    def execute_kernel_command(self, request: "CommandRequest") -> PromptResponse:
         return request.execute()

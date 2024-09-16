@@ -29,6 +29,8 @@ class CommandLineKernel:
                 setattr(self, arg_config["attr"], arg_config["value"])
 
     def exec_argv(self):
+        from wexample_prompt.utils.prompt_response import PromptResponse
+
         """
         Main entrypoint from command line calls.
         May not be called by an internal script.
@@ -38,8 +40,11 @@ class CommandLineKernel:
             self._sys_argv[self._sys_argv_start_index:self._sys_argv_end_index]
         )
 
+        responses:list[PromptResponse] = []
         for command_request in command_requests:
-            self.execute_kernel_command(command_request)
+            responses.append(self.execute_kernel_command(command_request))
+
+        self.io.print_responses(responses)
 
     def _build_command_requests_from_arguments(self, arguments: CommandLineArgumentsList) -> list[CommandRequest]:
         return []
