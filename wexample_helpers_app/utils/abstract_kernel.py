@@ -78,5 +78,5 @@ class AbstractKernel(BaseModel):
     def _get_command_resolvers(self) -> list["AbstractCommandResolver"]:
         return []
 
-    def execute_kernel_command(self, request: CommandRequest):
-        print(request.name)
+    def execute_kernel_command(self, request: CommandRequest) -> None:
+        return request.execute()
