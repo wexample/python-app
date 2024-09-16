@@ -2,6 +2,7 @@ from typing import Any, Optional, Dict, Type
 
 from pydantic import BaseModel, Field
 from wexample_helpers.const.types import StringsList
+from wexample_helpers_app.exception.kernel_exception import KernelException
 from wexample_prompt.io_manager import IOManager
 from wexample_filestate.file_state_manager import FileStateManager
 from wexample_helpers_app.utils.command_request import CommandRequest
@@ -48,7 +49,8 @@ class AbstractKernel(BaseModel):
     def _init_workdir(self):
         self.workdir = (self._get_workdir_state_manager_class()).create_from_path(
             path=self.entrypoint_path,
-            config={}
+            config={},
+            io=self.io
         )
 
     def _init_command_resolvers(self):
@@ -68,11 +70,9 @@ class AbstractKernel(BaseModel):
         from wexample_helpers.helpers.dict_helper import dict_get_first_missing_key
         first_missing_key = dict_get_first_missing_key(self.env_config, self.expected_env_items)
         if first_missing_key:
-            # TODO Use logger
-            print('ERROR: Missing .env configuration ' + first_missing_key)
-            exit()
+            raise KernelException(f"Missing {self._get_dotenv_file_name()} configuration {first_missing_key}")
 
-    def _get_core_args(self) -> list[dict[str, Any]]:
+    def _get_core_configuration_arguments(self) -> list[dict[str, Any]]:
         return []
 
     def _get_command_resolvers(self) -> list["AbstractCommandResolver"]:
