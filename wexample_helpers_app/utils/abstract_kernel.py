@@ -1,4 +1,4 @@
-from typing import Any, Optional, Dict
+from typing import Any, Optional, Dict, Type
 
 from pydantic import BaseModel, Field
 from wexample_helpers.const.types import StringsList
@@ -15,24 +15,36 @@ class AbstractKernel(BaseModel):
     expected_env_items: Optional[StringsList] = [
         "APP_ENV"
     ]
+    workdir: FileStateManager = None
 
     def __init__(self, /, **data: Any) -> None:
         super().__init__(**data)
 
         self.io = IOManager()
 
-        import os
-        self.root_path = os.path.dirname(os.path.realpath(self.entrypoint_path)) + os.sep
-        # TODO Use a directory manager like
-        # self.directory = (self.directory_structure_class)(path=root_path)
-
+        self._init_workdir()
         self._init_env_values()
+
+        # Validate configuration.
         self._check_env_values()
 
     def _init_env_values(self):
         from dotenv import dotenv_values
 
-        self.env_config = dotenv_values(f"{self.root_path}.env")
+        self.env_config = dotenv_values(f"{self.workdir.get_resolved()}{self._get_dotenv_file_name()}")
+
+    def _get_dotenv_file_name(self) -> str:
+        from wexample_helpers.const.globals import DOTENV_FILE_NAME
+        return DOTENV_FILE_NAME
+
+    def _init_workdir(self):
+        self.workdir = (self._get_workdir_state_manager_class()).create_from_path(
+            path=self.entrypoint_path,
+            config={}
+        )
+
+    def _get_workdir_state_manager_class(self) -> Type[FileStateManager]:
+        return FileStateManager
 
     def _check_env_values(self):
         from wexample_helpers.helpers.dict_helper import dict_get_first_missing_key
