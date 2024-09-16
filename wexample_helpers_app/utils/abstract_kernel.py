@@ -4,6 +4,7 @@ from pydantic import BaseModel, Field
 from wexample_helpers.const.types import StringsList
 from wexample_prompt.io_manager import IOManager
 from wexample_filestate.file_state_manager import FileStateManager
+from wexample_helpers_app.utils.kernel_command_request import KernelCommandRequest
 
 
 class AbstractKernel(BaseModel):
@@ -46,6 +47,9 @@ class AbstractKernel(BaseModel):
     def _get_workdir_state_manager_class(self) -> Type[FileStateManager]:
         return FileStateManager
 
+    def _get_command_request_class(self) -> Type[KernelCommandRequest]:
+        return KernelCommandRequest
+
     def _check_env_values(self):
         from wexample_helpers.helpers.dict_helper import dict_get_first_missing_key
         first_missing_key = dict_get_first_missing_key(self.env_config, self.expected_env_items)
@@ -53,3 +57,9 @@ class AbstractKernel(BaseModel):
             # TODO Use logger
             print('ERROR: Missing .env configuration ' + first_missing_key)
             exit()
+
+    def _get_core_args(self) -> list[dict[str, Any]]:
+        return []
+
+    def execute_kernel_command(self, request: KernelCommandRequest):
+        print(request.name)
