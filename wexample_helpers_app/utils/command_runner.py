@@ -1,5 +1,5 @@
 from pydantic import BaseModel
 
 
-class KernelCommandRunner(BaseModel):
+class CommandRunner(BaseModel):
     pass

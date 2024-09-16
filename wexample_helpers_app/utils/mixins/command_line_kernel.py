@@ -4,7 +4,7 @@ from typing import Type
 
 from wexample_helpers.helpers.args_helper import args_shift_one
 from wexample_helpers_app.const.types import CommandLineArgumentsList
-from wexample_helpers_app.utils.kernel_command_request import KernelCommandRequest
+from wexample_helpers_app.utils.command_request import CommandRequest
 
 
 class CommandLineKernel:
@@ -41,7 +41,7 @@ class CommandLineKernel:
         for command_request in command_requests:
             self.execute_kernel_command(command_request)
 
-    def _build_command_requests_from_arguments(self, arguments: CommandLineArgumentsList) -> list[KernelCommandRequest]:
+    def _build_command_requests_from_arguments(self, arguments: CommandLineArgumentsList) -> list[CommandRequest]:
         return []
 
     def _build_single_command_request_from_arguments(self, arguments: CommandLineArgumentsList):

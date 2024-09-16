@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
 
-class KernelCommandRequest(BaseModel):
+class CommandRequest(BaseModel):
     name: str
     arguments: list[str] = []
