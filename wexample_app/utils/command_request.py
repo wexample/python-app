@@ -1,10 +1,10 @@
-from wexample_helpers_app.utils.abstract_kernel_child import AbsractKernelChild
+from wexample_app.utils.abstract_kernel_child import AbsractKernelChild
 from typing import TYPE_CHECKING, Optional, Any
 
 if TYPE_CHECKING:
     from wexample_prompt.utils.prompt_response import PromptResponse
-    from wexample_helpers_app.utils.abstract_command_resolver import AbstractCommandResolver
-    from wexample_helpers_app.utils.runner.abstract_command_runner import AbstractCommandRunner
+    from wexample_app.utils.abstract_command_resolver import AbstractCommandResolver
+    from wexample_app.utils.runner.abstract_command_runner import AbstractCommandRunner
 
 
 class CommandRequest(AbsractKernelChild):

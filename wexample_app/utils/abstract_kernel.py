@@ -2,13 +2,13 @@ from typing import Any, Optional, Dict, Type
 
 from pydantic import BaseModel, Field
 from wexample_helpers.const.types import StringsList
-from wexample_helpers_app.exception.kernel_exception import KernelException
+from wexample_app.exception.kernel_exception import KernelException
 from wexample_prompt.io_manager import IOManager
 from wexample_filestate.file_state_manager import FileStateManager
-from wexample_helpers_app.utils.abstract_command_resolver import AbstractCommandResolver
-from wexample_helpers_app.utils.runner.abstract_command_runner import AbstractCommandRunner
+from wexample_app.utils.abstract_command_resolver import AbstractCommandResolver
+from wexample_app.utils.runner.abstract_command_runner import AbstractCommandRunner
 from wexample_prompt.utils.prompt_response import PromptResponse
-from wexample_helpers_app.utils.command_request import CommandRequest
+from wexample_app.utils.command_request import CommandRequest
 
 
 class AbstractKernel(BaseModel):
@@ -69,7 +69,7 @@ class AbstractKernel(BaseModel):
         return FileStateManager
 
     def _get_command_request_class(self) -> Type["CommandRequest"]:
-        from wexample_helpers_app.utils.command_request import CommandRequest
+        from wexample_app.utils.command_request import CommandRequest
 
         return CommandRequest
 
@@ -86,7 +86,7 @@ class AbstractKernel(BaseModel):
         return []
 
     def _get_command_runners(self) -> list[Type["AbstractCommandRunner"]]:
-        from wexample_helpers_app.utils.runner.python_command_runner import PythonCommandRunner
+        from wexample_app.utils.runner.python_command_runner import PythonCommandRunner
 
         return [
             # Default runner.
@@ -96,6 +96,6 @@ class AbstractKernel(BaseModel):
     def execute_kernel_command(self, request: "CommandRequest") -> PromptResponse:
         return request.execute()
 
-from wexample_helpers_app.utils.command import Command
+from wexample_app.utils.command import Command
 Command.model_rebuild()
 CommandRequest.model_rebuild()

@@ -1,11 +1,11 @@
 from abc import abstractmethod
 
-from wexample_helpers_app.utils.abstract_kernel_child import AbsractKernelChild
+from wexample_app.utils.abstract_kernel_child import AbsractKernelChild
 
 from typing import TYPE_CHECKING, Optional
 
 if TYPE_CHECKING:
-    from wexample_helpers_app.utils.command_request import CommandRequest
+    from wexample_app.utils.command_request import CommandRequest
 
 
 class AbstractCommandResolver(AbsractKernelChild):

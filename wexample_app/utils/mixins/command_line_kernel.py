@@ -3,8 +3,8 @@ from __future__ import annotations
 from typing import Type
 
 from wexample_helpers.helpers.args_helper import args_shift_one
-from wexample_helpers_app.const.types import CommandLineArgumentsList
-from wexample_helpers_app.utils.command_request import CommandRequest
+from wexample_app.const.types import CommandLineArgumentsList
+from wexample_app.utils.command_request import CommandRequest
 
 
 class CommandLineKernel:

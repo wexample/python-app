@@ -1,11 +1,11 @@
 from typing import Optional
 from typing import TYPE_CHECKING
 
-from wexample_helpers_app.utils.runner.abstract_command_runner import AbstractCommandRunner
+from wexample_app.utils.runner.abstract_command_runner import AbstractCommandRunner
 
 if TYPE_CHECKING:
-    from wexample_helpers_app.utils.command import Command
-    from wexample_helpers_app.utils.command_request import CommandRequest
+    from wexample_app.utils.command import Command
+    from wexample_app.utils.command_request import CommandRequest
 
 
 class PythonCommandRunner(AbstractCommandRunner):
@@ -24,7 +24,7 @@ class PythonCommandRunner(AbstractCommandRunner):
 
     def build_command(self, request: "CommandRequest") -> Optional["Command"]:
         import importlib.util
-        from wexample_helpers_app.utils.command import Command
+        from wexample_app.utils.command import Command
 
         # request = self.get_request()
         path = request.resolver.build_command_path(request)
