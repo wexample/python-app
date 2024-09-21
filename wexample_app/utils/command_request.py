@@ -1,5 +1,5 @@
 from wexample_app.utils.abstract_kernel_child import AbsractKernelChild
-from typing import TYPE_CHECKING, Optional, Any
+from typing import TYPE_CHECKING, Optional, Any, List, Union
 
 if TYPE_CHECKING:
     from wexample_prompt.utils.prompt_response import PromptResponse
@@ -9,7 +9,7 @@ if TYPE_CHECKING:
 
 class CommandRequest(AbsractKernelChild):
     name: str
-    arguments: list[str] = []
+    arguments: List[Union[str | int]] = []
     path: Optional[str] = None
     type: Optional[str] = None
     resolver: Optional["AbstractCommandResolver"] = None
@@ -23,11 +23,10 @@ class CommandRequest(AbsractKernelChild):
         self.resolver = self.get_resolver()
         self.runner = self.guess_runner()
 
-
     def execute(self) -> "PromptResponse":
         command = self.runner.build_command(request=self)
 
-        return command.execute()
+        return command.execute(self.arguments)
 
     def get_resolver(self) -> Optional["AbstractCommandResolver"]:
         return self.kernel.resolvers[self.type]

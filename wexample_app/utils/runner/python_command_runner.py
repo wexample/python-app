@@ -1,3 +1,4 @@
+import os.path
 from typing import Optional
 from typing import TYPE_CHECKING
 
@@ -26,8 +27,10 @@ class PythonCommandRunner(AbstractCommandRunner):
         import importlib.util
         from wexample_app.utils.command import Command
 
-        # request = self.get_request()
         path = request.resolver.build_command_path(request)
+
+        if not os.path.exists(path):
+            return None
 
         # Import module and load function.
         spec = importlib.util.spec_from_file_location(path, path)

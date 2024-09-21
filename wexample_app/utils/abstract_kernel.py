@@ -13,9 +13,7 @@ from wexample_app.utils.command_request import CommandRequest
 
 class AbstractKernel(BaseModel):
     io: Optional[IOManager] = None
-    directory: Optional[FileStateManager] = None
     entrypoint_path: str = Field(description="The main file placed at application root directory")
-    root_path: Optional[str] = None
     resolvers: Dict[str, "AbstractCommandResolver"] = None
     runners: Dict[str, "AbstractCommandRunner"] = None
     env_config: Dict[str, Optional[str]] = None
