@@ -3,8 +3,7 @@ from __future__ import annotations
 from wexample_helpers.helpers.args_helper import args_shift_one
 from wexample_app.const.types import CommandLineArgumentsList
 from wexample_app.utils.command_request import CommandRequest
-from wexample_prompt.utils.prompt_response import PromptResponse
-from wexample_wex_core.core.response.abstract_response import AbstractResponse
+from wexample_app.response.abstract_response import AbstractResponse
 
 
 class CommandLineKernel:
@@ -29,8 +28,6 @@ class CommandLineKernel:
                 setattr(self, arg_config["attr"], arg_config["value"])
 
     def exec_argv(self):
-        from wexample_prompt.utils.prompt_response import PromptResponse
-
         """
         Main entrypoint from command line calls.
         May not be called by an internal script.
@@ -40,7 +37,7 @@ class CommandLineKernel:
             self._sys_argv[self._sys_argv_start_index:self._sys_argv_end_index]
         )
 
-        responses:list[AbstractResponse] = []
+        responses: list[AbstractResponse] = []
         for command_request in command_requests:
             responses.append(self.execute_kernel_command(command_request))
 
@@ -51,17 +48,19 @@ class CommandLineKernel:
             self.execute_kernel_command(command_request)
         ])
 
-    def render_responses_to_prompt(self, responses:list[AbstractResponse]):
+    def render_responses_to_prompt(self, responses: list[AbstractResponse]):
         prompt_responses = []
+        from wexample_prompt.utils.prompt_response import PromptResponse
+
         for response in responses:
-            prompt_responses.extend(
+            prompt_responses.append(
                 # For now consider every output as a string
                 PromptResponse.from_multiline_message(
                     response.print()
                 )
             )
 
-        self.io.print_responses(responses)
+        self.io.print_responses(prompt_responses)
 
     def _build_command_requests_from_arguments(self, arguments: CommandLineArgumentsList) -> list[CommandRequest]:
         return []
