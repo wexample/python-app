@@ -7,8 +7,5 @@ if TYPE_CHECKING:
     from wexample_app.utils.abstract_kernel import AbstractKernel
 
 
-class AbsractKernelChild(BaseModel):
+class AbstractKernelChild(BaseModel):
     kernel: "AbstractKernel"
-
-    def __init__(self, /, **data: Any) -> None:
-        super().__init__(**data)

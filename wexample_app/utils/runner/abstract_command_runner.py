@@ -1,7 +1,7 @@
 from abc import abstractmethod
 from typing import Optional
 
-from wexample_app.utils.abstract_kernel_child import AbsractKernelChild
+from wexample_app.utils.abstract_kernel_child import AbstractKernelChild
 
 from typing import TYPE_CHECKING
 
@@ -10,7 +10,7 @@ if TYPE_CHECKING:
     from wexample_app.utils.command_request import CommandRequest
 
 
-class AbstractCommandRunner(AbsractKernelChild):
+class AbstractCommandRunner(AbstractKernelChild):
     @classmethod
     @abstractmethod
     def get_runner_name(cls) -> str:

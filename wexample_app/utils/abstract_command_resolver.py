@@ -1,6 +1,6 @@
 from abc import abstractmethod
 
-from wexample_app.utils.abstract_kernel_child import AbsractKernelChild
+from wexample_app.utils.abstract_kernel_child import AbstractKernelChild
 
 from typing import TYPE_CHECKING, Optional
 
@@ -8,7 +8,7 @@ if TYPE_CHECKING:
     from wexample_app.utils.command_request import CommandRequest
 
 
-class AbstractCommandResolver(AbsractKernelChild):
+class AbstractCommandResolver(AbstractKernelChild):
     @classmethod
     @abstractmethod
     def get_type(cls) -> str:

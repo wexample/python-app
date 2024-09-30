@@ -1,4 +1,4 @@
-from wexample_app.utils.abstract_kernel_child import AbsractKernelChild
+from wexample_app.utils.abstract_kernel_child import AbstractKernelChild
 from typing import TYPE_CHECKING, Optional, Any, List, Union
 
 if TYPE_CHECKING:
@@ -7,7 +7,7 @@ if TYPE_CHECKING:
     from wexample_app.utils.runner.abstract_command_runner import AbstractCommandRunner
 
 
-class CommandRequest(AbsractKernelChild):
+class CommandRequest(AbstractKernelChild):
     name: str
     arguments: List[Union[str | int]] = []
     path: Optional[str] = None
