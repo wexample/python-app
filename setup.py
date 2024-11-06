@@ -21,6 +21,7 @@ setup(
         'wexample-filestate',
         'wexample-helpers',
         'wexample-prompt',
+        'wexample-wex-addon-app',
     ],
     python_requires='>=3.6',
 )
