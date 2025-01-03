@@ -2,7 +2,7 @@ from wexample_app.utils.abstract_kernel_child import AbstractKernelChild
 from typing import TYPE_CHECKING, Optional, Any, List, Union
 
 if TYPE_CHECKING:
-    from wexample_prompt.utils.prompt_response import PromptResponse
+    from wexample_prompt.common.prompt_response import PromptResponse
     from wexample_app.utils.abstract_command_resolver import AbstractCommandResolver
     from wexample_app.utils.runner.abstract_command_runner import AbstractCommandRunner
 

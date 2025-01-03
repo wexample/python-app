@@ -50,7 +50,7 @@ class CommandLineKernel:
 
     def render_responses_to_prompt(self, responses: list[AbstractResponse]):
         prompt_responses = []
-        from wexample_prompt.utils.prompt_response import PromptResponse
+        from wexample_prompt.common.prompt_response import PromptResponse
 
         for response in responses:
             prompt_responses.append(

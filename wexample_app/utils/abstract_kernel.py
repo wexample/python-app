@@ -7,7 +7,7 @@ from wexample_prompt.io_manager import IOManager
 from wexample_filestate.file_state_manager import FileStateManager
 from wexample_app.utils.abstract_command_resolver import AbstractCommandResolver
 from wexample_app.utils.runner.abstract_command_runner import AbstractCommandRunner
-from wexample_prompt.utils.prompt_response import PromptResponse
+from wexample_prompt.common.prompt_response import PromptResponse
 from wexample_app.utils.command_request import CommandRequest
 
 
