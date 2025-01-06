@@ -7,7 +7,7 @@ from wexample_prompt.io_manager import IOManager
 from wexample_filestate.file_state_manager import FileStateManager
 from wexample_app.utils.abstract_command_resolver import AbstractCommandResolver
 from wexample_app.utils.runner.abstract_command_runner import AbstractCommandRunner
-from wexample_prompt.common.prompt_response import PromptResponse
+from wexample_prompt.responses.base_prompt_response import BasePromptResponse
 from wexample_app.utils.command_request import CommandRequest
 
 
@@ -77,9 +77,6 @@ class AbstractKernel(BaseModel):
         if first_missing_key:
             raise KernelException(f"Missing {self._get_dotenv_file_name()} configuration {first_missing_key}")
 
-    def _get_core_configuration_arguments(self) -> list[dict[str, Any]]:
-        return []
-
     def _get_command_resolvers(self) -> list[Type["AbstractCommandResolver"]]:
         return []
 
@@ -91,7 +88,7 @@ class AbstractKernel(BaseModel):
             PythonCommandRunner
         ]
 
-    def execute_kernel_command(self, request: "CommandRequest") -> PromptResponse:
+    def execute_kernel_command(self, request: "CommandRequest") -> BasePromptResponse:
         return request.execute()
 
 from wexample_app.utils.command import Command

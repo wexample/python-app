@@ -50,12 +50,12 @@ class CommandLineKernel:
 
     def render_responses_to_prompt(self, responses: list[AbstractResponse]):
         prompt_responses = []
-        from wexample_prompt.common.prompt_response import PromptResponse
+        from wexample_prompt.responses.base_prompt_response import BasePromptResponse
 
         for response in responses:
             prompt_responses.append(
                 # For now consider every output as a string
-                PromptResponse.from_multiline_message(
+                BasePromptResponse.from_multiline_message(
                     response.print()
                 )
             )
