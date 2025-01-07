@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wexample-app"
+description = "Helpers for building Python app or cli."
+readme = { file = "README.md", content-type = "text/markdown" }
+authors = [{name = "weeger", email = "contact@wexample.com"}]
+license = { text = "MIT" }
+homepage = "https://github.com/wexample/python-app"
+requires-python = ">=3.6"
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+dependencies = [
+    "python-dotenv",
+    "pydantic",
+    "wexample-filestate",
+    "wexample-helpers",
+    "wexample-prompt",
+    "wexample-wex-addon-app",
+]
+
+[tool.setuptools.packages]
+find = { include = ["*"] }
