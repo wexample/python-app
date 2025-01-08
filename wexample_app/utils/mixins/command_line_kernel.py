@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from wexample_helpers.helpers.args_helper import args_shift_one
+from wexample_helpers.helpers.args import args_shift_one
 from wexample_app.const.types import CommandLineArgumentsList
 from wexample_app.utils.command_request import CommandRequest
 from wexample_app.response.abstract_response import AbstractResponse

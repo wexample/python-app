@@ -72,7 +72,7 @@ class AbstractKernel(BaseModel):
         return CommandRequest
 
     def _check_env_values(self):
-        from wexample_helpers.helpers.dict_helper import dict_get_first_missing_key
+        from wexample_helpers.helpers.dict import dict_get_first_missing_key
         first_missing_key = dict_get_first_missing_key(self.env_config, self.expected_env_items)
         if first_missing_key:
             raise KernelException(f"Missing {self._get_dotenv_file_name()} configuration {first_missing_key}")
