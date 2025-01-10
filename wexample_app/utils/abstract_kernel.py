@@ -3,7 +3,7 @@ from typing import Any, Optional, Dict, Type
 from pydantic import BaseModel, Field
 from wexample_helpers.const.types import StringsList
 from wexample_app.exception.kernel_exception import KernelException
-from wexample_prompt.io_manager import IOManager
+from wexample_prompt.io_manager import IoManager
 from wexample_filestate.file_state_manager import FileStateManager
 from wexample_app.utils.abstract_command_resolver import AbstractCommandResolver
 from wexample_app.utils.runner.abstract_command_runner import AbstractCommandRunner
@@ -12,7 +12,7 @@ from wexample_app.utils.command_request import CommandRequest
 
 
 class AbstractKernel(BaseModel):
-    io: Optional[IOManager] = None
+    io: Optional[IoManager] = None
     entrypoint_path: str = Field(description="The main file placed at application root directory")
     resolvers: Dict[str, "AbstractCommandResolver"] = None
     runners: Dict[str, "AbstractCommandRunner"] = None
@@ -25,7 +25,7 @@ class AbstractKernel(BaseModel):
     def __init__(self, /, **data: Any) -> None:
         super().__init__(**data)
 
-        self.io = IOManager()
+        self.io = IoManager()
 
         self._init_workdir()
         self._init_env_values()
