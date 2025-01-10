@@ -3,7 +3,7 @@ from typing import Any, Optional, Dict, Type
 from pydantic import BaseModel, Field
 from wexample_helpers.const.types import StringsList
 from wexample_app.exception.kernel_exception import KernelException
-from wexample_prompt.io_manager import IoManager
+from wexample_prompt.common.io_manager import IoManager
 from wexample_filestate.file_state_manager import FileStateManager
 from wexample_app.utils.abstract_command_resolver import AbstractCommandResolver
 from wexample_app.utils.runner.abstract_command_runner import AbstractCommandRunner
