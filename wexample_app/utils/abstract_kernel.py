@@ -48,7 +48,7 @@ class AbstractKernel(BaseModel):
         self.workdir = (self._get_workdir_state_manager_class()).create_from_path(
             path=self.entrypoint_path,
             config={},
-            io=self.io
+            io_manager=self.io
         )
 
     def _init_resolvers(self):
