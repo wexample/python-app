@@ -1,20 +1,26 @@
-from typing import Any, Optional, Dict, Type
+from typing import Any, Optional, Dict, Type, cast, TYPE_CHECKING
 
 from pydantic import BaseModel, Field
-from wexample_helpers.const.types import StringsList
+
 from wexample_app.exception.kernel_exception import KernelException
-from wexample_prompt.common.io_manager import IoManager
-from wexample_filestate.file_state_manager import FileStateManager
-from wexample_app.utils.abstract_command_resolver import AbstractCommandResolver
-from wexample_app.utils.runner.abstract_command_runner import AbstractCommandRunner
-from wexample_prompt.responses.base_prompt_response import BasePromptResponse
 from wexample_app.utils.command_request import CommandRequest
+from wexample_app.utils.runner.abstract_command_runner import AbstractCommandRunner
+from wexample_filestate.file_state_manager import FileStateManager
+from wexample_helpers.const.types import StringsList
+from wexample_helpers.service.mixins.service_container_mixin import ServiceContainerMixin
+from wexample_prompt.common.io_manager import IoManager
+from wexample_prompt.responses.base_prompt_response import BasePromptResponse
+
+if TYPE_CHECKING:
+    from wexample_app.utils.abstract_command_resolver import AbstractCommandResolver
 
 
-class AbstractKernel(BaseModel):
+class AbstractKernel(
+    ServiceContainerMixin,
+    BaseModel
+):
     io: Optional[IoManager] = None
     entrypoint_path: str = Field(description="The main file placed at application root directory")
-    resolvers: Dict[str, "AbstractCommandResolver"] = None
     runners: Dict[str, "AbstractCommandRunner"] = None
     env_config: Dict[str, Optional[str]] = None
     expected_env_items: Optional[StringsList] = [
@@ -52,10 +58,10 @@ class AbstractKernel(BaseModel):
         )
 
     def _init_resolvers(self):
-        self.resolvers = {
-            class_definition.get_type(): class_definition(kernel=self)
-            for class_definition in self._get_command_resolvers()
-        }
+        self.register_services(
+            'resolvers',
+            self._get_command_resolvers()
+        )
 
     def _init_runners(self):
         self.runners = {
@@ -78,7 +84,9 @@ class AbstractKernel(BaseModel):
             raise KernelException(f"Missing {self._get_dotenv_file_name()} configuration {first_missing_key}")
 
     def _get_command_resolvers(self) -> list[Type["AbstractCommandResolver"]]:
-        return []
+        return cast(
+            list[Type["AbstractCommandResolver"]],
+            self.get_service_registry('command_resolvers').all_classes())
 
     def _get_command_runners(self) -> list[Type["AbstractCommandRunner"]]:
         from wexample_app.utils.runner.python_command_runner import PythonCommandRunner
@@ -91,6 +99,3 @@ class AbstractKernel(BaseModel):
     def execute_kernel_command(self, request: "CommandRequest") -> BasePromptResponse:
         return request.execute()
 
-from wexample_app.utils.command import Command
-Command.model_rebuild()
-CommandRequest.model_rebuild()
