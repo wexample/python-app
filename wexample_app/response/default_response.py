@@ -9,5 +9,3 @@ class DefaultResponse(AbstractResponse):
     def print(self) -> str:
         # For now consider every output as a string
         return str(self.content)
-
-DefaultResponse.model_rebuild()
