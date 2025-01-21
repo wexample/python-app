@@ -1,6 +1,7 @@
+from wexample_helpers.classes.mixin.has_class_dependencies import HasClassDependencies
 from wexample_helpers.classes.mixin.has_snake_short_class_name_class_mixin import HasSnakeShortClassNameClassMixin
 from wexample_prompt.mixins.with_prompt_context import WithPromptContext
 
 
-class ServiceMixin(WithPromptContext, HasSnakeShortClassNameClassMixin):
+class ServiceMixin(WithPromptContext, HasSnakeShortClassNameClassMixin, HasClassDependencies):
     pass
