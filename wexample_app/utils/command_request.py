@@ -1,13 +1,15 @@
-from wexample_app.utils.abstract_kernel_child import AbstractKernelChild
 from typing import TYPE_CHECKING, Optional, Any, List, Union
 
+from pydantic import BaseModel
+
+from wexample_app.utils.abstract_kernel_child import AbstractKernelChild
+
 if TYPE_CHECKING:
-    from wexample_prompt.common.prompt_response import PromptResponse
     from wexample_app.utils.abstract_command_resolver import AbstractCommandResolver
     from wexample_app.utils.runner.abstract_command_runner import AbstractCommandRunner
 
 
-class CommandRequest(AbstractKernelChild):
+class CommandRequest(AbstractKernelChild, BaseModel):
     name: str
     arguments: List[Union[str | int]] = []
     path: Optional[str] = None
@@ -23,7 +25,7 @@ class CommandRequest(AbstractKernelChild):
         self.resolver = self.get_resolver()
         self.runner = self.guess_runner()
 
-    def execute(self) -> "PromptResponse":
+    def execute(self) -> Any:
         command = self.runner.build_command(request=self)
 
         return command.execute(self.arguments)
