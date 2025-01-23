@@ -2,8 +2,8 @@ pip-tools
 pydantic
 pytest
 python-dotenv
-wexample-filestate==0.0.19
-wexample-helpers-yaml==0.0.18
-wexample-helpers==0.0.19
-wexample-prompt==0.0.18
-wexample-wex-addon-app==0.0.13
+wexample-filestate==0.0.20
+wexample-helpers-yaml==0.0.19
+wexample-helpers==0.0.20
+wexample-prompt==0.0.19
+wexample-wex-addon-app==0.0.14
