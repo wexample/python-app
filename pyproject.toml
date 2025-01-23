@@ -21,11 +21,11 @@ classifiers = [
 dependencies = [
     "python-dotenv",
     "pydantic",
-    "wexample-filestate",
-    "wexample-helpers",
-    "wexample-prompt",
-    "wexample-yaml",
-    "wexample-wex-addon-app",
+    "wexample-filestate==0.0.18",
+    "wexample-helpers==0.0.18",
+    "wexample-prompt==0.0.17",
+    "wexample-helpers-yaml==0.0.17",
+    "wexample-wex-addon-app==0.0.12",
 ]
 
 [project.readme]
