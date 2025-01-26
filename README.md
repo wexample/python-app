@@ -2,7 +2,7 @@
 
 Helpers for building Python app or cli.
 
-Version: 0.0.18
+Version: 0.0.19
 
 ## Requirements
 
@@ -14,11 +14,11 @@ Version: 0.0.18
 - pydantic
 - pytest
 - python-dotenv
-- wexample-filestate==0.0.21
-- wexample-helpers-yaml==0.0.20
-- wexample-helpers==0.0.21
-- wexample-prompt==0.0.20
-- wexample-wex-addon-app==0.0.15
+- wexample-filestate==0.0.22
+- wexample-helpers-yaml==0.0.21
+- wexample-helpers==0.0.22
+- wexample-prompt==0.0.21
+- wexample-wex-addon-app==0.0.16
 
 ## Installation
 
