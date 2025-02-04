@@ -17,7 +17,7 @@ Version: 0.0.23
 - wexample-filestate==0.0.26
 - wexample-helpers-yaml==0.0.25
 - wexample-helpers==0.0.26
-- wexample-prompt==0.0.25
+- wexample-prompt==0.0.27
 - wexample-wex-addon-app==0.0.20
 
 ## Installation
