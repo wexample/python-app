@@ -1,4 +1,4 @@
-from typing import Any, Optional, Dict, Type, cast, TYPE_CHECKING
+from typing import Any, Optional, Dict, Type, TYPE_CHECKING
 
 from pydantic import BaseModel, Field
 
@@ -84,9 +84,7 @@ class AbstractKernel(
             raise KernelException(f"Missing {self._get_dotenv_file_name()} configuration {first_missing_key}")
 
     def _get_command_resolvers(self) -> list[Type["AbstractCommandResolver"]]:
-        return cast(
-            list[Type["AbstractCommandResolver"]],
-            self.get_service_registry('command_resolvers').all_classes())
+        return []
 
     def _get_command_runners(self) -> list[Type["AbstractCommandRunner"]]:
         from wexample_app.utils.runner.python_command_runner import PythonCommandRunner
@@ -98,4 +96,3 @@ class AbstractKernel(
 
     def execute_kernel_command(self, request: "CommandRequest") -> BasePromptResponse:
         return request.execute()
-
