@@ -1,5 +1,7 @@
 from typing import cast, Type, TYPE_CHECKING, Optional, Dict
 
+from wexample_app.runner.abstract_command_runner import AbstractCommandRunner
+
 if TYPE_CHECKING:
     from wexample_app.resolver.abstract_command_resolver import AbstractCommandResolver
 
@@ -13,10 +15,11 @@ class CommandRunnerKernel:
         )).instantiate_all(kernel=self)
 
     def _init_runners(self):
-        self.runners = {
-            class_definition.get_runner_name(): class_definition(kernel=self)
-            for class_definition in self._get_command_runners()
-        }
+        from wexample_app.service.service_registry import ServiceRegistry
+        cast(ServiceRegistry, self.register_services(
+            'command_runners',
+            self._get_command_runners()
+        )).instantiate_all(kernel=self)
 
     def _get_command_resolvers(self) -> list[Type["AbstractCommandResolver"]]:
         return []
@@ -39,4 +42,16 @@ class CommandRunnerKernel:
         return cast(
             Dict[str, "AbstractCommandResolver"],
             self.get_service_registry('command_resolvers').all_instances()
+        )
+
+    def get_runner(self, type: str) -> Optional[AbstractCommandRunner]:
+        return cast(
+            AbstractCommandRunner,
+            self.get_service_registry('command_runners').get(key=type)
+        )
+
+    def get_runners(self) -> Dict[str, AbstractCommandRunner]:
+        return cast(
+            Dict[str, AbstractCommandRunner],
+            self.get_service_registry('command_runners').all_instances()
         )
