@@ -4,7 +4,6 @@ from typing import cast, Type, List, Dict, Any
 
 from pydantic import PrivateAttr
 
-from wexample_app.const.globals import ENV_VAR_NAME_APP_ENV
 from wexample_app.const.types import CommandLineArgumentsList
 
 
@@ -50,11 +49,12 @@ class CommandLineKernel:
         return self._build_single_command_request_from_arguments(arguments)
 
     def _build_single_command_request_from_arguments(self, arguments: CommandLineArgumentsList):
-        class_definition = cast(Type["CommandRequest"], self._get_command_request_class())
+        from wexample_app.common.command_request import CommandRequest
+        class_definition = cast(Type[CommandRequest], self._get_command_request_class())
 
         return [
             class_definition(
                 kernel=self,
-                name=arguments[0],
-                arguments=arguments[1:])
+                name=arguments[1],
+                arguments=arguments[2:])
         ]

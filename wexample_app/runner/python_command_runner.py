@@ -15,7 +15,11 @@ class PythonCommandRunner(AbstractCommandRunner):
         from pathlib import Path
         from wexample_helpers.const.globals import FILE_EXTENSION_PYTHON
 
-        file_path = Path(request.resolver.build_command_path(request))
+        path = request.resolver.build_command_path(request)
+        if path is None:
+            return False
+        
+        file_path = Path(path)
         file_extension = file_path.suffix.lower()
 
         return file_extension == f".{FILE_EXTENSION_PYTHON}"

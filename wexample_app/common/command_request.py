@@ -55,6 +55,9 @@ class CommandRequest(
         return cast("CommandRunnerKernel", super().kernel)
 
     def execute(self) -> Any:
+        if self.runner is None:
+            return None
+
         command = self.runner.build_command(request=self)
 
         return command.execute(self.arguments) if command is not None else None
