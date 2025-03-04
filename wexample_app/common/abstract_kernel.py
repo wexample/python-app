@@ -1,15 +1,12 @@
-from typing import TYPE_CHECKING, Any, List
+from typing import Any, List
 
 from pydantic import BaseModel, Field
 
-from wexample_helpers.classes.mixin.has_env_keys import HasEnvKeys
 from wexample_app.const.globals import ENV_VAR_NAME_APP_ENV
 from wexample_app.service.mixins.service_container_mixin import ServiceContainerMixin
 from wexample_filestate.mixins.with_workdir_mixin import WithWorkdirMixin
+from wexample_helpers.classes.mixin.has_env_keys import HasEnvKeys
 from wexample_prompt.mixins.with_prompt_context import WithPromptContext
-
-if TYPE_CHECKING:
-    pass
 
 
 class AbstractKernel(

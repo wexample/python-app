@@ -1,10 +1,10 @@
 from abc import abstractmethod
 from typing import TYPE_CHECKING, Optional
 
-from wexample_app.utils.service.service_mixin import ServiceMixin
+from wexample_app.common.service.service_mixin import ServiceMixin
 
 if TYPE_CHECKING:
-    from wexample_app.utils.command_request import CommandRequest
+    from wexample_app.common.command_request import CommandRequest
 
 
 class AbstractCommandResolver(ServiceMixin):
