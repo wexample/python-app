@@ -16,7 +16,7 @@ class ServiceRegistry(Registry[Type[ServiceMixin]]):
     def register_multiple(self, service_classes: List[Type[ServiceMixin]]) -> None:
         """Register multiple service classes at once."""
         for service_class in service_classes:
-            if hasattr(service_class, 'get_name'):
+            if hasattr(service_class, 'get_snake_short_class_name'):
                 key = service_class.get_snake_short_class_name()
             else:
                 key = service_class.__name__
