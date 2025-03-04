@@ -19,6 +19,18 @@ class CommandLineKernel:
 
         self._sys_argv = sys.argv.copy()
 
+        self._handle_core_args()
+
+    def _get_core_args(self):
+        return {}
+
+    def _handle_core_args(self):
+        from wexample_helpers.helpers.args import args_shift_one
+
+        for arg_config in self._get_core_args():
+            if args_shift_one(self._sys_argv, arg_config["arg"], True) is not None:
+                setattr(self, arg_config["attr"], arg_config["value"])
+
     def exec_argv(self):
         """
         Main entrypoint from command line calls.
