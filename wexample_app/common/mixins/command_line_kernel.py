@@ -21,8 +21,8 @@ class CommandLineKernel:
 
         self._handle_core_args()
 
-    def _get_core_args(self):
-        return {}
+    def _get_core_args(self) -> List[Dict[str, Any]]:
+        return []
 
     def _handle_core_args(self):
         from wexample_helpers.helpers.args import args_shift_one
@@ -41,7 +41,7 @@ class CommandLineKernel:
             properties={
                 "Location": self.workdir.get_resolved(),
                 "Environment": self.get_env_parameter(ENV_VAR_NAME_APP_ENV),
-                "Arguments": self._sys_argv[2:],
+                "Arguments": self._sys_argv,
             }
         )
 
