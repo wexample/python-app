@@ -16,5 +16,6 @@ class CommandLineKernel:
         """
         self.io.log('EXEC ARGV')
         self.io.log('WORKDIR ' + self.workdir.get_resolved())
+        self.io.log('ENV ' + self.get_env_parameter("APP_ENV"))
         self.io.list(self._sys_argv)
         self.io.list(self._registries.keys())
