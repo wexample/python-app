@@ -12,13 +12,13 @@ if TYPE_CHECKING:
 
 
 class AbstractCommandResolver(AbstractKernelChild, ServiceMixin, BaseModel):
-    @classmethod
-    def get_class_name_suffix(cls) -> Optional[str]:
-        return 'CommandResolver'
-
     def __init__(self, kernel: "AbstractKernel", **kwargs):
         BaseModel.__init__(self, **kwargs)
         AbstractKernelChild.__init__(self, kernel=kernel)
+
+    @classmethod
+    def get_class_name_suffix(cls) -> Optional[str]:
+        return 'CommandResolver'
 
     @classmethod
     @abstractmethod

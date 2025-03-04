@@ -63,9 +63,9 @@ class CommandRequest(
         return self.kernel.get_resolver(self.type)
 
     def guess_runner(self) -> Optional["AbstractCommandRunner"]:
-        for runner_type in self.kernel.runners:
-            if self.kernel.runners[runner_type].will_run(self):
-                return self.kernel.runners[runner_type]
+        for runner in self.kernel.get_runners().values():
+            if runner.will_run(self):
+                return runner
         return None
 
     def guess_type(self) -> Optional[str]:
