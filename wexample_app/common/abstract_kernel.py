@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, List, Type, TYPE_CHECKING
+from typing import List, Type, TYPE_CHECKING
 
 from pydantic import BaseModel, Field
 
@@ -32,7 +32,6 @@ class AbstractKernel(
         self._init_io_manager()
         self._init_workdir(self.entrypoint_path, self.io_manager)
         self._load_env_file(f"{self.workdir.get_resolved()}{self._get_dotenv_file_name()}")
-
         return self
 
     def _get_command_request_class(self) -> Type["CommandRequest"]:
