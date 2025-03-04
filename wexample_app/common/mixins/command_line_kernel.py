@@ -59,6 +59,11 @@ class CommandLineKernel:
             self._sys_argv[self._sys_argv_start_index:self._sys_argv_end_index]
         )
 
+        from wexample_app.response.abstract_response import AbstractResponse
+        responses: list["AbstractResponse"] = []
+        for command_request in command_requests:
+            responses.append(self.execute_kernel_command(command_request))
+
     def _build_command_requests_from_arguments(self, arguments: CommandLineArgumentsList) -> list["CommandRequest"]:
         # By default allow one request per execution call.
         return self._build_single_command_request_from_arguments(arguments)

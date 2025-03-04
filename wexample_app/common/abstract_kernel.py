@@ -38,3 +38,6 @@ class AbstractKernel(
     def _get_command_request_class(self) -> Type["CommandRequest"]:
         from wexample_app.common.command_request import CommandRequest
         return CommandRequest
+
+    def execute_kernel_command(self, request: "CommandRequest") -> BasePromptResponse:
+        return request.execute()
