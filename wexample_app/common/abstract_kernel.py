@@ -1,4 +1,6 @@
-from typing import Any, List
+from __future__ import annotations
+
+from typing import Any, List, Type, TYPE_CHECKING
 
 from pydantic import BaseModel, Field
 
@@ -7,6 +9,9 @@ from wexample_app.service.mixins.service_container_mixin import ServiceContainer
 from wexample_filestate.mixins.with_workdir_mixin import WithWorkdirMixin
 from wexample_helpers.classes.mixin.has_env_keys import HasEnvKeys
 from wexample_prompt.mixins.with_prompt_context import WithPromptContext
+
+if TYPE_CHECKING:
+    from wexample_app.common.command_request import CommandRequest
 
 
 class AbstractKernel(
@@ -23,7 +28,13 @@ class AbstractKernel(
             ENV_VAR_NAME_APP_ENV
         ]
 
-    def model_post_init(self, __context: Any) -> None:
+    def setup(self) -> "AbstractKernel":
         self._init_io_manager()
         self._init_workdir(self.entrypoint_path, self.io_manager)
         self._load_env_file(f"{self.workdir.get_resolved()}{self._get_dotenv_file_name()}")
+
+        return self
+
+    def _get_command_request_class(self) -> Type["CommandRequest"]:
+        from wexample_app.common.command_request import CommandRequest
+        return CommandRequest

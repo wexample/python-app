@@ -1,10 +1,18 @@
+from __future__ import annotations
+
+from typing import cast, Type
+
 from pydantic import PrivateAttr
 
 from wexample_app.const.globals import ENV_VAR_NAME_APP_ENV
+from wexample_app.const.types import CommandLineArgumentsList
 
 
 class CommandLineKernel:
     _sys_argv: list[str] = PrivateAttr(default_factory=list)
+    _sys_argv_start_index: int = 1
+    _sys_argv_end_index: int | None = None
+    _core_argv: list[str] = PrivateAttr(default_factory=list)
 
     def _init_command_line_kernel(self):
         import sys
@@ -34,3 +42,21 @@ class CommandLineKernel:
             title="Runners",
             properties=self.get_runners()
         )
+
+        command_requests = self._build_command_requests_from_arguments(
+            self._sys_argv[self._sys_argv_start_index:self._sys_argv_end_index]
+        )
+
+    def _build_command_requests_from_arguments(self, arguments: CommandLineArgumentsList) -> list["CommandRequest"]:
+        # By default allow one request per execution call.
+        return self._build_single_command_request_from_arguments(arguments)
+
+    def _build_single_command_request_from_arguments(self, arguments: CommandLineArgumentsList):
+        class_definition = cast(Type["CommandRequest"], self._get_command_request_class())
+
+        return [
+            class_definition(
+                kernel=self,
+                name=arguments[0],
+                arguments=arguments[1:])
+        ]
