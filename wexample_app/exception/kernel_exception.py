@@ -1,2 +1,0 @@
-class KernelException(Exception):
-    pass
