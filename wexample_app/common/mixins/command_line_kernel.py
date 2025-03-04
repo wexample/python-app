@@ -14,4 +14,6 @@ class CommandLineKernel:
         Main entrypoint from command line calls.
         May not be called by an internal script.
         """
-        pass
+        self.io.log('EXEC ARGV')
+        self.io.list(self._sys_argv)
+        self.io.list(self._registries.keys())
