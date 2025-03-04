@@ -9,6 +9,7 @@ from wexample_app.service.mixins.service_container_mixin import ServiceContainer
 from wexample_filestate.mixins.with_workdir_mixin import WithWorkdirMixin
 from wexample_helpers.classes.mixin.has_env_keys import HasEnvKeys
 from wexample_prompt.mixins.with_prompt_context import WithPromptContext
+from wexample_prompt.responses.base_prompt_response import BasePromptResponse
 
 if TYPE_CHECKING:
     from wexample_app.common.command_request import CommandRequest
