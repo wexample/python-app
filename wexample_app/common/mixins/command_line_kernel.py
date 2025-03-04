@@ -36,25 +36,6 @@ class CommandLineKernel:
         Main entrypoint from command line calls.
         May not be called by an internal script.
         """
-        self.io.properties(
-            title="General",
-            properties={
-                "Location": self.workdir.get_resolved(),
-                "Environment": self.get_env_parameter(ENV_VAR_NAME_APP_ENV),
-                "Arguments": self._sys_argv,
-            }
-        )
-
-        self.io.properties(
-            title="Resolvers",
-            properties=self.get_resolvers()
-        )
-
-        self.io.properties(
-            title="Runners",
-            properties=self.get_runners()
-        )
-
         command_requests = self._build_command_requests_from_arguments(
             self._sys_argv[self._sys_argv_start_index:self._sys_argv_end_index]
         )
