@@ -5,7 +5,7 @@ from pydantic import BaseModel
 
 from wexample_app.common.abstract_kernel_child import AbstractKernelChild
 from wexample_app.common.service.service_mixin import ServiceMixin
-from wexample_wex_core.const.types import StringsMatch
+from wexample_helpers.const.types import StringsMatch
 
 if TYPE_CHECKING:
     from wexample_app.common.command_request import CommandRequest
@@ -37,8 +37,10 @@ class AbstractCommandResolver(AbstractKernelChild, ServiceMixin, BaseModel):
     def build_command_function_name(self, request: "CommandRequest") -> None:
         return None
 
-    def supports(self, request: "CommandRequest") -> bool:
-        if self.build_match(request.name):
-            return True
+    def supports(self, request: "CommandRequest") -> Optional[StringsMatch]:
+        match = self.build_match(request.name)
 
-        return False
+        if match:
+            return match
+
+        return None

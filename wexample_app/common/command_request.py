@@ -5,9 +5,9 @@ from pydantic import BaseModel, Field, PrivateAttr
 
 from wexample_app.common.abstract_kernel_child import AbstractKernelChild
 from wexample_app.runner.abstract_command_runner import AbstractCommandRunner
+from wexample_helpers.const.types import StringsMatch
 
 if TYPE_CHECKING:
-    from wexample_wex_core.common.kernel import Kernel
     from wexample_app.common.abstract_kernel import AbstractKernel
     from wexample_app.common.mixins.command_runner_kernel import CommandRunnerKernel
     from wexample_app.resolver.abstract_command_resolver import AbstractCommandResolver
@@ -21,10 +21,11 @@ class CommandRequest(
     arguments: List[Union[str, int]] = Field(default_factory=list)
     path: Optional[str] = None
     type: Optional[str] = None
+    _match: Optional[StringsMatch] = None
     _resolver: Optional["AbstractCommandResolver"] = PrivateAttr(default=None)
     _runner: Optional["AbstractCommandRunner"] = PrivateAttr(default=None)
 
-    def __init__(self, kernel: "Kernel", **kwargs):
+    def __init__(self, kernel: "AbstractKernel", **kwargs):
         BaseModel.__init__(self, **kwargs)
         AbstractKernelChild.__init__(self, kernel=kernel)
 
@@ -34,11 +35,19 @@ class CommandRequest(
         self.runner = self.guess_runner()
 
     @property
+    def match(self) -> "StringsMatch":
+        return self._match
+
+    @match.setter
+    def match(self, value: "StringsMatch") -> None:
+        self._match = value
+
+    @property
     def resolver(self) -> "AbstractCommandResolver":
         return self._resolver
 
     @resolver.setter
-    def resolver(self, value: "AbstractCommandResolver"):
+    def resolver(self, value: "AbstractCommandResolver") -> None:
         self._resolver = value
 
     @property
@@ -46,7 +55,7 @@ class CommandRequest(
         return self._runner
 
     @runner.setter
-    def runner(self, value: "AbstractCommandRunner"):
+    def runner(self, value: "AbstractCommandRunner") -> None:
         self._runner = value
 
     @property
@@ -73,6 +82,8 @@ class CommandRequest(
 
     def guess_type(self) -> Optional[str]:
         for resolver in self.kernel.get_resolvers().values():
-            if resolver.supports(request=self):
+            match = resolver.supports(request=self)
+            if match is not None:
+                self.match = match
                 return resolver.get_type()
         return None
