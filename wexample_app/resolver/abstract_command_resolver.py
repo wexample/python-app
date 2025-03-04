@@ -1,13 +1,15 @@
 from abc import abstractmethod
 from typing import TYPE_CHECKING, Optional
 
+from pydantic import BaseModel
+
 from wexample_app.common.service.service_mixin import ServiceMixin
 
 if TYPE_CHECKING:
     from wexample_app.common.command_request import CommandRequest
 
 
-class AbstractCommandResolver(ServiceMixin):
+class AbstractCommandResolver(ServiceMixin, BaseModel):
     @classmethod
     @abstractmethod
     def get_type(cls) -> str:
