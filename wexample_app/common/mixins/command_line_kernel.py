@@ -15,5 +15,6 @@ class CommandLineKernel:
         May not be called by an internal script.
         """
         self.io.log('EXEC ARGV')
+        self.io.log('WORKDIR ' + self.workdir.get_resolved())
         self.io.list(self._sys_argv)
         self.io.list(self._registries.keys())

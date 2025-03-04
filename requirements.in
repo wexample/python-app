@@ -1,3 +1,4 @@
+dotenv
 pip-tools
 pydantic
 pytest

@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, List
 
 from pydantic import BaseModel, Field
 
@@ -18,9 +18,12 @@ class AbstractKernel(
 ):
     entrypoint_path: str = Field(description="The main file placed at application root directory")
 
+    def get_expected_env_keys(self) -> List[str]:
+        return [
+            "APP_ENV"
+        ]
+
     def model_post_init(self, __context: Any) -> None:
         self._init_io_manager()
-        self._init_workdir(
-            self.entrypoint_path,
-            self.io_manager
-        )
+        self._init_workdir(self.entrypoint_path, self.io_manager)
+        self._validate_env_keys()
