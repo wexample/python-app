@@ -2,7 +2,7 @@ from abc import abstractmethod
 
 from pydantic import BaseModel
 
-from wexample_app.utils.abstract_kernel_child import AbstractKernelChild
+from wexample_app.common.abstract_kernel_child import AbstractKernelChild
 
 
 class AbstractResponse(AbstractKernelChild, BaseModel):
