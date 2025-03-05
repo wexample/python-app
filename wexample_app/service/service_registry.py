@@ -67,11 +67,11 @@ class ServiceRegistry(Registry[Type[ServiceMixin]]):
         return self._items.get(key)
 
     def all_keys(self) -> List[str]:
-        return self._items.keys()
+        return list(self._items.keys())
 
     def all_classes(self) -> List[Type[ServiceMixin]]:
         """Return all registered service classes."""
-        return self._items.values()
+        return list(self._items.values())
 
     def all_instances(self) -> Dict[str, ServiceMixin]:
         """Return all instantiated services."""
