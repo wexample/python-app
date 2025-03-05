@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import List, Type, TYPE_CHECKING
+from typing import List, Type, TYPE_CHECKING, Optional
 
 from pydantic import BaseModel, Field
 
@@ -30,12 +30,19 @@ class AbstractKernel(
             ENV_VAR_NAME_APP_ENV
         ]
 
-    def setup(self, addons: List[Type["AbstractAddonManager"]]) -> "AbstractKernel":
+    def setup(self, addons: Optional[List[Type["AbstractAddonManager"]]] = None) -> "AbstractKernel":
         self._init_io_manager()
         self._init_workdir(self.entrypoint_path, self.io_manager)
         self._load_env_file(f"{self.workdir.get_resolved()}{self._get_dotenv_file_name()}")
-        self.register_items("addons", addons)
+        self._init_addons(addons=addons)
+
         return self
+
+    def _init_addons(self, addons: Optional[List[Type["AbstractAddonManager"]]] = None):
+        from wexample_helpers.service.registry import Registry
+
+        self.set_registry("addon", Registry)
+        self.register_items("addon", addons or [])
 
     def _get_command_request_class(self) -> Type["CommandRequest"]:
         from wexample_app.common.command_request import CommandRequest
