@@ -46,7 +46,7 @@ class ServiceRegistry(Registry[Type[ServiceMixin]]):
                 service_class.model_rebuild()
 
             # Create instance with kernel
-            instance = service_class(**kwargs)
+            instance = service_class(**kwargs).setup()
             self._service_instances[key] = instance
             return instance
 
