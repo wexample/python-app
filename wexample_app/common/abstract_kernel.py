@@ -27,6 +27,7 @@ class AbstractKernel(
 
     def __init__(self, **kwargs) -> None:
         BaseModel.__init__(self, **kwargs)
+        HasEnvKeysFile.__init__(self)
 
     def get_expected_env_keys(self) -> List[str]:
         return [
@@ -34,9 +35,13 @@ class AbstractKernel(
         ]
 
     def setup(self, addons: Optional[List[Type["AbstractAddonManager"]]] = None) -> "AbstractKernel":
+        from wexample_helpers.const.globals import FILE_NAME_ENV, FILE_NAME_ENV_YAML
+
         self._init_io_manager()
         self._init_workdir(entrypoint_path=self.entrypoint_path, io_manager=self.io)
-        self._init_env_file(f"{self.workdir.get_resolved()}{self._get_dotenv_file_name()}")
+        workdir_resolved = self.workdir.get_resolved()
+        self._init_env_file(f"{workdir_resolved}{FILE_NAME_ENV}")
+        self._init_env_file_yaml(f"{workdir_resolved}{FILE_NAME_ENV_YAML}")
         self._init_addons(addons=addons)
 
         return self
