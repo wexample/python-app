@@ -5,7 +5,7 @@ from pydantic import BaseModel
 
 from wexample_app.common.abstract_kernel_child import AbstractKernelChild
 from wexample_app.common.service.service_mixin import ServiceMixin
-from wexample_helpers.const.types import StringsMatch
+from wexample_helpers.const.types import StringsMatch, StringsList
 
 if TYPE_CHECKING:
     from wexample_app.common.command_request import CommandRequest
@@ -44,3 +44,10 @@ class AbstractCommandResolver(AbstractKernelChild, ServiceMixin, BaseModel):
             return match
 
         return None
+
+    def get_function_name_parts(self, parts: StringsList) -> StringsList:
+        return [
+            parts[0],
+            parts[1],
+            parts[2],
+        ]

@@ -16,6 +16,10 @@ class AbstractCommandRunner(AbstractKernelChild, ServiceMixin, BaseModel):
         BaseModel.__init__(self, **kwargs)
         AbstractKernelChild.__init__(self, kernel=kernel)
 
+    @classmethod
+    def get_class_name_suffix(cls) -> Optional[str]:
+        return "CommandRunner"
+
     @abstractmethod
     def build_command(self, request: "CommandRequest") -> Optional["Command"]:
         pass
