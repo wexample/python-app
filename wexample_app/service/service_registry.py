@@ -13,15 +13,6 @@ class ServiceRegistry(Registry[Type[ServiceMixin]]):
         """Register a service class in the registry."""
         self._items[key] = service_class
 
-    def register_multiple(self, service_classes: List[Type[ServiceMixin]]) -> None:
-        """Register multiple service classes at once."""
-        for service_class in service_classes:
-            if hasattr(service_class, 'get_snake_short_class_name'):
-                key = service_class.get_snake_short_class_name()
-            else:
-                key = service_class.__name__
-            self.register(key, service_class)
-
     def get(self, key: str | Type[ServiceMixin], **kwargs) -> Optional[ServiceMixin]:
         """
         Retrieve a service by its key. Instantiates the service if it doesn't exist.
@@ -49,6 +40,8 @@ class ServiceRegistry(Registry[Type[ServiceMixin]]):
             instance = service_class(**kwargs).setup()
             self._service_instances[key] = instance
             return instance
+
+        self._raise_error_if_expected(key, None)
 
         return None
 
