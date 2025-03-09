@@ -13,7 +13,6 @@ from wexample_prompt.responses.base_prompt_response import BasePromptResponse
 
 if TYPE_CHECKING:
     from wexample_app.common.command_request import CommandRequest
-    from wexample_app.common.abstract_addon_manager import AbstractAddonManager
 
 
 class AbstractKernel(
@@ -34,7 +33,7 @@ class AbstractKernel(
             ENV_VAR_NAME_APP_ENV
         ]
 
-    def setup(self, addons: Optional[List[Type["AbstractAddonManager"]]] = None) -> "AbstractKernel":
+    def setup(self) -> "AbstractKernel":
         from wexample_helpers.const.globals import FILE_NAME_ENV, FILE_NAME_ENV_YAML
 
         self._init_io_manager()
@@ -42,15 +41,8 @@ class AbstractKernel(
         workdir_resolved = self.workdir.get_resolved()
         self._init_env_file(f"{workdir_resolved}{FILE_NAME_ENV}")
         self._init_env_file_yaml(f"{workdir_resolved}{FILE_NAME_ENV_YAML}")
-        self._init_addons(addons=addons)
 
         return self
-
-    def _init_addons(self, addons: Optional[List[Type["AbstractAddonManager"]]] = None):
-        from wexample_helpers.service.registry import Registry
-
-        self.set_registry("addon", Registry)
-        self.register_items("addon", addons or [])
 
     def _get_command_request_class(self) -> Type["CommandRequest"]:
         from wexample_app.common.command_request import CommandRequest
