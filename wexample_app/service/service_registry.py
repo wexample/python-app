@@ -66,9 +66,6 @@ class ServiceRegistry(Registry[Type[ServiceMixin]]):
         """Get the service class without instantiating it."""
         return self._items.get(key)
 
-    def all_keys(self) -> List[str]:
-        return list(self._items.keys())
-
     def all_classes(self) -> List[Type[ServiceMixin]]:
         """Return all registered service classes."""
         return list(self._items.values())
