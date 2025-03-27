@@ -25,7 +25,7 @@ dependencies = [
     "pytest",
     "python-dotenv",
     "wexample-filestate>=0.0.31",
-    "wexample-helpers-yaml>=0.0.30",
+    "wexample-helpers-yaml>=0.0.31",
 ]
 
 [project.readme]
