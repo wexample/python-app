@@ -1,10 +1,13 @@
 from __future__ import annotations
 
-from typing import cast, Type, List, Dict, Any
+from typing import cast, Type, List, Dict, Any, TYPE_CHECKING
 
 from pydantic import PrivateAttr
 
 from wexample_app.const.types import CommandLineArgumentsList
+
+if TYPE_CHECKING:
+    from wexample_app.common.command_request import CommandRequest
 
 
 class CommandLineKernel:
@@ -45,7 +48,7 @@ class CommandLineKernel:
             responses.append(self.execute_kernel_command(command_request))
 
     def _build_command_requests_from_arguments(self, arguments: CommandLineArgumentsList) -> list["CommandRequest"]:
-        # By default allow one request per execution call.
+        # By default, allow one request per execution call.
         return self._build_single_command_request_from_arguments(arguments)
 
     def _build_single_command_request_from_arguments(self, arguments: CommandLineArgumentsList):
@@ -55,6 +58,6 @@ class CommandLineKernel:
         return [
             class_definition(
                 kernel=self,
-                name=arguments[1],
-                arguments=arguments[2:])
+                name=arguments[0],
+                arguments=arguments[1:])
         ]
