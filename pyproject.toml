@@ -24,8 +24,8 @@ dependencies = [
     "pydantic",
     "pytest",
     "python-dotenv",
-    "wexample-filestate>=0.0.33",
-    "wexample-helpers-yaml>=0.0.32",
+    "wexample-filestate==0.0.35",
+    "wexample-helpers-yaml==0.0.52",
 ]
 
 [project.readme]
