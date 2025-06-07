@@ -4,12 +4,12 @@ from typing import List, Dict, Any, TYPE_CHECKING
 
 from pydantic import PrivateAttr
 
-from core.response.AbstractResponse import AbstractResponse
 
 if TYPE_CHECKING:
     from wexample_app.const.types import CommandLineArgumentsList
     from wexample_app.common.command_request import CommandRequest
     from wexample_app.common.abstract_kernel import AbstractKernel
+    from wexample_app.response.abstract_response import AbstractResponse
 
 
 class CommandLineKernel():
