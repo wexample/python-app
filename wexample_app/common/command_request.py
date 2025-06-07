@@ -4,7 +4,9 @@ from typing import List, Optional, Union, TYPE_CHECKING
 from pydantic import BaseModel, Field, PrivateAttr
 
 from wexample_app.common.abstract_kernel_child import AbstractKernelChild
+from wexample_app.exception.command_build_failed_exception import CommandBuildFailedException
 from wexample_app.exception.command_resolver_not_found_exception import CommandResolverNotFoundException
+from wexample_app.exception.command_runner_missing_exception import CommandRunnerMissingException
 from wexample_app.exception.command_type_not_found_exception import CommandTypeNotFoundException
 from wexample_app.runner.abstract_command_runner import AbstractCommandRunner
 from wexample_helpers.const.types import StringsMatch
@@ -70,11 +72,16 @@ class CommandRequest(
 
     def execute(self) -> Any:
         if self.runner is None:
-            return None
+            raise CommandRunnerMissingException(
+                command_name=self.name
+            )
 
         command = self.resolver.build_command(request=self)
         if command is None:
-            return None
+            raise CommandBuildFailedException(
+                command_name=self.name,
+                resolver_name=self.resolver.__class__.__name__
+            )
 
         return command.execute(self.arguments)
 

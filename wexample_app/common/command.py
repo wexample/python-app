@@ -3,6 +3,7 @@ from typing import Callable, Any, TYPE_CHECKING
 from pydantic import BaseModel
 
 from wexample_app.common.abstract_kernel_child import AbstractKernelChild
+from wexample_app.response.null_response import NullResponse
 
 if TYPE_CHECKING:
     from wexample_app.common.abstract_kernel import AbstractKernel
@@ -17,7 +18,12 @@ class Command(AbstractKernelChild, BaseModel):
 
     def execute(self, arguments):
         # Basic way to execute command.
-        return self.function(
+        response = self.function(
             kernel=self.kernel,
             arguments=arguments
         )
+
+        if response is None:
+            return NullResponse(kernel=self.kernel)
+
+        return response
