@@ -9,10 +9,10 @@ from wexample_app.service.mixins.service_container_mixin import ServiceContainer
 from wexample_filestate.mixins.with_workdir_mixin import WithWorkdirMixin
 from wexample_helpers.classes.mixin.has_env_keys_file import HasEnvKeysFile
 from wexample_prompt.mixins.with_prompt_context import WithPromptContext
-from wexample_prompt.responses.base_prompt_response import BasePromptResponse
 
 if TYPE_CHECKING:
     from wexample_app.common.command_request import CommandRequest
+    from wexample_app.response.abstract_response import AbstractResponse
 
 
 class AbstractKernel(
@@ -48,5 +48,5 @@ class AbstractKernel(
         from wexample_app.common.command_request import CommandRequest
         return CommandRequest
 
-    def execute_kernel_command(self, request: "CommandRequest") -> BasePromptResponse:
+    def execute_kernel_command(self, request: "CommandRequest") -> "AbstractResponse":
         return request.execute()

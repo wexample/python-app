@@ -1,5 +1,5 @@
-from typing import Any, cast
 from typing import List, Optional, Union, TYPE_CHECKING
+from typing import cast
 
 from pydantic import BaseModel, Field, PrivateAttr
 
@@ -15,6 +15,7 @@ if TYPE_CHECKING:
     from wexample_app.common.abstract_kernel import AbstractKernel
     from wexample_app.common.mixins.command_runner_kernel import CommandRunnerKernel
     from wexample_app.resolver.abstract_command_resolver import AbstractCommandResolver
+    from wexample_app.response.abstract_response import AbstractResponse
 
 
 class CommandRequest(
@@ -70,20 +71,26 @@ class CommandRequest(
         # Enforce typing
         return cast("CommandRunnerKernel", super().kernel)
 
-    def execute(self) -> Any:
+    def execute(self) -> "AbstractResponse":
         if self.runner is None:
             raise CommandRunnerMissingException(
                 command_name=self.name
             )
 
-        command = self.resolver.build_command(request=self)
-        if command is None:
-            raise CommandBuildFailedException(
-                command_name=self.name,
-                resolver_name=self.resolver.__class__.__name__
-            )
+        try:
+            command = self.resolver.build_command(request=self)
+            if command is None:
+                raise CommandBuildFailedException(
+                    command_name=self.name,
+                    resolver_name=self.resolver.__class__.__name__
+                )
 
-        return command.execute(self.arguments)
+            return command.execute(self.arguments)
+        except Exception as e:
+            self.kernel.io.error(
+                exception=e,
+                fatal=True
+            )
 
     def _get_resolver(self) -> "AbstractCommandResolver":
         resolver = self.kernel.get_resolver(self.type)
