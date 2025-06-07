@@ -27,7 +27,6 @@ class PythonCommandRunner(AbstractCommandRunner):
         import importlib.util
 
         path = request.resolver.build_command_path(request)
-
         if not os.path.exists(path):
             return None
 

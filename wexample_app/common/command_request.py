@@ -73,7 +73,6 @@ class CommandRequest(
             return None
 
         command = self.runner.build_command(request=self)
-
         return command.execute(self.arguments) if command is not None else None
 
     def _get_resolver(self) -> "AbstractCommandResolver":

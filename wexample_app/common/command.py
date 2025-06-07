@@ -16,6 +16,7 @@ class Command(AbstractKernelChild, BaseModel):
         AbstractKernelChild.__init__(self, kernel=kernel)
 
     def execute(self, arguments):
+        # Basic way to execute command.
         return self.function(
             kernel=self.kernel,
             arguments=arguments
