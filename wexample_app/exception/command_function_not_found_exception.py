@@ -9,7 +9,7 @@ class CommandFunctionNotFoundData(ExceptionData):
     module_path: str
 
 
-class CommandFunctionNotFound(AbstractException):
+class CommandFunctionNotFoundException(AbstractException):
     """Exception raised when a command function cannot be found in the module."""
     error_code: str = "COMMAND_FUNCTION_NOT_FOUND"
 

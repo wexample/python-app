@@ -4,8 +4,8 @@ from typing import List, Optional, Union, TYPE_CHECKING
 from pydantic import BaseModel, Field, PrivateAttr
 
 from wexample_app.common.abstract_kernel_child import AbstractKernelChild
-from wexample_app.exception.command_resolver_not_found import CommandResolverNotFound
-from wexample_app.exception.command_type_not_found import CommandTypeNotFound
+from wexample_app.exception.command_resolver_not_found_exception import CommandResolverNotFoundException
+from wexample_app.exception.command_type_not_found_exception import CommandTypeNotFoundException
 from wexample_app.runner.abstract_command_runner import AbstractCommandRunner
 from wexample_helpers.const.types import StringsMatch
 
@@ -33,7 +33,7 @@ class CommandRequest(
 
         self.type = self._guess_type()
         if self.type is None:
-            raise CommandTypeNotFound(self.name)
+            raise CommandTypeNotFoundException(self.name)
 
         self.resolver = self._get_resolver()
         self.path = self.resolver.build_command_path(request=self)
@@ -81,7 +81,7 @@ class CommandRequest(
     def _get_resolver(self) -> "AbstractCommandResolver":
         resolver = self.kernel.get_resolver(self.type)
         if resolver is None:
-            raise CommandResolverNotFound(self.type)
+            raise CommandResolverNotFoundException(self.type)
         return resolver
 
     def _guess_runner(self) -> Optional["AbstractCommandRunner"]:

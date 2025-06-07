@@ -3,10 +3,10 @@ from typing import Optional
 from typing import TYPE_CHECKING
 from types import ModuleType
 
-from wexample_app.exception.command_file_not_found import CommandFileNotFound
-from wexample_app.exception.command_module_load_error import CommandModuleLoadError
-from wexample_app.exception.command_function_name_missing import CommandFunctionNameMissing
-from wexample_app.exception.command_function_not_found import CommandFunctionNotFound
+from wexample_app.exception.command_file_not_found_exception import CommandFileNotFoundException
+from wexample_app.exception.command_module_load_error_exception import CommandModuleLoadErrorException
+from wexample_app.exception.command_function_name_missing_exception import CommandFunctionNameMissingException
+from wexample_app.exception.command_function_not_found_exception import CommandFunctionNotFoundException
 from wexample_app.runner.abstract_command_runner import AbstractCommandRunner
 from wexample_helpers.const.types import AnyCallable
 
@@ -34,12 +34,12 @@ class PythonCommandRunner(AbstractCommandRunner):
 
         path = request.resolver.build_command_path(request)
         if not os.path.exists(path):
-            raise CommandFileNotFound(file_path=path)
+            raise CommandFileNotFoundException(file_path=path)
 
         # Import module and load function.
         spec = importlib.util.spec_from_file_location(path, path)
         if not spec or not spec.loader:
-            raise CommandModuleLoadError(file_path=path)
+            raise CommandModuleLoadErrorException(file_path=path)
 
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
@@ -50,7 +50,7 @@ class PythonCommandRunner(AbstractCommandRunner):
         function_name = request.resolver.build_command_function_name(request)
 
         if not function_name:
-            raise CommandFunctionNameMissing(command_name=request.command_name)
+            raise CommandFunctionNameMissingException(command_name=request.command_name)
 
         module = self._load_command_python_module(request=request)
         return getattr(module, function_name, None)
@@ -62,7 +62,7 @@ class PythonCommandRunner(AbstractCommandRunner):
         if not function:
             path = request.resolver.build_command_path(request)
             function_name = request.resolver.build_command_function_name(request)
-            raise CommandFunctionNotFound(function_name=function_name, module_path=path)
+            raise CommandFunctionNotFoundException(function_name=function_name, module_path=path)
 
         return request.resolver.get_command_class_type()(
             kernel=self.kernel,

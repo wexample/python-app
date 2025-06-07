@@ -3,24 +3,24 @@ from typing import Optional
 from wexample_app.exception.abstract_exception import AbstractException, ExceptionData
 
 
-class CommandFunctionNameMissingData(ExceptionData):
-    """Data model for CommandFunctionNameMissing exception."""
+class CommandTypeNotFoundData(ExceptionData):
+    """Data model for CommandTypeNotFound exception."""
     command_name: str
 
 
-class CommandFunctionNameMissing(AbstractException):
-    """Exception raised when a command function name cannot be determined."""
-    error_code: str = "COMMAND_FUNCTION_NAME_MISSING"
+class CommandTypeNotFoundException(AbstractException):
+    """Exception raised when the system cannot determine the type of a command."""
+    error_code: str = "COMMAND_TYPE_NOT_FOUND"
 
     def __init__(self, command_name: str, cause: Optional[Exception] = None):
         # Create structured data using Pydantic model
-        data_model = CommandFunctionNameMissingData(command_name=command_name)
+        data_model = CommandTypeNotFoundData(command_name=command_name)
 
         # Store command_name as instance attribute for backward compatibility
         self.command_name = command_name
 
         super().__init__(
-            message=f"Command function name could not be determined for: {command_name}",
+            message=f"Unable to determine command type for: {command_name}",
             data=data_model.model_dump(),
             cause=cause
         )

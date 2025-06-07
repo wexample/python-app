@@ -8,7 +8,7 @@ class CommandResolverNotFoundData(ExceptionData):
     command_type: str
 
 
-class CommandResolverNotFound(AbstractException):
+class CommandResolverNotFoundException(AbstractException):
     """Exception raised when no resolver is found for a specific command type."""
     error_code: str = "COMMAND_RESOLVER_NOT_FOUND"
 
