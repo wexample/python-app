@@ -4,6 +4,8 @@ from typing import List, Dict, Any, TYPE_CHECKING
 
 from pydantic import PrivateAttr
 
+from core.response.AbstractResponse import AbstractResponse
+
 if TYPE_CHECKING:
     from wexample_app.const.types import CommandLineArgumentsList
     from wexample_app.common.command_request import CommandRequest
@@ -33,19 +35,30 @@ class CommandLineKernel():
             if args_shift_one(self._sys_argv, arg_config["arg"], True) is not None:
                 setattr(self, arg_config["attr"], arg_config["value"])
 
-    def exec_argv(self: "AbstractKernel"):
+    def exec_argv(self: "AbstractKernel") -> List["AbstractResponse"]:
+        from wexample_app.response.abstract_response import AbstractResponse
+        responses: list["AbstractResponse"] = []
+
         """
         Main entrypoint from command line calls.
         May not be called by an internal script.
         """
-        command_requests = self._build_command_requests_from_arguments(
-            self._sys_argv[self._sys_argv_start_index:self._sys_argv_end_index]
-        )
+        try:
+            command_requests = self._build_command_requests_from_arguments(
+                self._sys_argv[self._sys_argv_start_index:self._sys_argv_end_index]
+            )
+        except Exception as e:
+            self.io.error(
+                exception=e,
+                fatal=True
+            )
 
-        from wexample_app.response.abstract_response import AbstractResponse
-        responses: list["AbstractResponse"] = []
+            return responses
+
         for command_request in command_requests:
             responses.append(self.execute_kernel_command(command_request))
+
+        return responses
 
     def _build_command_requests_from_arguments(
             self: "AbstractKernel",
