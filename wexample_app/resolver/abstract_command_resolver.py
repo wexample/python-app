@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Optional, Type
 
 from pydantic import BaseModel
 
@@ -10,6 +10,7 @@ from wexample_helpers.const.types import StringsMatch, StringsList
 if TYPE_CHECKING:
     from wexample_app.common.command_request import CommandRequest
     from wexample_app.common.abstract_kernel import AbstractKernel
+    from wexample_app.common.command import Command
 
 
 class AbstractCommandResolver(AbstractKernelChild, ServiceMixin, BaseModel):
@@ -26,6 +27,10 @@ class AbstractCommandResolver(AbstractKernelChild, ServiceMixin, BaseModel):
     def get_type(cls) -> str:
         pass
 
+    def get_command_class_type(cls) -> Type["Command"]:
+        from wexample_app.common.command import Command
+        return Command
+
     @classmethod
     def build_match(cls, command: str) -> Optional[StringsMatch]:
         import re
@@ -34,7 +39,7 @@ class AbstractCommandResolver(AbstractKernelChild, ServiceMixin, BaseModel):
     def build_command_path(self, request: "CommandRequest") -> Optional[str]:
         return None
 
-    def build_command_function_name(self, request: "CommandRequest") -> None:
+    def build_command_function_name(self, request: "CommandRequest") -> Optional[str]:
         return None
 
     def supports(self, request: "CommandRequest") -> Optional[StringsMatch]:

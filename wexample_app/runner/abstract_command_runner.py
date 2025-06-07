@@ -9,6 +9,7 @@ from wexample_app.common.service.service_mixin import ServiceMixin
 if TYPE_CHECKING:
     from wexample_app.common.abstract_kernel import AbstractKernel
     from wexample_app.common.command_request import CommandRequest
+    from wexample_app.common.command import Command
 
 
 class AbstractCommandRunner(AbstractKernelChild, ServiceMixin, BaseModel):
