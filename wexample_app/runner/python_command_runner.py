@@ -1,8 +1,10 @@
 import os.path
 from typing import Optional
 from typing import TYPE_CHECKING
+from types import ModuleType
 
 from wexample_app.runner.abstract_command_runner import AbstractCommandRunner
+from wexample_helpers.const.types import AnyCallable
 
 if TYPE_CHECKING:
     from wexample_app.common.command import Command
@@ -23,7 +25,7 @@ class PythonCommandRunner(AbstractCommandRunner):
 
         return file_extension == f".{FILE_EXTENSION_PYTHON}"
 
-    def build_command(self, request: "CommandRequest") -> Optional["Command"]:
+    def _load_command_python_module(self, request: "CommandRequest") -> ModuleType:
         import importlib.util
 
         path = request.resolver.build_command_path(request)
@@ -38,13 +40,22 @@ class PythonCommandRunner(AbstractCommandRunner):
 
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
-        function = getattr(module, request.resolver.build_command_function_name(request), None)
+
+        return module
+
+    def _load_command_python_function(self, request: "CommandRequest") -> AnyCallable:
         function_name = request.resolver.build_command_function_name(request)
+
         if not function_name:
             return None
 
-        return Command(
-        function = getattr(module, function_name, None)
+        module = self._load_command_python_module(request=request)
+        return getattr(module, function_name, None)
+
+
+    def build_runnable_command(self, request: "CommandRequest") -> Optional["Command"]:
+        function = self._load_command_python_function(request=request)
+
         if not function:
             return None
 

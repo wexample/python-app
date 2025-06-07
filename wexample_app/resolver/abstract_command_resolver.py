@@ -36,6 +36,10 @@ class AbstractCommandResolver(AbstractKernelChild, ServiceMixin, BaseModel):
         import re
         return re.match(cls.get_pattern(), command) if command else None
 
+    # @abstractmethod
+    def build_command(self, request: "CommandRequest") -> Optional["Command"]:
+        return request.runner.build_runnable_command(request)
+
     def build_command_path(self, request: "CommandRequest") -> Optional[str]:
         return None
 
