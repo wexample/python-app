@@ -31,13 +31,13 @@ class CommandRequest(
         BaseModel.__init__(self, **kwargs)
         AbstractKernelChild.__init__(self, kernel=kernel)
 
-        self.type = self.guess_type()
+        self.type = self._guess_type()
         if self.type is None:
             raise CommandTypeNotFound(self.name)
             
-        self.resolver = self.get_resolver()
+        self.resolver = self._get_resolver()
         self.path = self.resolver.build_command_path(request=self)
-        self.runner = self.guess_runner()
+        self.runner = self._guess_runner()
 
     @property
     def match(self) -> "StringsMatch":
@@ -76,19 +76,19 @@ class CommandRequest(
 
         return command.execute(self.arguments) if command is not None else None
 
-    def get_resolver(self) -> "AbstractCommandResolver":
+    def _get_resolver(self) -> "AbstractCommandResolver":
         resolver = self.kernel.get_resolver(self.type)
         if resolver is None:
             raise CommandResolverNotFound(self.type)
         return resolver
 
-    def guess_runner(self) -> Optional["AbstractCommandRunner"]:
+    def _guess_runner(self) -> Optional["AbstractCommandRunner"]:
         for runner in self.kernel.get_runners().values():
             if runner.will_run(self):
                 return runner
         return None
 
-    def guess_type(self) -> Optional[str]:
+    def _guess_type(self) -> Optional[str]:
         for resolver in self.kernel.get_resolvers().values():
             match = resolver.supports(request=self)
             if match is not None:

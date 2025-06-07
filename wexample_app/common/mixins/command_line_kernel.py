@@ -1,13 +1,13 @@
 from __future__ import annotations
 
-from typing import cast, Type, List, Dict, Any, TYPE_CHECKING, Generic, TypeVar
+from typing import List, Dict, Any, TYPE_CHECKING, Generic, TypeVar
 
 from pydantic import PrivateAttr
 
 from wexample_app.common.abstract_kernel import AbstractKernel
-from wexample_app.const.types import CommandLineArgumentsList
 
 if TYPE_CHECKING:
+    from wexample_app.const.types import CommandLineArgumentsList
     from wexample_app.common.command_request import CommandRequest
 
 AK = TypeVar("AK", bound=AbstractKernel)
@@ -50,16 +50,13 @@ class CommandLineKernel(Generic[AK]):
         for command_request in command_requests:
             responses.append(self.execute_kernel_command(command_request))
 
-    def _build_command_requests_from_arguments(self, arguments: CommandLineArgumentsList) -> list["CommandRequest"]:
+    def _build_command_requests_from_arguments(self, arguments: "CommandLineArgumentsList") -> list["CommandRequest"]:
         # By default, allow one request per execution call.
         return self._build_single_command_request_from_arguments(arguments)
 
-    def _build_single_command_request_from_arguments(self: AK, arguments: CommandLineArgumentsList):
-        from wexample_app.common.command_request import CommandRequest
-        class_definition = cast(Type[CommandRequest], self._get_command_request_class())
-
+    def _build_single_command_request_from_arguments(self: AK, arguments: "CommandLineArgumentsList"):
         return [
-            class_definition(
+            self._get_command_request_class()(
                 kernel=self,
                 name=arguments[0],
                 arguments=arguments[1:])
