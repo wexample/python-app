@@ -12,7 +12,12 @@ class CommandTypeNotFoundException(AbstractException):
     """Exception raised when the system cannot determine the type of a command."""
     error_code: str = "COMMAND_TYPE_NOT_FOUND"
 
-    def __init__(self, command_name: str, cause: Optional[Exception] = None):
+    def __init__(
+            self,
+            command_name: str,
+            cause: Optional[Exception] = None,
+            previous: Optional[Exception] = None
+    ):
         # Create structured data using Pydantic model
         data_model = CommandTypeNotFoundData(command_name=command_name)
 
@@ -22,5 +27,6 @@ class CommandTypeNotFoundException(AbstractException):
         super().__init__(
             message=f"Unable to determine command type for: {command_name}",
             data=data_model.model_dump(),
-            cause=cause
+            cause=cause,
+            previous=previous
         )

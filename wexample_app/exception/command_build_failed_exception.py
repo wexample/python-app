@@ -13,7 +13,13 @@ class CommandBuildFailedException(AbstractException):
     """Exception raised when a command cannot be built by its resolver."""
     error_code: str = "COMMAND_BUILD_FAILED"
 
-    def __init__(self, command_name: str, resolver_name: str, cause: Optional[Exception] = None):
+    def __init__(
+            self,
+            command_name: str,
+            resolver_name: str,
+            cause: Optional[Exception] = None,
+            previous: Optional[Exception] = None
+    ):
         # Create structured data using Pydantic model
         data_model = CommandBuildFailedData(command_name=command_name, resolver_name=resolver_name)
 
@@ -24,5 +30,6 @@ class CommandBuildFailedException(AbstractException):
         super().__init__(
             message=f"Failed to build command '{command_name}' with resolver: {resolver_name}",
             data=data_model.model_dump(),
-            cause=cause
+            cause=cause,
+            previous=previous,
         )
