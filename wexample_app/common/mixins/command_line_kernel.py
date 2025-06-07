@@ -1,39 +1,42 @@
 from __future__ import annotations
 
-from typing import cast, Type, List, Dict, Any, TYPE_CHECKING
+from typing import cast, Type, List, Dict, Any, TYPE_CHECKING, Generic, TypeVar
 
 from pydantic import PrivateAttr
 
+from wexample_app.common.abstract_kernel import AbstractKernel
 from wexample_app.const.types import CommandLineArgumentsList
 
 if TYPE_CHECKING:
     from wexample_app.common.command_request import CommandRequest
 
+AK = TypeVar("AK", bound=AbstractKernel)
 
-class CommandLineKernel:
+
+class CommandLineKernel(Generic[AK]):
     _sys_argv: list[str] = PrivateAttr(default_factory=list)
     _sys_argv_start_index: int = 1
     _sys_argv_end_index: int | None = None
     _core_argv: list[str] = PrivateAttr(default_factory=list)
 
-    def _init_command_line_kernel(self):
+    def _init_command_line_kernel(self: AK):
         import sys
 
         self._sys_argv = sys.argv.copy()
 
         self._handle_core_args()
 
-    def _get_core_args(self) -> List[Dict[str, Any]]:
+    def _get_core_args(self: AK) -> List[Dict[str, Any]]:
         return []
 
-    def _handle_core_args(self):
+    def _handle_core_args(self: AK):
         from wexample_helpers.helpers.args import args_shift_one
 
         for arg_config in self._get_core_args():
             if args_shift_one(self._sys_argv, arg_config["arg"], True) is not None:
                 setattr(self, arg_config["attr"], arg_config["value"])
 
-    def exec_argv(self):
+    def exec_argv(self: AK):
         """
         Main entrypoint from command line calls.
         May not be called by an internal script.
@@ -51,7 +54,7 @@ class CommandLineKernel:
         # By default, allow one request per execution call.
         return self._build_single_command_request_from_arguments(arguments)
 
-    def _build_single_command_request_from_arguments(self, arguments: CommandLineArgumentsList):
+    def _build_single_command_request_from_arguments(self: AK, arguments: CommandLineArgumentsList):
         from wexample_app.common.command_request import CommandRequest
         class_definition = cast(Type[CommandRequest], self._get_command_request_class())
 
