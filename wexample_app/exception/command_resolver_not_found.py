@@ -1,7 +1,26 @@
-from wexample_app.exception.abstract_exception import AbstractException
+from typing import Optional
+
+from wexample_app.exception.abstract_exception import AbstractException, ExceptionData
+
+
+class CommandResolverNotFoundData(ExceptionData):
+    """Data model for CommandResolverNotFound exception."""
+    command_type: str
 
 
 class CommandResolverNotFound(AbstractException):
-    def __init__(self, command_type: str):
+    """Exception raised when no resolver is found for a specific command type."""
+    error_code: str = "COMMAND_RESOLVER_NOT_FOUND"
+
+    def __init__(self, command_type: str, cause: Optional[Exception] = None):
+        # Create structured data using Pydantic model
+        data_model = CommandResolverNotFoundData(command_type=command_type)
+
+        # Store command_type as instance attribute for backward compatibility
         self.command_type = command_type
-        super().__init__(message=f"No resolver found for command type: {command_type}")
+
+        super().__init__(
+            message=f"No resolver found for command type: {command_type}",
+            data=data_model.model_dump(),
+            cause=cause
+        )
