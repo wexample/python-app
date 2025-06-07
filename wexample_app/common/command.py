@@ -6,6 +6,9 @@ from wexample_app.common.abstract_kernel_child import AbstractKernelChild
 from wexample_app.response.null_response import NullResponse
 
 if TYPE_CHECKING:
+    from wexample_app.common.command_request import CommandRequest
+
+if TYPE_CHECKING:
     from wexample_app.common.abstract_kernel import AbstractKernel
     from wexample_app.response.abstract_response import AbstractResponse
 
@@ -17,11 +20,11 @@ class Command(AbstractKernelChild, BaseModel):
         BaseModel.__init__(self, **kwargs)
         AbstractKernelChild.__init__(self, kernel=kernel)
 
-    def execute(self, arguments) -> "AbstractResponse":
+    def execute_request(self, request: "CommandRequest") -> "AbstractResponse":
         # Basic way to execute command.
         response = self.function(
             kernel=self.kernel,
-            arguments=arguments
+            arguments=request.arguments
         )
 
         if response is None:

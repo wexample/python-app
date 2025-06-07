@@ -85,7 +85,7 @@ class CommandRequest(
                     resolver_name=self.resolver.__class__.__name__
                 )
 
-            return command.execute(self.arguments)
+            return command.execute_request(self)
         except Exception as e:
             self.kernel.io.error(
                 exception=e,
