@@ -12,8 +12,16 @@ class YamlCommandRunner(AbstractFileCommandRunner):
         from wexample_helpers.const.globals import FILE_EXTENSION_YAML
         return FILE_EXTENSION_YAML
 
+    def _execute_yaml(self, kernel, request: "CommandRequest", arguments):
+        # Placeholder
+        kernel.io.properties({
+            'runner': type(self),
+            'name': request.name,
+            'arguments': request.arguments
+        })
+
     def _build_command_function(self, request: "CommandRequest") -> AnyCallable:
         def _script_command_handler(kernel, arguments):
-            print('Executing command: ' + request.name)
+            self._execute_yaml(kernel, request, arguments)
 
         return _script_command_handler
