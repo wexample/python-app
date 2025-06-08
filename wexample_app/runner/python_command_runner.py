@@ -11,7 +11,6 @@ if TYPE_CHECKING:
 
 
 class PythonCommandRunner(AbstractFileCommandRunner):
-    @classmethod
     def get_file_extension(self) -> str:
         from wexample_helpers.const.globals import FILE_EXTENSION_PYTHON
         return FILE_EXTENSION_PYTHON

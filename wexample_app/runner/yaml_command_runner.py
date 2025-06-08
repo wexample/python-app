@@ -8,10 +8,12 @@ if TYPE_CHECKING:
 
 
 class YamlCommandRunner(AbstractFileCommandRunner):
-    def _build_command_function(self, request: "CommandRequest") -> AnyCallable:
-        def _temp(kernel, arguments):
-            # TODO improve
-            print('kernel: ' + str(kernel))
-            print('arguments: ' + str(arguments))
+    def get_file_extension(self) -> str:
+        from wexample_helpers.const.globals import FILE_EXTENSION_YAML
+        return FILE_EXTENSION_YAML
 
-        return _temp
+    def _build_command_function(self, request: "CommandRequest") -> AnyCallable:
+        def _script_command_handler(kernel, arguments):
+            print('Executing command: ' + request.name)
+
+        return _script_command_handler
