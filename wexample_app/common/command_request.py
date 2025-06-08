@@ -39,8 +39,11 @@ class CommandRequest(
             raise CommandTypeNotFoundException(self.name)
 
         self.resolver = self._get_resolver()
-        self.path = self.resolver.build_command_path(request=self)
         self.runner = self._guess_runner()
+        if not self.runner:
+            raise Exception('No runner for ' + self.name)
+
+        self.path = self.runner.build_command_path(request=self)
 
     @property
     def match(self) -> "StringsMatch":

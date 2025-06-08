@@ -1,40 +1,25 @@
-import os.path
-from typing import Optional
-from typing import TYPE_CHECKING
 from types import ModuleType
+from typing import TYPE_CHECKING, Any
 
-from wexample_app.exception.command_file_not_found_exception import CommandFileNotFoundException
-from wexample_app.exception.command_module_load_error_exception import CommandModuleLoadErrorException
 from wexample_app.exception.command_function_name_missing_exception import CommandFunctionNameMissingException
-from wexample_app.exception.command_function_not_found_exception import CommandFunctionNotFoundException
-from wexample_app.runner.abstract_command_runner import AbstractCommandRunner
+from wexample_app.exception.command_module_load_error_exception import CommandModuleLoadErrorException
+from wexample_app.runner.abstract_file_command_runner import AbstractFileCommandRunner
 from wexample_helpers.const.types import AnyCallable
 
 if TYPE_CHECKING:
-    from wexample_app.common.command import Command
     from wexample_app.common.command_request import CommandRequest
 
 
-class PythonCommandRunner(AbstractCommandRunner):
-    def will_run(self, request: "CommandRequest") -> bool:
-        from pathlib import Path
+class PythonCommandRunner(AbstractFileCommandRunner):
+    @classmethod
+    def get_file_extension(self) -> str:
         from wexample_helpers.const.globals import FILE_EXTENSION_PYTHON
-
-        path = request.resolver.build_command_path(request)
-        if path is None:
-            return False
-
-        file_path = Path(path)
-        file_extension = file_path.suffix.lower()
-
-        return file_extension == f".{FILE_EXTENSION_PYTHON}"
+        return FILE_EXTENSION_PYTHON
 
     def _load_command_python_module(self, request: "CommandRequest") -> ModuleType:
         import importlib.util
 
-        path = request.resolver.build_command_path(request)
-        if not os.path.exists(path):
-            raise CommandFileNotFoundException(file_path=path)
+        path = self.build_command_path(request)
 
         # Import module and load function.
         spec = importlib.util.spec_from_file_location(path, path)
@@ -55,16 +40,5 @@ class PythonCommandRunner(AbstractCommandRunner):
         module = self._load_command_python_module(request=request)
         return getattr(module, function_name, None)
 
-
-    def build_runnable_command(self, request: "CommandRequest") -> Optional["Command"]:
-        function = self._load_command_python_function(request=request)
-
-        if not function:
-            path = request.resolver.build_command_path(request)
-            function_name = request.resolver.build_command_function_name(request)
-            raise CommandFunctionNotFoundException(function_name=function_name, module_path=path)
-
-        return request.resolver.get_command_class_type()(
-            kernel=self.kernel,
-            function=function
-        ) if function is not None else None
+    def _build_command_function(self, request: "CommandRequest") -> Any:
+        return self._load_command_python_function(request=request)

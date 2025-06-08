@@ -40,7 +40,11 @@ class AbstractCommandResolver(AbstractKernelChild, ServiceMixin, BaseModel):
     def build_command(self, request: "CommandRequest") -> Optional["Command"]:
         return request.runner.build_runnable_command(request)
 
-    def build_command_path(self, request: "CommandRequest") -> Optional[str]:
+    def build_command_path(
+            self,
+            request: "CommandRequest",
+            extension: str
+    ) -> Optional[str]:
         return None
 
     def build_command_function_name(self, request: "CommandRequest") -> Optional[str]:
