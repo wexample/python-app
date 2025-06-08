@@ -12,12 +12,12 @@ if TYPE_CHECKING:
 class DefaultResponse(AbstractResponse):
     content: Any
 
-    def print(self) -> str:
     def __init__(self, kernel: "AbstractKernel", **kwargs) -> None:
         super().__init__(kernel, **kwargs)
 
         if not args_is_basic_value(self.content):
             raise ResponseInvalidContentException(content=self.content)
 
+    def get_printable(self) -> ResponsePrintable:
         # For now consider every output as a string
         return str(self.content)

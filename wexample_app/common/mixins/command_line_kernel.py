@@ -35,10 +35,7 @@ class CommandLineKernel():
             if args_shift_one(self._sys_argv, arg_config["arg"], True) is not None:
                 setattr(self, arg_config["attr"], arg_config["value"])
 
-    def exec_argv(self: "AbstractKernel") -> List["AbstractResponse"]:
-        from wexample_app.response.abstract_response import AbstractResponse
-        responses: list["AbstractResponse"] = []
-
+    def exec_argv(self: "AbstractKernel") -> None:
         """
         Main entrypoint from command line calls.
         May not be called by an internal script.
@@ -53,12 +50,10 @@ class CommandLineKernel():
                 fatal=True
             )
 
-            return responses
+            return
 
         for command_request in command_requests:
-            responses.append(self.execute_kernel_command(command_request))
-
-        return responses
+            self.execute_kernel_command_and_print(command_request)
 
     def _build_command_requests_from_arguments(
             self: "AbstractKernel",

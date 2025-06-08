@@ -20,14 +20,27 @@ class Command(AbstractKernelChild, BaseModel):
         BaseModel.__init__(self, **kwargs)
         AbstractKernelChild.__init__(self, kernel=kernel)
 
-    def execute_request(self, request: "CommandRequest") -> "AbstractResponse":
+    def execute_request(self, request: "CommandRequest") -> Any:
         # Basic way to execute command.
-        response = self.function(
+        return self.function(
             kernel=self.kernel,
             arguments=request.arguments
         )
 
-        if response is None:
+    def execute_request_and_normalize(self, request: "CommandRequest") -> Any:
+        return self.normalize_response(
+            self.execute_request(
+                request=request
+            )
+        )
+
+    def normalize_response(self, function_output: Any) -> "AbstractResponse":
+        from wexample_app.response.abstract_response import AbstractResponse
+
+        if isinstance(function_output, AbstractResponse):
+            return function_output
+        elif function_output is None:
             return NullResponse(kernel=self.kernel)
 
-        return response
+        from wexample_app.response.default_response import DefaultResponse
+        return DefaultResponse(kernel=self.kernel, content=function_output)

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import List, Type, TYPE_CHECKING
+from typing import List, Type, TYPE_CHECKING, Optional, Any
 
 from pydantic import BaseModel, Field
 
@@ -23,6 +23,7 @@ class AbstractKernel(
     BaseModel
 ):
     entrypoint_path: str = Field(description="The main file placed at application root directory")
+    root_request: Optional[Any] = None
 
     def __init__(self, **kwargs) -> None:
         BaseModel.__init__(self, **kwargs)
@@ -49,4 +50,12 @@ class AbstractKernel(
         return CommandRequest
 
     def execute_kernel_command(self, request: "CommandRequest") -> "AbstractResponse":
+        # Save unique root request
+        self.root_request = self.root_request if self.root_request else request
+
         return request.execute()
+
+    def execute_kernel_command_and_print(self, request: "CommandRequest") -> None:
+        response = self.execute_kernel_command(request=request)
+
+        print(response.get_wrapped_printable())
