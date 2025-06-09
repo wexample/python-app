@@ -16,6 +16,7 @@ if TYPE_CHECKING:
 class AbstractCommandResolver(AbstractKernelChild, ServiceMixin, BaseModel):
     def __init__(self, kernel: "AbstractKernel", **kwargs):
         BaseModel.__init__(self, **kwargs)
+        # ServiceMixin.__init__(self) TODO Init service mixin ??
         AbstractKernelChild.__init__(self, kernel=kernel)
 
     @classmethod
