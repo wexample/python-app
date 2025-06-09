@@ -1,12 +1,6 @@
 from typing import Optional
 
-from wexample_app.exception.abstract_exception import AbstractException, ExceptionData
-from wexample_helpers.exception.not_allowed_item_exception import NotAllowedItemException
-
-
-class CommandRunnerNotFoundData(ExceptionData):
-    """Data model for CommandRunnerNotFound exception."""
-    command_name: str
+from wexample_app.exception.abstract_exception import AbstractException
 
 
 class CommandRunnerNotFoundException(AbstractException):
@@ -25,7 +19,7 @@ class CommandRunnerNotFoundException(AbstractException):
     ):
         # Store command_name as instance attribute
         self.command_name = command_name
-        
+
         # Call parent constructor with appropriate parameters
         super().__init__(
             message=f"Not runner found supporting execution of command \"{command_name}\"",
