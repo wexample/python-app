@@ -9,13 +9,15 @@ if TYPE_CHECKING:
 
 class CommandRunnerKernel:
     def _init_resolvers(self: Union["CommandRunnerKernel", "ServiceContainerMixin"]):
-        cast("ServiceRegistry", self.register_services(
+        from wexample_app.service.service_registry import ServiceRegistry
+        cast(ServiceRegistry, self.register_services(
             'command_resolvers',
             self._get_command_resolvers()
         )).instantiate_all(kernel=self)
 
     def _init_runners(self: ["CommandRunnerKernel", "ServiceContainerMixin"]):
-        cast("ServiceRegistry", self.register_services(
+        from wexample_app.service.service_registry import ServiceRegistry
+        cast(ServiceRegistry, self.register_services(
             'command_runners',
             self._get_command_runners()
         )).instantiate_all(kernel=self)
