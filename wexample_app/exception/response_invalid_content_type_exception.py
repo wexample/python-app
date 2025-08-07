@@ -1,15 +1,9 @@
 from typing import Any, Optional, List, Type
 
-from wexample_app.exception.abstract_exception import AbstractException, ExceptionData
+from wexample_helpers.exception.not_allowed_item_exception import NotAllowedItemException
 
 
-class ResponseInvalidContentData(ExceptionData):
-    """Data model for ResponseInvalidContent exception."""
-    content_type: str
-    content_value: str
-
-
-class ResponseInvalidContentTypeException(AbstractException):
+class ResponseInvalidContentTypeException(NotAllowedItemException):
     """Exception raised when a response contains invalid content that cannot be properly processed."""
     error_code: str = "RESPONSE_INVALID_CONTENT"
 
@@ -20,28 +14,25 @@ class ResponseInvalidContentTypeException(AbstractException):
             cause: Optional[Exception] = None,
             previous: Optional[Exception] = None,
     ):
-        from helper.string import string_truncate
+        from wexample_helpers.helpers.string import string_truncate
 
-        # Create structured data using Pydantic model
+        # Get the content type name
         content_type = type(content).__name__
+        
         # Convert to string but limit length to avoid huge error messages
         content_str = string_truncate(content, 100)
 
-        data_model = ResponseInvalidContentData(
-            content_type=content_type,
-            content_value=content_str
-        )
-
-        # Store content info as instance attributes
-        self.content_type = content_type
-        self.content_value = content_str
+        # Convert type objects to strings for the allowed values
+        allowed_values = [t.__name__ for t in allowed_content_types]
         
-        # Format the allowed types for the error message
-        allowed_types_str = ", ".join([t.__name__ for t in allowed_content_types])
-
+        # Use the parent class (NotAllowedItemException) initialization
         super().__init__(
-            message=f"Response contains invalid content of type '{content_type}'. Expected one of: {allowed_types_str}.",
-            data=data_model.model_dump(),
+            item_type="content type",
+            item_value=content_type,
+            allowed_values=allowed_values,
             cause=cause,
             previous=previous
         )
+        
+        # Store additional content info as instance attributes
+        self.content_value = content_str
