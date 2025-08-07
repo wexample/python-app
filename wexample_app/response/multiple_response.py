@@ -9,14 +9,26 @@ if TYPE_CHECKING:
 
 
 class MultipleResponse(AbstractResponse):
-    content: List[Any] = []
+    responses: List[Any] = []
 
     def __init__(self, kernel: "AbstractKernel", **kwargs) -> None:
         super().__init__(kernel, **kwargs)
 
-        if not isinstance(self.content, list):
-            raise ResponseInvalidContentTypeException(content=self.content, allowed_content_types=[list])
+        if not isinstance(self.responses, list):
+            raise ResponseInvalidContentTypeException(
+                content=self.responses,
+                allowed_content_types=[list]
+            )
 
     def get_printable(self) -> ResponsePrintable:
         # For now consider every output as a string
-        return str(self.content)
+        return str(self.responses)
+
+    def append(self, response: AbstractResponse) -> None:
+        if not isinstance(response, AbstractResponse):
+            raise ResponseInvalidContentTypeException(
+                content=response,
+                allowed_content_types=[AbstractResponse]
+            )
+
+        self.responses.append(response)
