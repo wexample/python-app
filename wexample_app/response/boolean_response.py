@@ -6,4 +6,6 @@ class BooleanResponse(AbstractResponse):
     content: bool
 
     def get_printable(self) -> ResponsePrintable:
-        return 'True' if self.content is True else 'False'
+        from wexample_helpers.helpers.string import string_render_boolean
+
+        return string_render_boolean(self.content)
