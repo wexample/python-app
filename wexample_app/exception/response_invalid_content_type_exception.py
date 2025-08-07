@@ -20,7 +20,7 @@ class ResponseInvalidContentTypeException(NotAllowedItemException):
         content_type = type(content).__name__
         
         # Convert to string but limit length to avoid huge error messages
-        content_str = string_truncate(content, 100)
+        content_str = string_truncate(str(content), 100)
 
         # Convert type objects to strings for the allowed values
         allowed_values = [t.__name__ for t in allowed_content_types]
