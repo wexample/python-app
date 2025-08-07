@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Optional, Any
 
 from wexample_app.const.types import ResponsePrintable
 from wexample_app.response.abstract_response import AbstractResponse
@@ -8,7 +8,7 @@ if TYPE_CHECKING:
 
 
 class FailureResponse(AbstractResponse):
-    exception: Optional[Exception] = None
+    exception: Optional[Any] = None
     message: Optional[str] = None
 
     def get_printable(self) -> ResponsePrintable:
