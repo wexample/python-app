@@ -20,12 +20,12 @@ class ResponseInvalidContentTypeException(AbstractException):
             cause: Optional[Exception] = None,
             previous: Optional[Exception] = None,
     ):
+        from helper.string import string_truncate
+
         # Create structured data using Pydantic model
         content_type = type(content).__name__
         # Convert to string but limit length to avoid huge error messages
-        content_str = str(content)
-        if len(content_str) > 100:
-            content_str = content_str[:97] + "..."
+        content_str = string_truncate(content, 100)
 
         data_model = ResponseInvalidContentData(
             content_type=content_type,
