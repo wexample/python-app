@@ -1,6 +1,6 @@
 from typing import Optional
 
-from wexample_app.exception.abstract_exception import AbstractException
+from wexample_helpers.exception.abstract_exception import AbstractException
 
 
 class CommandRunnerNotFoundException(AbstractException):
