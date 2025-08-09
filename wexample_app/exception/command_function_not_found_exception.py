@@ -1,6 +1,6 @@
 from typing import Optional
 
-from wexample_helpers.exception.abstract_exception import AbstractException, ExceptionData
+from wexample_helpers.exception.undefined_exception import UndefinedException, ExceptionData
 
 
 class CommandFunctionNotFoundData(ExceptionData):
@@ -9,7 +9,7 @@ class CommandFunctionNotFoundData(ExceptionData):
     module_path: str
 
 
-class CommandFunctionNotFoundException(AbstractException):
+class CommandFunctionNotFoundException(UndefinedException):
     """Exception raised when a command function cannot be found in the module."""
     error_code: str = "COMMAND_FUNCTION_NOT_FOUND"
 

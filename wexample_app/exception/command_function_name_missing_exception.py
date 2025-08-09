@@ -1,6 +1,6 @@
 from typing import Optional
 
-from wexample_helpers.exception.abstract_exception import AbstractException, ExceptionData
+from wexample_helpers.exception.undefined_exception import UndefinedException, ExceptionData
 
 
 class CommandFunctionNameMissingData(ExceptionData):
@@ -8,7 +8,7 @@ class CommandFunctionNameMissingData(ExceptionData):
     command_name: str
 
 
-class CommandFunctionNameMissingException(AbstractException):
+class CommandFunctionNameMissingException(UndefinedException):
     """Exception raised when a command function name cannot be determined."""
     error_code: str = "COMMAND_FUNCTION_NAME_MISSING"
 

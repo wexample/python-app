@@ -1,6 +1,6 @@
 from typing import Optional
 
-from wexample_helpers.exception.abstract_exception import AbstractException, ExceptionData
+from wexample_helpers.exception.undefined_exception import UndefinedException, ExceptionData
 
 
 class CommandBuildFailedData(ExceptionData):
@@ -9,7 +9,7 @@ class CommandBuildFailedData(ExceptionData):
     resolver_name: str
 
 
-class CommandBuildFailedException(AbstractException):
+class CommandBuildFailedException(UndefinedException):
     """Exception raised when a command cannot be built by its resolver."""
     error_code: str = "COMMAND_BUILD_FAILED"
 

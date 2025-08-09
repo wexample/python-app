@@ -1,6 +1,6 @@
 from typing import Optional
 
-from wexample_helpers.exception.abstract_exception import AbstractException, ExceptionData
+from wexample_helpers.exception.undefined_exception import UndefinedException, ExceptionData
 
 
 class CommandRunnerMissingData(ExceptionData):
@@ -8,7 +8,7 @@ class CommandRunnerMissingData(ExceptionData):
     command_name: str
 
 
-class CommandRunnerMissingException(AbstractException):
+class CommandRunnerMissingException(UndefinedException):
     """Exception raised when no runner is available for a command."""
     error_code: str = "COMMAND_RUNNER_MISSING"
 

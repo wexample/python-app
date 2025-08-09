@@ -1,9 +1,9 @@
 from typing import Optional
 
-from wexample_helpers.exception.abstract_exception import AbstractException
+from wexample_helpers.exception.undefined_exception import UndefinedException
 
 
-class CommandRunnerNotFoundException(AbstractException):
+class CommandRunnerNotFoundException(UndefinedException):
     """Exception raised when no suitable runner is found for a command.
     
     This exception is thrown when the system cannot find an appropriate runner

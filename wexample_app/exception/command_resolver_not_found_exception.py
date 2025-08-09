@@ -1,6 +1,6 @@
 from typing import Optional
 
-from wexample_helpers.exception.abstract_exception import AbstractException, ExceptionData
+from wexample_helpers.exception.undefined_exception import UndefinedException, ExceptionData
 
 
 class CommandResolverNotFoundData(ExceptionData):
@@ -8,7 +8,7 @@ class CommandResolverNotFoundData(ExceptionData):
     command_type: str
 
 
-class CommandResolverNotFoundException(AbstractException):
+class CommandResolverNotFoundException(UndefinedException):
     """Exception raised when no resolver is found for a specific command type."""
     error_code: str = "COMMAND_RESOLVER_NOT_FOUND"
 

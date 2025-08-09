@@ -1,6 +1,6 @@
 from typing import Optional
 
-from wexample_helpers.exception.abstract_exception import AbstractException, ExceptionData
+from wexample_helpers.exception.undefined_exception import UndefinedException, ExceptionData
 
 
 class CommandTypeNotFoundData(ExceptionData):
@@ -8,7 +8,7 @@ class CommandTypeNotFoundData(ExceptionData):
     command_name: str
 
 
-class CommandTypeNotFoundException(AbstractException):
+class CommandTypeNotFoundException(UndefinedException):
     """Exception raised when the system cannot determine the type of a command."""
     error_code: str = "COMMAND_TYPE_NOT_FOUND"
 

@@ -1,6 +1,6 @@
 from typing import Optional
 
-from wexample_helpers.exception.abstract_exception import AbstractException, ExceptionData
+from wexample_helpers.exception.undefined_exception import UndefinedException, ExceptionData
 
 
 class CommandModuleLoadErrorData(ExceptionData):
@@ -8,7 +8,7 @@ class CommandModuleLoadErrorData(ExceptionData):
     file_path: str
 
 
-class CommandModuleLoadErrorException(AbstractException):
+class CommandModuleLoadErrorException(UndefinedException):
     """Exception raised when a Python module cannot be loaded from a command file."""
     error_code: str = "COMMAND_MODULE_LOAD_ERROR"
 
