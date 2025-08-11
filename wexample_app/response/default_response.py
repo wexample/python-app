@@ -16,11 +16,11 @@ class DefaultResponse(AbstractResponse):
         super().__init__(kernel, **kwargs)
 
         if not args_is_basic_value(self.content):
-            from wexample_helpers.const.types import BasicInlineValue
+            from wexample_helpers.const.types import Scalar
 
             raise ResponseInvalidContentTypeException(
                 content=self.content,
-                allowed_content_types=BasicInlineValue
+                allowed_content_types=Scalar
             )
 
     def get_printable(self) -> ResponsePrintable:
