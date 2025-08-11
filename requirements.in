@@ -3,5 +3,5 @@ pip-tools
 pydantic
 pytest
 python-dotenv
-wexample-filestate==0.0.44
-wexample-helpers-yaml==0.0.62
+wexample-filestate==0.0.45
+wexample-helpers-yaml==0.0.63
