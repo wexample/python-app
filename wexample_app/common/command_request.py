@@ -2,12 +2,12 @@ from typing import List, Optional, Union, TYPE_CHECKING
 from typing import cast
 
 from pydantic import BaseModel, Field, PrivateAttr
-from wexample_app.exception.command_runner_not_found_exception import CommandRunnerNotFoundException
 
 from wexample_app.common.abstract_kernel_child import AbstractKernelChild
 from wexample_app.exception.command_build_failed_exception import CommandBuildFailedException
 from wexample_app.exception.command_resolver_not_found_exception import CommandResolverNotFoundException
 from wexample_app.exception.command_runner_missing_exception import CommandRunnerMissingException
+from wexample_app.exception.command_runner_not_found_exception import CommandRunnerNotFoundException
 from wexample_app.exception.command_type_not_found_exception import CommandTypeNotFoundException
 from wexample_app.runner.abstract_command_runner import AbstractCommandRunner
 from wexample_helpers.const.types import StringsMatch
