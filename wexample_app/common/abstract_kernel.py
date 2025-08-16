@@ -8,6 +8,7 @@ from wexample_app.const.globals import ENV_VAR_NAME_APP_ENV
 from wexample_app.service.mixins.service_container_mixin import ServiceContainerMixin
 from wexample_filestate.mixins.with_workdir_mixin import WithWorkdirMixin
 from wexample_helpers.classes.mixin.has_env_keys_file import HasEnvKeysFile
+from wexample_helpers.classes.mixin.printable_mixin import PrintableMixin
 from wexample_prompt.mixins.with_prompt_context import WithPromptContext
 
 if TYPE_CHECKING:
@@ -20,6 +21,7 @@ class AbstractKernel(
     HasEnvKeysFile,
     WithWorkdirMixin,
     WithPromptContext,
+    PrintableMixin,
     BaseModel
 ):
     entrypoint_path: str = Field(description="The main file placed at application root directory")
