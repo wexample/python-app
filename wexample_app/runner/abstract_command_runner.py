@@ -5,6 +5,7 @@ from pydantic import BaseModel
 
 from wexample_app.common.abstract_kernel_child import AbstractKernelChild
 from wexample_app.common.service.service_mixin import ServiceMixin
+from wexample_helpers.classes.mixin.printable_mixin import PrintableMixin
 from wexample_helpers.const.types import AnyCallable
 
 if TYPE_CHECKING:
@@ -13,7 +14,7 @@ if TYPE_CHECKING:
     from wexample_app.common.command_request import CommandRequest
 
 
-class AbstractCommandRunner(AbstractKernelChild, ServiceMixin, BaseModel):
+class AbstractCommandRunner(AbstractKernelChild, ServiceMixin, PrintableMixin, BaseModel):
     def __init__(self, kernel: "AbstractKernel", **kwargs):
         BaseModel.__init__(self, **kwargs)
         AbstractKernelChild.__init__(self, kernel=kernel)
