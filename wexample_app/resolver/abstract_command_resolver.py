@@ -15,7 +15,7 @@ if TYPE_CHECKING:
     from wexample_app.common.command import Command
     from wexample_wex_core.middleware.abstract_middleware import AbstractMiddleware
     from wexample_wex_core.common.command_method_wrapper import CommandMethodWrapper
-    from wexample_wex_core.common.execution_context import ExecutionContext
+    from wexample_wex_core.context.execution_context import ExecutionContext
 
 
 class AbstractCommandResolver(AbstractKernelChild, ServiceMixin, PrintableMixin, BaseModel):
@@ -63,7 +63,7 @@ class AbstractCommandResolver(AbstractKernelChild, ServiceMixin, PrintableMixin,
             request: "CommandRequest",
             function_kwargs: Kwargs,
     ) -> "ExecutionContext":
-        from wexample_wex_core.common.execution_context import ExecutionContext
+        from wexample_wex_core.context.execution_context import ExecutionContext
 
         return ExecutionContext(
             middleware=middleware,
