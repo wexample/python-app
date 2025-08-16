@@ -4,12 +4,12 @@ from typing import List, Dict, Any, TYPE_CHECKING
 
 from pydantic import PrivateAttr
 
+from wexample_filestate.file_state_manager import FileStateManager
 
 if TYPE_CHECKING:
     from wexample_app.const.types import CommandLineArgumentsList
     from wexample_app.common.command_request import CommandRequest
     from wexample_app.common.abstract_kernel import AbstractKernel
-    from wexample_app.response.abstract_response import AbstractResponse
 
 
 class CommandLineKernel():
@@ -17,11 +17,18 @@ class CommandLineKernel():
     _sys_argv_start_index: int = 1
     _sys_argv_end_index: int | None = None
     _core_argv: list[str] = PrivateAttr(default_factory=list)
+    _call_workdir: "FileStateManager" = PrivateAttr()
 
     def _init_command_line_kernel(self: "AbstractKernel"):
         import sys
+        import os
 
         self._sys_argv = sys.argv.copy()
+        self._call_workdir = FileStateManager.create_from_path(
+            path=os.getcwd(),
+            config={},
+            io=self.io
+        )
 
         self._handle_core_args()
 
@@ -34,6 +41,29 @@ class CommandLineKernel():
         for arg_config in self._get_core_args():
             if args_shift_one(self._sys_argv, arg_config["arg"], True) is not None:
                 setattr(self, arg_config["attr"], arg_config["value"])
+
+    def _build_command_requests_from_arguments(
+            self: "AbstractKernel",
+            arguments: "CommandLineArgumentsList"
+    ) -> list["CommandRequest"]:
+        # By default, allow one request per execution call.
+        return self._build_single_command_request_from_arguments(arguments)
+
+    def _build_single_command_request_from_arguments(
+            self: "AbstractKernel",
+            arguments: "CommandLineArgumentsList"
+    ):
+        return [
+            self._get_command_request_class()(
+                kernel=self,
+                name=arguments[0],
+                arguments=arguments[1:])
+        ]
+
+    @property
+    def call_workdir(self) -> "FileStateManager":
+        # Getter is non-optional and always returns a conformant type
+        return self._call_workdir
 
     def exec_argv(self: "AbstractKernel") -> None:
         """
@@ -54,21 +84,3 @@ class CommandLineKernel():
 
         for command_request in command_requests:
             self.execute_kernel_command_and_print(command_request)
-
-    def _build_command_requests_from_arguments(
-            self: "AbstractKernel",
-            arguments: "CommandLineArgumentsList"
-    ) -> list["CommandRequest"]:
-        # By default, allow one request per execution call.
-        return self._build_single_command_request_from_arguments(arguments)
-
-    def _build_single_command_request_from_arguments(
-            self: "AbstractKernel",
-            arguments: "CommandLineArgumentsList"
-    ):
-        return [
-            self._get_command_request_class()(
-                kernel=self,
-                name=arguments[0],
-                arguments=arguments[1:])
-        ]
