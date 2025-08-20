@@ -60,6 +60,4 @@ class AbstractKernel(
         return request.execute()
 
     def execute_kernel_command_and_print(self, request: "CommandRequest") -> None:
-        response = self.execute_kernel_command(request=request)
-
-        print(response.get_wrapped_printable())
+        self.execute_kernel_command(request=request)
