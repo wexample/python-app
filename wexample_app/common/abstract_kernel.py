@@ -9,7 +9,7 @@ from wexample_app.service.mixins.service_container_mixin import ServiceContainer
 from wexample_filestate.mixins.with_workdir_mixin import WithWorkdirMixin
 from wexample_helpers.classes.mixin.has_env_keys_file import HasEnvKeysFile
 from wexample_helpers.classes.mixin.printable_mixin import PrintableMixin
-from wexample_prompt.mixins.with_prompt_context import WithPromptContext
+from wexample_prompt.mixins.with_io_methods import WithIoMethods
 
 if TYPE_CHECKING:
     from wexample_app.common.command_request import CommandRequest
@@ -20,7 +20,7 @@ class AbstractKernel(
     ServiceContainerMixin,
     HasEnvKeysFile,
     WithWorkdirMixin,
-    WithPromptContext,
+    WithIoMethods,
     PrintableMixin,
     BaseModel
 ):
