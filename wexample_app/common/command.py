@@ -13,7 +13,7 @@ if TYPE_CHECKING:
 class Command(AbstractKernelChild, BaseModel):
     function: Callable[..., Any] = None
 
-    def __init__(self, kernel: "AbstractKernel", **kwargs):
+    def __init__(self, kernel: "AbstractKernel", **kwargs) -> None:
         BaseModel.__init__(self, **kwargs)
         AbstractKernelChild.__init__(self, kernel=kernel)
 

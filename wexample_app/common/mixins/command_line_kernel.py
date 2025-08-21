@@ -18,7 +18,7 @@ class CommandLineKernel:
     _core_argv: list[str] = PrivateAttr(default_factory=list)
     _call_workdir: "FileStateManager" = PrivateAttr()
 
-    def _init_command_line_kernel(self: "AbstractKernel"):
+    def _init_command_line_kernel(self: "AbstractKernel") -> None:
         import os
         import sys
 
@@ -32,7 +32,7 @@ class CommandLineKernel:
     def _get_core_args(self: "AbstractKernel") -> List[Dict[str, Any]]:
         return []
 
-    def _handle_core_args(self: "AbstractKernel"):
+    def _handle_core_args(self: "AbstractKernel") -> None:
         from wexample_helpers.helpers.args import args_shift_one
 
         for arg_config in self._get_core_args():

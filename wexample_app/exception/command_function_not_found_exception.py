@@ -1,7 +1,9 @@
 from typing import Optional
 
-from wexample_helpers.exception.undefined_exception import (ExceptionData,
-                                                            UndefinedException)
+from wexample_helpers.exception.undefined_exception import (
+    ExceptionData,
+    UndefinedException,
+)
 
 
 class CommandFunctionNotFoundData(ExceptionData):
@@ -22,7 +24,7 @@ class CommandFunctionNotFoundException(UndefinedException):
         module_path: str,
         cause: Optional[Exception] = None,
         previous: Optional[Exception] = None,
-    ):
+    ) -> None:
         # Create structured data using Pydantic model
         data_model = CommandFunctionNotFoundData(
             function_name=function_name, module_path=module_path

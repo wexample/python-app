@@ -1,7 +1,8 @@
 from typing import Any, List, Optional, Type
 
-from wexample_helpers.exception.not_allowed_item_exception import \
-    NotAllowedItemException
+from wexample_helpers.exception.not_allowed_item_exception import (
+    NotAllowedItemException,
+)
 
 
 class ResponseInvalidContentTypeException(NotAllowedItemException):
@@ -15,7 +16,7 @@ class ResponseInvalidContentTypeException(NotAllowedItemException):
         allowed_content_types: List[Type],
         cause: Optional[Exception] = None,
         previous: Optional[Exception] = None,
-    ):
+    ) -> None:
         from wexample_helpers.helpers.string import string_truncate
 
         # Get the content type name

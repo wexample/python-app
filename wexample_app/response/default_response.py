@@ -1,8 +1,9 @@
 from typing import TYPE_CHECKING, Any
 
 from wexample_app.const.types import ResponsePrintable
-from wexample_app.exception.response_invalid_content_type_exception import \
-    ResponseInvalidContentTypeException
+from wexample_app.exception.response_invalid_content_type_exception import (
+    ResponseInvalidContentTypeException,
+)
 from wexample_app.response.abstract_response import AbstractResponse
 from wexample_helpers.helpers.args import args_is_basic_value
 

@@ -7,7 +7,7 @@ if TYPE_CHECKING:
 class AbstractKernelChild:
     _kernel: Optional["AbstractKernel"]
 
-    def __init__(self, kernel: "AbstractKernel"):
+    def __init__(self, kernel: "AbstractKernel") -> None:
         from wexample_app.common.abstract_kernel import AbstractKernel
 
         assert isinstance(kernel, AbstractKernel)
@@ -15,7 +15,7 @@ class AbstractKernelChild:
         self._kernel = kernel
 
     @property
-    def kernel(self) -> "AbstractKernel":
+    def kernel(self) -> None:
         return self._kernel
 
     @kernel.setter

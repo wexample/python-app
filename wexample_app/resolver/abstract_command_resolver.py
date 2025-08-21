@@ -11,17 +11,15 @@ if TYPE_CHECKING:
     from wexample_app.common.abstract_kernel import AbstractKernel
     from wexample_app.common.command import Command
     from wexample_app.common.command_request import CommandRequest
-    from wexample_wex_core.common.command_method_wrapper import \
-        CommandMethodWrapper
+    from wexample_wex_core.common.command_method_wrapper import CommandMethodWrapper
     from wexample_wex_core.context.execution_context import ExecutionContext
-    from wexample_wex_core.middleware.abstract_middleware import \
-        AbstractMiddleware
+    from wexample_wex_core.middleware.abstract_middleware import AbstractMiddleware
 
 
 class AbstractCommandResolver(
     AbstractKernelChild, ServiceMixin, PrintableMixin, BaseModel
 ):
-    def __init__(self, kernel: "AbstractKernel", **kwargs):
+    def __init__(self, kernel: "AbstractKernel", **kwargs) -> None:
         BaseModel.__init__(self, **kwargs)
         ServiceMixin.__init__(self)
         AbstractKernelChild.__init__(self, kernel=kernel)
@@ -65,8 +63,7 @@ class AbstractCommandResolver(
         request: "CommandRequest",
         function_kwargs: Kwargs,
     ) -> "ExecutionContext":
-        from wexample_wex_core.context.execution_context import \
-            ExecutionContext
+        from wexample_wex_core.context.execution_context import ExecutionContext
 
         return ExecutionContext(
             middleware=middleware,

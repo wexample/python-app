@@ -1,4 +1,4 @@
-def debug_handle_app_error(e: Exception, debug_config_file_name: str = ".env.yml"):
+def debug_handle_app_error(e: Exception, debug_config_file_name: str = ".env.yml") -> None:
     import os
 
     from wexample_helpers.helpers.error import error_format

@@ -1,18 +1,20 @@
 from typing import TYPE_CHECKING, Dict, Optional, Type, Union, cast
 
-from wexample_app.const.registries import (REGISTRY_KERNEL_COMMAND_RESOLVER,
-                                           REGISTRY_KERNEL_COMMAND_RUNNERS)
+from wexample_app.const.registries import (
+    REGISTRY_KERNEL_COMMAND_RESOLVER,
+    REGISTRY_KERNEL_COMMAND_RUNNERS,
+)
 from wexample_app.runner.abstract_command_runner import AbstractCommandRunner
 
 if TYPE_CHECKING:
-    from wexample_app.resolver.abstract_command_resolver import \
-        AbstractCommandResolver
-    from wexample_app.service.mixins.service_container_mixin import \
-        ServiceContainerMixin
+    from wexample_app.resolver.abstract_command_resolver import AbstractCommandResolver
+    from wexample_app.service.mixins.service_container_mixin import (
+        ServiceContainerMixin,
+    )
 
 
 class CommandRunnerKernel:
-    def _init_resolvers(self: Union["CommandRunnerKernel", "ServiceContainerMixin"]):
+    def _init_resolvers(self: Union["CommandRunnerKernel", "ServiceContainerMixin"]) -> None:
         from wexample_app.service.service_registry import ServiceRegistry
 
         cast(
@@ -22,7 +24,7 @@ class CommandRunnerKernel:
             ),
         ).instantiate_all(kernel=self)
 
-    def _init_runners(self: ["CommandRunnerKernel", "ServiceContainerMixin"]):
+    def _init_runners(self: ["CommandRunnerKernel", "ServiceContainerMixin"]) -> None:
         from wexample_app.service.service_registry import ServiceRegistry
 
         cast(
@@ -36,8 +38,7 @@ class CommandRunnerKernel:
         return []
 
     def _get_command_runners(self) -> list[Type["AbstractCommandRunner"]]:
-        from wexample_app.runner.python_command_runner import \
-            PythonCommandRunner
+        from wexample_app.runner.python_command_runner import PythonCommandRunner
 
         return [
             # Default runner.

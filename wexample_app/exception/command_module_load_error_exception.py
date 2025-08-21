@@ -1,7 +1,9 @@
 from typing import Optional
 
-from wexample_helpers.exception.undefined_exception import (ExceptionData,
-                                                            UndefinedException)
+from wexample_helpers.exception.undefined_exception import (
+    ExceptionData,
+    UndefinedException,
+)
 
 
 class CommandModuleLoadErrorData(ExceptionData):
@@ -20,7 +22,7 @@ class CommandModuleLoadErrorException(UndefinedException):
         file_path: str,
         cause: Optional[Exception] = None,
         previous: Optional[Exception] = None,
-    ):
+    ) -> None:
         # Create structured data using Pydantic model
         data_model = CommandModuleLoadErrorData(file_path=file_path)
 
