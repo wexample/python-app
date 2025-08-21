@@ -1,15 +1,14 @@
 from __future__ import annotations
 
-from typing import List, Dict, Any, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Dict, List
 
 from pydantic import PrivateAttr
-
 from wexample_filestate.file_state_manager import FileStateManager
 
 if TYPE_CHECKING:
-    from wexample_app.const.types import CommandLineArgumentsList
-    from wexample_app.common.command_request import CommandRequest
     from wexample_app.common.abstract_kernel import AbstractKernel
+    from wexample_app.common.command_request import CommandRequest
+    from wexample_app.const.types import CommandLineArgumentsList
 
 
 class CommandLineKernel:
@@ -20,8 +19,8 @@ class CommandLineKernel:
     _call_workdir: "FileStateManager" = PrivateAttr()
 
     def _init_command_line_kernel(self: "AbstractKernel"):
-        import sys
         import os
+        import sys
 
         self._sys_argv = sys.argv.copy()
         self._call_workdir = FileStateManager.create_from_path(

@@ -1,8 +1,7 @@
-from typing import Any, Optional, List, Type, cast, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, List, Optional, Type, cast
 
-from wexample_helpers.service.mixins.registry_container_mixin import (
-    RegistryContainerMixin,
-)
+from wexample_helpers.service.mixins.registry_container_mixin import \
+    RegistryContainerMixin
 
 if TYPE_CHECKING:
     from wexample_app.service.service_registry import ServiceRegistry

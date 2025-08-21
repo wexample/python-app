@@ -2,7 +2,6 @@ from abc import abstractmethod
 from typing import TYPE_CHECKING, Any
 
 from pydantic import BaseModel
-
 from wexample_app.common.abstract_kernel_child import AbstractKernelChild
 from wexample_app.const.types import ResponsePrintable
 

@@ -1,8 +1,7 @@
-from typing import Any, Optional, List, Type
+from typing import Any, List, Optional, Type
 
-from wexample_helpers.exception.not_allowed_item_exception import (
-    NotAllowedItemException,
-)
+from wexample_helpers.exception.not_allowed_item_exception import \
+    NotAllowedItemException
 
 
 class ResponseInvalidContentTypeException(NotAllowedItemException):

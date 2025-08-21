@@ -1,13 +1,12 @@
 from types import ModuleType
 from typing import TYPE_CHECKING, Any
 
-from wexample_app.exception.command_function_name_missing_exception import (
-    CommandFunctionNameMissingException,
-)
-from wexample_app.exception.command_module_load_error_exception import (
-    CommandModuleLoadErrorException,
-)
-from wexample_app.runner.abstract_file_command_runner import AbstractFileCommandRunner
+from wexample_app.exception.command_function_name_missing_exception import \
+    CommandFunctionNameMissingException
+from wexample_app.exception.command_module_load_error_exception import \
+    CommandModuleLoadErrorException
+from wexample_app.runner.abstract_file_command_runner import \
+    AbstractFileCommandRunner
 from wexample_helpers.const.types import AnyCallable
 
 if TYPE_CHECKING:

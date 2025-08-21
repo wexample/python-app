@@ -1,14 +1,13 @@
-from typing import Callable, Any, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Callable
 
 from pydantic import BaseModel
-
 from wexample_app.common.abstract_kernel_child import AbstractKernelChild
 from wexample_app.helpers.response import response_normalize
 
 if TYPE_CHECKING:
-    from wexample_app.response.abstract_response import AbstractResponse
-    from wexample_app.common.command_request import CommandRequest
     from wexample_app.common.abstract_kernel import AbstractKernel
+    from wexample_app.common.command_request import CommandRequest
+    from wexample_app.response.abstract_response import AbstractResponse
 
 
 class Command(AbstractKernelChild, BaseModel):

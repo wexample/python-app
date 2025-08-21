@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Optional, Any
+from typing import TYPE_CHECKING, Any, Optional
 
 from wexample_app.const.types import ResponsePrintable
 from wexample_app.response.abstract_response import AbstractResponse

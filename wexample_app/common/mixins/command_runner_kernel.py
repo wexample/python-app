@@ -1,16 +1,14 @@
-from typing import cast, Type, TYPE_CHECKING, Optional, Dict, Union
+from typing import TYPE_CHECKING, Dict, Optional, Type, Union, cast
 
-from wexample_app.const.registries import (
-    REGISTRY_KERNEL_COMMAND_RESOLVER,
-    REGISTRY_KERNEL_COMMAND_RUNNERS,
-)
+from wexample_app.const.registries import (REGISTRY_KERNEL_COMMAND_RESOLVER,
+                                           REGISTRY_KERNEL_COMMAND_RUNNERS)
 from wexample_app.runner.abstract_command_runner import AbstractCommandRunner
 
 if TYPE_CHECKING:
-    from wexample_app.resolver.abstract_command_resolver import AbstractCommandResolver
-    from wexample_app.service.mixins.service_container_mixin import (
-        ServiceContainerMixin,
-    )
+    from wexample_app.resolver.abstract_command_resolver import \
+        AbstractCommandResolver
+    from wexample_app.service.mixins.service_container_mixin import \
+        ServiceContainerMixin
 
 
 class CommandRunnerKernel:
@@ -38,7 +36,8 @@ class CommandRunnerKernel:
         return []
 
     def _get_command_runners(self) -> list[Type["AbstractCommandRunner"]]:
-        from wexample_app.runner.python_command_runner import PythonCommandRunner
+        from wexample_app.runner.python_command_runner import \
+            PythonCommandRunner
 
         return [
             # Default runner.

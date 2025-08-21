@@ -2,15 +2,14 @@ from abc import abstractmethod
 from typing import TYPE_CHECKING, Optional
 
 from pydantic import BaseModel
-
 from wexample_app.common.abstract_kernel_child import AbstractKernelChild
 from wexample_app.common.service.service_mixin import ServiceMixin
 from wexample_helpers.classes.mixin.printable_mixin import PrintableMixin
 from wexample_helpers.const.types import AnyCallable
 
 if TYPE_CHECKING:
-    from wexample_app.common.command import Command
     from wexample_app.common.abstract_kernel import AbstractKernel
+    from wexample_app.common.command import Command
     from wexample_app.common.command_request import CommandRequest
 
 
@@ -33,9 +32,8 @@ class AbstractCommandRunner(
         function = self._build_command_function(request=request)
 
         if not function:
-            from wexample_app.exception.command_function_not_found_exception import (
-                CommandFunctionNotFoundException,
-            )
+            from wexample_app.exception.command_function_not_found_exception import \
+                CommandFunctionNotFoundException
 
             path = self.build_command_path(request)
             function_name = request.resolver.build_command_function_name(request)

@@ -1,6 +1,7 @@
 from typing import TYPE_CHECKING
 
-from wexample_app.runner.abstract_file_command_runner import AbstractFileCommandRunner
+from wexample_app.runner.abstract_file_command_runner import \
+    AbstractFileCommandRunner
 from wexample_helpers.const.types import AnyCallable
 
 if TYPE_CHECKING:
