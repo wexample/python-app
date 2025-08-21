@@ -20,15 +20,11 @@ class Command(AbstractKernelChild, BaseModel):
 
     def execute_request(self, request: "CommandRequest") -> Any:
         # Basic way to execute command.
-        return self.function(
-            kernel=self.kernel,
-            arguments=request.arguments
-        )
+        return self.function(kernel=self.kernel, arguments=request.arguments)
 
-    def execute_request_and_normalize(self, request: "CommandRequest") -> "AbstractResponse":
+    def execute_request_and_normalize(
+        self, request: "CommandRequest"
+    ) -> "AbstractResponse":
         return response_normalize(
-            kernel=self.kernel,
-            response=self.execute_request(
-                request=request
-            )
+            kernel=self.kernel, response=self.execute_request(request=request)
         )

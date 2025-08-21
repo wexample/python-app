@@ -23,6 +23,6 @@ class AbstractResponse(AbstractKernelChild, BaseModel):
         printable = self.get_printable()
 
         if printable is None:
-            return ''
+            return ""
 
         return printable

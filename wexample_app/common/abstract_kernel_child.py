@@ -9,6 +9,7 @@ class AbstractKernelChild:
 
     def __init__(self, kernel: "AbstractKernel"):
         from wexample_app.common.abstract_kernel import AbstractKernel
+
         assert isinstance(kernel, AbstractKernel)
 
         self._kernel = kernel

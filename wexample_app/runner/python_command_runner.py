@@ -1,8 +1,12 @@
 from types import ModuleType
 from typing import TYPE_CHECKING, Any
 
-from wexample_app.exception.command_function_name_missing_exception import CommandFunctionNameMissingException
-from wexample_app.exception.command_module_load_error_exception import CommandModuleLoadErrorException
+from wexample_app.exception.command_function_name_missing_exception import (
+    CommandFunctionNameMissingException,
+)
+from wexample_app.exception.command_module_load_error_exception import (
+    CommandModuleLoadErrorException,
+)
 from wexample_app.runner.abstract_file_command_runner import AbstractFileCommandRunner
 from wexample_helpers.const.types import AnyCallable
 
@@ -13,6 +17,7 @@ if TYPE_CHECKING:
 class PythonCommandRunner(AbstractFileCommandRunner):
     def get_file_extension(self) -> str:
         from wexample_helpers.const.globals import FILE_EXTENSION_PYTHON
+
         return FILE_EXTENSION_PYTHON
 
     def _load_command_python_module(self, request: "CommandRequest") -> ModuleType:

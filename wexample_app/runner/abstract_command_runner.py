@@ -14,7 +14,9 @@ if TYPE_CHECKING:
     from wexample_app.common.command_request import CommandRequest
 
 
-class AbstractCommandRunner(AbstractKernelChild, ServiceMixin, PrintableMixin, BaseModel):
+class AbstractCommandRunner(
+    AbstractKernelChild, ServiceMixin, PrintableMixin, BaseModel
+):
     def __init__(self, kernel: "AbstractKernel", **kwargs):
         BaseModel.__init__(self, **kwargs)
         AbstractKernelChild.__init__(self, kernel=kernel)
@@ -31,11 +33,15 @@ class AbstractCommandRunner(AbstractKernelChild, ServiceMixin, PrintableMixin, B
         function = self._build_command_function(request=request)
 
         if not function:
-            from wexample_app.exception.command_function_not_found_exception import CommandFunctionNotFoundException
+            from wexample_app.exception.command_function_not_found_exception import (
+                CommandFunctionNotFoundException,
+            )
 
             path = self.build_command_path(request)
             function_name = request.resolver.build_command_function_name(request)
-            raise CommandFunctionNotFoundException(function_name=function_name, module_path=path)
+            raise CommandFunctionNotFoundException(
+                function_name=function_name, module_path=path
+            )
 
         return function
 
@@ -44,9 +50,7 @@ class AbstractCommandRunner(AbstractKernelChild, ServiceMixin, PrintableMixin, B
 
     def build_runnable_command(self, request: "CommandRequest") -> Optional["Command"]:
         from wexample_app.common.command import Command
+
         function = self._build_command_function_or_fail(request=request)
 
-        return Command(
-            kernel=self.kernel,
-            function=function
-        )
+        return Command(kernel=self.kernel, function=function)

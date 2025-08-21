@@ -4,11 +4,21 @@ from typing import cast
 from pydantic import BaseModel, Field, PrivateAttr
 
 from wexample_app.common.abstract_kernel_child import AbstractKernelChild
-from wexample_app.exception.command_build_failed_exception import CommandBuildFailedException
-from wexample_app.exception.command_resolver_not_found_exception import CommandResolverNotFoundException
-from wexample_app.exception.command_runner_missing_exception import CommandRunnerMissingException
-from wexample_app.exception.command_runner_not_found_exception import CommandRunnerNotFoundException
-from wexample_app.exception.command_type_not_found_exception import CommandTypeNotFoundException
+from wexample_app.exception.command_build_failed_exception import (
+    CommandBuildFailedException,
+)
+from wexample_app.exception.command_resolver_not_found_exception import (
+    CommandResolverNotFoundException,
+)
+from wexample_app.exception.command_runner_missing_exception import (
+    CommandRunnerMissingException,
+)
+from wexample_app.exception.command_runner_not_found_exception import (
+    CommandRunnerNotFoundException,
+)
+from wexample_app.exception.command_type_not_found_exception import (
+    CommandTypeNotFoundException,
+)
 from wexample_app.runner.abstract_command_runner import AbstractCommandRunner
 from wexample_helpers.const.types import StringsMatch
 
@@ -19,10 +29,7 @@ if TYPE_CHECKING:
     from wexample_app.response.abstract_response import AbstractResponse
 
 
-class CommandRequest(
-    AbstractKernelChild,
-    BaseModel
-):
+class CommandRequest(AbstractKernelChild, BaseModel):
     name: str
     arguments: List[Union[str, int]] = Field(default_factory=list)
     path: Optional[str] = None
@@ -42,9 +49,7 @@ class CommandRequest(
         self.resolver = self._get_resolver()
         self.runner = self._guess_runner()
         if not self.runner:
-            raise CommandRunnerNotFoundException(
-                command_name=self.name
-            )
+            raise CommandRunnerNotFoundException(command_name=self.name)
 
         self.path = self.runner.build_command_path(request=self)
 
@@ -79,24 +84,19 @@ class CommandRequest(
 
     def execute(self) -> "AbstractResponse":
         if self.runner is None:
-            raise CommandRunnerMissingException(
-                command_name=self.name
-            )
+            raise CommandRunnerMissingException(command_name=self.name)
 
         try:
             command = self.resolver.build_command(request=self)
             if command is None:
                 raise CommandBuildFailedException(
                     command_name=self.name,
-                    resolver_name=self.resolver.__class__.__name__
+                    resolver_name=self.resolver.__class__.__name__,
                 )
 
             return command.execute_request_and_normalize(self)
         except Exception as e:
-            self.kernel.io.error(
-                exception=e,
-                fatal=True
-            )
+            self.kernel.io.error(exception=e, fatal=True)
 
     def _get_resolver(self) -> "AbstractCommandResolver":
         resolver = self.kernel.get_resolver(self.type)

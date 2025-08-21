@@ -22,9 +22,11 @@ class AbstractKernel(
     WithWorkdirMixin,
     WithIoMethods,
     PrintableMixin,
-    BaseModel
+    BaseModel,
 ):
-    entrypoint_path: str = Field(description="The main file placed at application root directory")
+    entrypoint_path: str = Field(
+        description="The main file placed at application root directory"
+    )
     root_request: Optional[Any] = None
 
     def __init__(self, **kwargs) -> None:
@@ -32,9 +34,7 @@ class AbstractKernel(
         HasEnvKeysFile.__init__(self)
 
     def get_expected_env_keys(self) -> List[str]:
-        return [
-            ENV_VAR_NAME_APP_ENV
-        ]
+        return [ENV_VAR_NAME_APP_ENV]
 
     def setup(self) -> "AbstractKernel":
         import os
@@ -51,6 +51,7 @@ class AbstractKernel(
 
     def _get_command_request_class(self) -> Type["CommandRequest"]:
         from wexample_app.common.command_request import CommandRequest
+
         return CommandRequest
 
     def execute_kernel_command(self, request: "CommandRequest") -> "AbstractResponse":

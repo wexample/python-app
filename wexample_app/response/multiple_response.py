@@ -1,7 +1,9 @@
 from typing import Any, TYPE_CHECKING, List
 
 from wexample_app.const.types import ResponsePrintable
-from wexample_app.exception.response_invalid_content_type_exception import ResponseInvalidContentTypeException
+from wexample_app.exception.response_invalid_content_type_exception import (
+    ResponseInvalidContentTypeException,
+)
 from wexample_app.response.abstract_response import AbstractResponse
 
 if TYPE_CHECKING:
@@ -16,8 +18,7 @@ class MultipleResponse(AbstractResponse):
 
         if not isinstance(self.responses, list):
             raise ResponseInvalidContentTypeException(
-                content=self.responses,
-                allowed_content_types=[list]
+                content=self.responses, allowed_content_types=[list]
             )
 
     def get_printable(self) -> ResponsePrintable:
@@ -27,8 +28,7 @@ class MultipleResponse(AbstractResponse):
     def append(self, response: AbstractResponse) -> None:
         if not isinstance(response, AbstractResponse):
             raise ResponseInvalidContentTypeException(
-                content=response,
-                allowed_content_types=[AbstractResponse]
+                content=response, allowed_content_types=[AbstractResponse]
             )
 
         self.responses.append(response)

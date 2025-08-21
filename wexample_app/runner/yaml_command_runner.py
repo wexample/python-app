@@ -10,15 +10,14 @@ if TYPE_CHECKING:
 class YamlCommandRunner(AbstractFileCommandRunner):
     def get_file_extension(self) -> str:
         from wexample_helpers.const.globals import FILE_EXTENSION_YAML
+
         return FILE_EXTENSION_YAML
 
     def _execute_yaml(self, kernel, request: "CommandRequest", arguments):
         # Placeholder
-        kernel.io.properties({
-            'runner': type(self),
-            'name': request.name,
-            'arguments': request.arguments
-        })
+        kernel.io.properties(
+            {"runner": type(self), "name": request.name, "arguments": request.arguments}
+        )
 
     def _build_command_function(self, request: "CommandRequest") -> AnyCallable:
         def _script_command_handler(kernel, arguments):

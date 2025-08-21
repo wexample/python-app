@@ -1,7 +1,9 @@
 from typing import Any, TYPE_CHECKING
 
 from wexample_app.const.types import ResponsePrintable
-from wexample_app.exception.response_invalid_content_type_exception import ResponseInvalidContentTypeException
+from wexample_app.exception.response_invalid_content_type_exception import (
+    ResponseInvalidContentTypeException,
+)
 from wexample_app.response.abstract_response import AbstractResponse
 from wexample_helpers.helpers.args import args_is_basic_value
 
@@ -19,8 +21,7 @@ class DefaultResponse(AbstractResponse):
             from wexample_helpers.const.types import Scalar
 
             raise ResponseInvalidContentTypeException(
-                content=self.content,
-                allowed_content_types=Scalar
+                content=self.content, allowed_content_types=Scalar
             )
 
     def get_printable(self) -> ResponsePrintable:

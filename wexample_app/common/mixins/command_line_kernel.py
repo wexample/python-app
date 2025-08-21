@@ -12,7 +12,7 @@ if TYPE_CHECKING:
     from wexample_app.common.abstract_kernel import AbstractKernel
 
 
-class CommandLineKernel():
+class CommandLineKernel:
     _sys_argv: list[str] = PrivateAttr(default_factory=list)
     _sys_argv_start_index: int = 1
     _sys_argv_end_index: int | None = None
@@ -25,9 +25,7 @@ class CommandLineKernel():
 
         self._sys_argv = sys.argv.copy()
         self._call_workdir = FileStateManager.create_from_path(
-            path=os.getcwd(),
-            config={},
-            io=self.io
+            path=os.getcwd(), config={}, io=self.io
         )
 
         self._handle_core_args()
@@ -43,21 +41,18 @@ class CommandLineKernel():
                 setattr(self, f"_config_arg_{arg_config['attr']}", arg_config["value"])
 
     def _build_command_requests_from_arguments(
-            self: "AbstractKernel",
-            arguments: "CommandLineArgumentsList"
+        self: "AbstractKernel", arguments: "CommandLineArgumentsList"
     ) -> list["CommandRequest"]:
         # By default, allow one request per execution call.
         return self._build_single_command_request_from_arguments(arguments)
 
     def _build_single_command_request_from_arguments(
-            self: "AbstractKernel",
-            arguments: "CommandLineArgumentsList"
+        self: "AbstractKernel", arguments: "CommandLineArgumentsList"
     ):
         return [
             self._get_command_request_class()(
-                kernel=self,
-                name=arguments[0],
-                arguments=arguments[1:])
+                kernel=self, name=arguments[0], arguments=arguments[1:]
+            )
         ]
 
     @property
@@ -72,13 +67,10 @@ class CommandLineKernel():
         """
         try:
             command_requests = self._build_command_requests_from_arguments(
-                self._sys_argv[self._sys_argv_start_index:self._sys_argv_end_index]
+                self._sys_argv[self._sys_argv_start_index : self._sys_argv_end_index]
             )
         except Exception as e:
-            self.io.error(
-                exception=e,
-                fatal=True
-            )
+            self.io.error(exception=e, fatal=True)
 
             return
 

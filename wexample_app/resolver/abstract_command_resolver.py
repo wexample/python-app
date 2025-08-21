@@ -18,7 +18,9 @@ if TYPE_CHECKING:
     from wexample_wex_core.context.execution_context import ExecutionContext
 
 
-class AbstractCommandResolver(AbstractKernelChild, ServiceMixin, PrintableMixin, BaseModel):
+class AbstractCommandResolver(
+    AbstractKernelChild, ServiceMixin, PrintableMixin, BaseModel
+):
     def __init__(self, kernel: "AbstractKernel", **kwargs):
         BaseModel.__init__(self, **kwargs)
         ServiceMixin.__init__(self)
@@ -26,7 +28,7 @@ class AbstractCommandResolver(AbstractKernelChild, ServiceMixin, PrintableMixin,
 
     @classmethod
     def get_class_name_suffix(cls) -> Optional[str]:
-        return 'CommandResolver'
+        return "CommandResolver"
 
     @classmethod
     @abstractmethod
@@ -35,11 +37,13 @@ class AbstractCommandResolver(AbstractKernelChild, ServiceMixin, PrintableMixin,
 
     def get_command_class_type(cls) -> Type["Command"]:
         from wexample_app.common.command import Command
+
         return Command
 
     @classmethod
     def build_match(cls, command: str) -> Optional[StringsMatch]:
         import re
+
         return re.match(cls.get_pattern(), command) if command else None
 
     # @abstractmethod
@@ -47,9 +51,7 @@ class AbstractCommandResolver(AbstractKernelChild, ServiceMixin, PrintableMixin,
         return request.runner.build_runnable_command(request)
 
     def build_command_path(
-            self,
-            request: "CommandRequest",
-            extension: str
+        self, request: "CommandRequest", extension: str
     ) -> Optional[str]:
         return None
 
@@ -57,11 +59,11 @@ class AbstractCommandResolver(AbstractKernelChild, ServiceMixin, PrintableMixin,
         return None
 
     def build_execution_context(
-            self,
-            middleware: Optional["AbstractMiddleware"],
-            command_wrapper: "CommandMethodWrapper",
-            request: "CommandRequest",
-            function_kwargs: Kwargs,
+        self,
+        middleware: Optional["AbstractMiddleware"],
+        command_wrapper: "CommandMethodWrapper",
+        request: "CommandRequest",
+        function_kwargs: Kwargs,
     ) -> "ExecutionContext":
         from wexample_wex_core.context.execution_context import ExecutionContext
 
@@ -69,7 +71,7 @@ class AbstractCommandResolver(AbstractKernelChild, ServiceMixin, PrintableMixin,
             middleware=middleware,
             command_wrapper=command_wrapper,
             request=request,
-            function_kwargs=function_kwargs
+            function_kwargs=function_kwargs,
         )
 
     def supports(self, request: "CommandRequest") -> Optional[StringsMatch]:

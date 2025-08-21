@@ -1,6 +1,8 @@
 from typing import Any, Optional, List, Type, cast, TYPE_CHECKING
 
-from wexample_helpers.service.mixins.registry_container_mixin import RegistryContainerMixin
+from wexample_helpers.service.mixins.registry_container_mixin import (
+    RegistryContainerMixin,
+)
 
 if TYPE_CHECKING:
     from wexample_app.service.service_registry import ServiceRegistry
@@ -12,9 +14,12 @@ class ServiceContainerMixin(RegistryContainerMixin):
 
     def _get_registry_class_type(self) -> Type["ServiceRegistry"]:
         from wexample_app.service.service_registry import ServiceRegistry
+
         return ServiceRegistry
 
-    def register_service(self, registry_name: str, key: str, service: Any) -> "Registry":
+    def register_service(
+        self, registry_name: str, key: str, service: Any
+    ) -> "Registry":
         """Register a service in a specific registry."""
         return self.register_item(registry_name, key, service)
 
