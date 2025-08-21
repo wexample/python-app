@@ -21,7 +21,7 @@ class AbstractCommandRunner(
         AbstractKernelChild.__init__(self, kernel=kernel)
 
     @classmethod
-    def get_class_name_suffix(cls) -> Optional[str]:
+    def get_class_name_suffix(cls) -> str | None:
         return "CommandRunner"
 
     @abstractmethod

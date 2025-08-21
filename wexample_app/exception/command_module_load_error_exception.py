@@ -20,8 +20,8 @@ class CommandModuleLoadErrorException(UndefinedException):
     def __init__(
         self,
         file_path: str,
-        cause: Optional[Exception] = None,
-        previous: Optional[Exception] = None,
+        cause: Exception | None = None,
+        previous: Exception | None = None,
     ) -> None:
         # Create structured data using Pydantic model
         data_model = CommandModuleLoadErrorData(file_path=file_path)
