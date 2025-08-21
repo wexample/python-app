@@ -40,7 +40,7 @@ class CommandLineKernel():
 
         for arg_config in self._get_core_args():
             if args_shift_one(self._sys_argv, arg_config["arg"], True) is not None:
-                setattr(self, arg_config["attr"], arg_config["value"])
+                setattr(self, f"_config_arg_{arg_config['attr']}", arg_config["value"])
 
     def _build_command_requests_from_arguments(
             self: "AbstractKernel",
