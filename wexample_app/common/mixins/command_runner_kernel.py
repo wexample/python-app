@@ -14,7 +14,9 @@ if TYPE_CHECKING:
 
 
 class CommandRunnerKernel:
-    def _init_resolvers(self: Union["CommandRunnerKernel", "ServiceContainerMixin"]) -> None:
+    def _init_resolvers(
+        self: Union["CommandRunnerKernel", "ServiceContainerMixin"],
+    ) -> None:
         from wexample_app.service.service_registry import ServiceRegistry
 
         cast(
