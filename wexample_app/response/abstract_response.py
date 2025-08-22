@@ -12,7 +12,7 @@ if TYPE_CHECKING:
 
 
 class AbstractResponse(AbstractKernelChild, BaseModel):
-    def __init__(self, /, kernel: "AbstractKernel", **kwargs: Any) -> None:
+    def __init__(self, /, kernel: AbstractKernel, **kwargs: Any) -> None:
         BaseModel.__init__(self, **kwargs)
         AbstractKernelChild.__init__(self, kernel=kernel)
 

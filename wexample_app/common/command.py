@@ -16,17 +16,17 @@ if TYPE_CHECKING:
 class Command(AbstractKernelChild, BaseModel):
     function: Callable[..., Any] = None
 
-    def __init__(self, kernel: "AbstractKernel", **kwargs) -> None:
+    def __init__(self, kernel: AbstractKernel, **kwargs) -> None:
         BaseModel.__init__(self, **kwargs)
         AbstractKernelChild.__init__(self, kernel=kernel)
 
-    def execute_request(self, request: "CommandRequest") -> Any:
+    def execute_request(self, request: CommandRequest) -> Any:
         # Basic way to execute command.
         return self.function(kernel=self.kernel, arguments=request.arguments)
 
     def execute_request_and_normalize(
-        self, request: "CommandRequest"
-    ) -> "AbstractResponse":
+        self, request: CommandRequest
+    ) -> AbstractResponse:
         return response_normalize(
             kernel=self.kernel, response=self.execute_request(request=request)
         )

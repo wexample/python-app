@@ -15,7 +15,7 @@ if TYPE_CHECKING:
 class MultipleResponse(AbstractResponse):
     responses: list[Any] = []
 
-    def __init__(self, kernel: "AbstractKernel", **kwargs) -> None:
+    def __init__(self, kernel: AbstractKernel, **kwargs) -> None:
         super().__init__(kernel, **kwargs)
 
         if not isinstance(self.responses, list):

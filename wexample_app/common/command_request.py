@@ -38,7 +38,7 @@ class CommandRequest(AbstractKernelChild, BaseModel):
     _resolver: Optional["AbstractCommandResolver"] = PrivateAttr(default=None)
     _runner: Optional["AbstractCommandRunner"] = PrivateAttr(default=None)
 
-    def __init__(self, kernel: "AbstractKernel", **kwargs) -> None:
+    def __init__(self, kernel: AbstractKernel, **kwargs) -> None:
         BaseModel.__init__(self, **kwargs)
         AbstractKernelChild.__init__(self, kernel=kernel)
 
@@ -54,27 +54,27 @@ class CommandRequest(AbstractKernelChild, BaseModel):
         self.path = self.runner.build_command_path(request=self)
 
     @property
-    def match(self) -> "StringsMatch":
+    def match(self) -> StringsMatch:
         return self._match
 
     @match.setter
-    def match(self, value: "StringsMatch") -> None:
+    def match(self, value: StringsMatch) -> None:
         self._match = value
 
     @property
-    def resolver(self) -> "AbstractCommandResolver":
+    def resolver(self) -> AbstractCommandResolver:
         return self._resolver
 
     @resolver.setter
-    def resolver(self, value: "AbstractCommandResolver") -> None:
+    def resolver(self, value: AbstractCommandResolver) -> None:
         self._resolver = value
 
     @property
-    def runner(self) -> "AbstractCommandRunner":
+    def runner(self) -> AbstractCommandRunner:
         return self._runner
 
     @runner.setter
-    def runner(self, value: "AbstractCommandRunner") -> None:
+    def runner(self, value: AbstractCommandRunner) -> None:
         self._runner = value
 
     @property
@@ -82,7 +82,7 @@ class CommandRequest(AbstractKernelChild, BaseModel):
         # Enforce typing
         return cast("CommandRunnerKernel", super().kernel)
 
-    def execute(self) -> "AbstractResponse":
+    def execute(self) -> AbstractResponse:
         if self.runner is None:
             raise CommandRunnerMissingException(command_name=self.name)
 
@@ -98,7 +98,7 @@ class CommandRequest(AbstractKernelChild, BaseModel):
         except Exception as e:
             self.kernel.io.error(exception=e, fatal=True)
 
-    def _get_resolver(self) -> "AbstractCommandResolver":
+    def _get_resolver(self) -> AbstractCommandResolver:
         resolver = self.kernel.get_resolver(self.type)
         if resolver is None:
             raise CommandResolverNotFoundException(self.type)

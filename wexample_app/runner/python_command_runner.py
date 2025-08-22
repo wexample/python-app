@@ -22,7 +22,7 @@ class PythonCommandRunner(AbstractFileCommandRunner):
 
         return FILE_EXTENSION_PYTHON
 
-    def _load_command_python_module(self, request: "CommandRequest") -> ModuleType:
+    def _load_command_python_module(self, request: CommandRequest) -> ModuleType:
         import importlib.util
 
         path = self.build_command_path(request)
@@ -37,7 +37,7 @@ class PythonCommandRunner(AbstractFileCommandRunner):
 
         return module
 
-    def _load_command_python_function(self, request: "CommandRequest") -> AnyCallable:
+    def _load_command_python_function(self, request: CommandRequest) -> AnyCallable:
         function_name = request.resolver.build_command_function_name(request)
 
         if not function_name:
@@ -46,5 +46,5 @@ class PythonCommandRunner(AbstractFileCommandRunner):
         module = self._load_command_python_module(request=request)
         return getattr(module, function_name, None)
 
-    def _build_command_function(self, request: "CommandRequest") -> Any:
+    def _build_command_function(self, request: CommandRequest) -> Any:
         return self._load_command_python_function(request=request)

@@ -18,7 +18,7 @@ if TYPE_CHECKING:
 class AbstractCommandRunner(
     AbstractKernelChild, ServiceMixin, PrintableMixin, BaseModel
 ):
-    def __init__(self, kernel: "AbstractKernel", **kwargs) -> None:
+    def __init__(self, kernel: AbstractKernel, **kwargs) -> None:
         BaseModel.__init__(self, **kwargs)
         AbstractKernelChild.__init__(self, kernel=kernel)
 
@@ -27,10 +27,10 @@ class AbstractCommandRunner(
         return "CommandRunner"
 
     @abstractmethod
-    def _build_command_function(self, request: "CommandRequest") -> AnyCallable:
+    def _build_command_function(self, request: CommandRequest) -> AnyCallable:
         pass
 
-    def _build_command_function_or_fail(self, request: "CommandRequest") -> AnyCallable:
+    def _build_command_function_or_fail(self, request: CommandRequest) -> AnyCallable:
         function = self._build_command_function(request=request)
 
         if not function:
@@ -46,10 +46,10 @@ class AbstractCommandRunner(
 
         return function
 
-    def will_run(self, request: "CommandRequest") -> bool:
+    def will_run(self, request: CommandRequest) -> bool:
         return False
 
-    def build_runnable_command(self, request: "CommandRequest") -> Optional["Command"]:
+    def build_runnable_command(self, request: CommandRequest) -> Optional["Command"]:
         from wexample_app.common.command import Command
 
         function = self._build_command_function_or_fail(request=request)

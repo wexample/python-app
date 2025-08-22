@@ -21,11 +21,11 @@ class ServiceContainerMixin(RegistryContainerMixin):
 
     def register_service(
         self, registry_name: str, key: str, service: Any
-    ) -> "Registry":
+    ) -> Registry:
         """Register a service in a specific registry."""
         return self.register_item(registry_name, key, service)
 
-    def register_services(self, registry_name: str, services: list[Any]) -> "Registry":
+    def register_services(self, registry_name: str, services: list[Any]) -> Registry:
         """Register multiple services at once in a specific registry."""
         return self.register_items(registry_name, services)
 
@@ -33,7 +33,7 @@ class ServiceContainerMixin(RegistryContainerMixin):
         """Retrieve a service from a specific registry by its key."""
         return self.get_item(registry_name, key)
 
-    def get_service_registry(self, registry_name: str) -> "ServiceRegistry":
+    def get_service_registry(self, registry_name: str) -> ServiceRegistry:
         from wexample_app.service.service_registry import ServiceRegistry
 
         return cast(ServiceRegistry, self.get_registry(registry_name))

@@ -16,7 +16,7 @@ if TYPE_CHECKING:
 class DefaultResponse(AbstractResponse):
     content: Any
 
-    def __init__(self, kernel: "AbstractKernel", **kwargs) -> None:
+    def __init__(self, kernel: AbstractKernel, **kwargs) -> None:
         super().__init__(kernel, **kwargs)
 
         if not args_is_basic_value(self.content):

@@ -15,13 +15,13 @@ class YamlCommandRunner(AbstractFileCommandRunner):
 
         return FILE_EXTENSION_YAML
 
-    def _execute_yaml(self, kernel, request: "CommandRequest", arguments) -> None:
+    def _execute_yaml(self, kernel, request: CommandRequest, arguments) -> None:
         # Placeholder
         kernel.io.properties(
             {"runner": type(self), "name": request.name, "arguments": request.arguments}
         )
 
-    def _build_command_function(self, request: "CommandRequest") -> AnyCallable:
+    def _build_command_function(self, request: CommandRequest) -> AnyCallable:
         def _script_command_handler(kernel, arguments) -> None:
             self._execute_yaml(kernel, request, arguments)
 

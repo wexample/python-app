@@ -35,7 +35,7 @@ class AbstractKernel(
     def get_expected_env_keys(self) -> list[str]:
         return [ENV_VAR_NAME_APP_ENV]
 
-    def setup(self) -> "AbstractKernel":
+    def setup(self) -> AbstractKernel:
         import os
         from pathlib import Path
 
@@ -54,11 +54,11 @@ class AbstractKernel(
 
         return CommandRequest
 
-    def execute_kernel_command(self, request: "CommandRequest") -> "AbstractResponse":
+    def execute_kernel_command(self, request: CommandRequest) -> AbstractResponse:
         # Save unique root request
         self.root_request = self.root_request if self.root_request else request
 
         return request.execute()
 
-    def execute_kernel_command_and_print(self, request: "CommandRequest") -> None:
+    def execute_kernel_command_and_print(self, request: CommandRequest) -> None:
         self.execute_kernel_command(request=request)
