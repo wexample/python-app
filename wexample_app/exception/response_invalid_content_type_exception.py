@@ -13,9 +13,9 @@ class ResponseInvalidContentTypeException(NotAllowedItemException):
     def __init__(
         self,
         content: Any,
-        allowed_content_types: List[Type],
-        cause: Optional[Exception] = None,
-        previous: Optional[Exception] = None,
+        allowed_content_types: list[type],
+        cause: Exception | None = None,
+        previous: Exception | None = None,
     ) -> None:
         from wexample_helpers.helpers.string import string_truncate
 

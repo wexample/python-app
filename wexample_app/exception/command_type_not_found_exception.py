@@ -20,8 +20,8 @@ class CommandTypeNotFoundException(UndefinedException):
     def __init__(
         self,
         command_name: str,
-        cause: Optional[Exception] = None,
-        previous: Optional[Exception] = None,
+        cause: Exception | None = None,
+        previous: Exception | None = None,
     ) -> None:
         # Create structured data using Pydantic model
         data_model = CommandTypeNotFoundData(command_name=command_name)

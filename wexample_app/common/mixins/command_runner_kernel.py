@@ -36,10 +36,10 @@ class CommandRunnerKernel:
             ),
         ).instantiate_all(kernel=self)
 
-    def _get_command_resolvers(self) -> list[Type["AbstractCommandResolver"]]:
+    def _get_command_resolvers(self) -> list[type["AbstractCommandResolver"]]:
         return []
 
-    def _get_command_runners(self) -> list[Type["AbstractCommandRunner"]]:
+    def _get_command_runners(self) -> list[type["AbstractCommandRunner"]]:
         from wexample_app.runner.python_command_runner import PythonCommandRunner
 
         return [
@@ -57,22 +57,22 @@ class CommandRunnerKernel:
 
     def get_resolvers(
         self: "ServiceContainerMixin",
-    ) -> Dict[str, "AbstractCommandResolver"]:
+    ) -> dict[str, "AbstractCommandResolver"]:
         return cast(
-            Dict[str, "AbstractCommandResolver"],
+            dict[str, "AbstractCommandResolver"],
             self.get_service_registry(REGISTRY_KERNEL_COMMAND_RESOLVER).all_instances(),
         )
 
     def get_runner(
         self: "ServiceContainerMixin", type: str
-    ) -> Optional[AbstractCommandRunner]:
+    ) -> AbstractCommandRunner | None:
         return cast(
             AbstractCommandRunner,
             self.get_service_registry(REGISTRY_KERNEL_COMMAND_RUNNERS).get(key=type),
         )
 
-    def get_runners(self: "ServiceContainerMixin") -> Dict[str, AbstractCommandRunner]:
+    def get_runners(self: "ServiceContainerMixin") -> dict[str, AbstractCommandRunner]:
         return cast(
-            Dict[str, AbstractCommandRunner],
+            dict[str, AbstractCommandRunner],
             self.get_service_registry(REGISTRY_KERNEL_COMMAND_RUNNERS).all_instances(),
         )

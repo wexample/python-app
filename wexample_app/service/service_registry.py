@@ -4,17 +4,17 @@ from wexample_app.common.service.service_mixin import ServiceMixin
 from wexample_helpers.service.registry import Registry
 
 
-class ServiceRegistry(Registry[Type[ServiceMixin]]):
+class ServiceRegistry(Registry[type[ServiceMixin]]):
     """Registry for managing services of type ServiceMixin."""
 
-    _service_instances: Dict[str, ServiceMixin] = {}
+    _service_instances: dict[str, ServiceMixin] = {}
     container: Any  # Will be ServiceMixinContainer at runtime
 
-    def register(self, key: str, service_class: Type[ServiceMixin]) -> None:
+    def register(self, key: str, service_class: type[ServiceMixin]) -> None:
         """Register a service class in the registry."""
         self._items[key] = service_class
 
-    def get(self, key: str | Type[ServiceMixin], **kwargs) -> Optional[ServiceMixin]:
+    def get(self, key: str | type[ServiceMixin], **kwargs) -> ServiceMixin | None:
         """
         Retrieve a service by its key. Instantiates the service if it doesn't exist.
         Additional kwargs are passed to the service constructor.
@@ -46,7 +46,7 @@ class ServiceRegistry(Registry[Type[ServiceMixin]]):
 
         return None
 
-    def instantiate_all(self, **kwargs) -> Dict[str, ServiceMixin]:
+    def instantiate_all(self, **kwargs) -> dict[str, ServiceMixin]:
         """
         Instantiate all registered services with the given kwargs.
         Returns a dictionary of service instances keyed by their names.
@@ -56,18 +56,18 @@ class ServiceRegistry(Registry[Type[ServiceMixin]]):
                 self.get(key, **kwargs)
         return self.all_instances()
 
-    def get_class(self, key: str) -> Optional[Type[ServiceMixin]]:
+    def get_class(self, key: str) -> type[ServiceMixin] | None:
         """Get the service class without instantiating it."""
         return self._items.get(key)
 
-    def all_classes(self) -> List[Type[ServiceMixin]]:
+    def all_classes(self) -> list[type[ServiceMixin]]:
         """Return all registered service classes."""
         return list(self._items.values())
 
-    def all_instances(self) -> Dict[str, ServiceMixin]:
+    def all_instances(self) -> dict[str, ServiceMixin]:
         """Return all instantiated services."""
         return self._service_instances.copy()
 
-    def get_all(self) -> Dict[str, ServiceMixin]:
+    def get_all(self) -> dict[str, ServiceMixin]:
         """Get all instantiated services."""
         return self._service_instances

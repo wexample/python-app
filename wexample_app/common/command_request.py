@@ -29,10 +29,10 @@ if TYPE_CHECKING:
 
 class CommandRequest(AbstractKernelChild, BaseModel):
     name: str
-    arguments: List[Union[str, int]] = Field(default_factory=list)
-    path: Optional[str] = None
-    type: Optional[str] = None
-    _match: Optional[StringsMatch] = None
+    arguments: list[str | int] = Field(default_factory=list)
+    path: str | None = None
+    type: str | None = None
+    _match: StringsMatch | None = None
     _resolver: Optional["AbstractCommandResolver"] = PrivateAttr(default=None)
     _runner: Optional["AbstractCommandRunner"] = PrivateAttr(default=None)
 
@@ -108,7 +108,7 @@ class CommandRequest(AbstractKernelChild, BaseModel):
                 return runner
         return None
 
-    def _guess_type(self) -> Optional[str]:
+    def _guess_type(self) -> str | None:
         for resolver in self.kernel.get_resolvers().values():
             match = resolver.supports(request=self)
             if match is not None:

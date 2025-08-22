@@ -26,16 +26,16 @@ class AbstractKernel(
     entrypoint_path: str = Field(
         description="The main file placed at application root directory"
     )
-    root_request: Optional[Any] = None
+    root_request: Any | None = None
 
     def __init__(self, **kwargs) -> None:
         BaseModel.__init__(self, **kwargs)
         HasEnvKeysFile.__init__(self)
 
-    def get_expected_env_keys(self) -> List[str]:
+    def get_expected_env_keys(self) -> list[str]:
         return [ENV_VAR_NAME_APP_ENV]
 
-    def setup(self) -> "AbstractKernel":
+    def setup(self) -> AbstractKernel:
         import os
         from pathlib import Path
 
@@ -49,16 +49,16 @@ class AbstractKernel(
 
         return self
 
-    def _get_command_request_class(self) -> Type["CommandRequest"]:
+    def _get_command_request_class(self) -> type[CommandRequest]:
         from wexample_app.common.command_request import CommandRequest
 
         return CommandRequest
 
-    def execute_kernel_command(self, request: "CommandRequest") -> "AbstractResponse":
+    def execute_kernel_command(self, request: CommandRequest) -> AbstractResponse:
         # Save unique root request
         self.root_request = self.root_request if self.root_request else request
 
         return request.execute()
 
-    def execute_kernel_command_and_print(self, request: "CommandRequest") -> None:
+    def execute_kernel_command_and_print(self, request: CommandRequest) -> None:
         self.execute_kernel_command(request=request)

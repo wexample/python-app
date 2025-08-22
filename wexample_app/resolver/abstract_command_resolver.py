@@ -25,7 +25,7 @@ class AbstractCommandResolver(
         AbstractKernelChild.__init__(self, kernel=kernel)
 
     @classmethod
-    def get_class_name_suffix(cls) -> Optional[str]:
+    def get_class_name_suffix(cls) -> str | None:
         return "CommandResolver"
 
     @classmethod
@@ -33,13 +33,13 @@ class AbstractCommandResolver(
     def get_type(cls) -> str:
         pass
 
-    def get_command_class_type(cls) -> Type["Command"]:
+    def get_command_class_type(cls) -> type["Command"]:
         from wexample_app.common.command import Command
 
         return Command
 
     @classmethod
-    def build_match(cls, command: str) -> Optional[StringsMatch]:
+    def build_match(cls, command: str) -> StringsMatch | None:
         import re
 
         return re.match(cls.get_pattern(), command) if command else None
@@ -50,10 +50,10 @@ class AbstractCommandResolver(
 
     def build_command_path(
         self, request: "CommandRequest", extension: str
-    ) -> Optional[str]:
+    ) -> str | None:
         return None
 
-    def build_command_function_name(self, request: "CommandRequest") -> Optional[str]:
+    def build_command_function_name(self, request: "CommandRequest") -> str | None:
         return None
 
     def build_execution_context(
@@ -72,7 +72,7 @@ class AbstractCommandResolver(
             function_kwargs=function_kwargs,
         )
 
-    def supports(self, request: "CommandRequest") -> Optional[StringsMatch]:
+    def supports(self, request: "CommandRequest") -> StringsMatch | None:
         match = self.build_match(request.name)
 
         if match:

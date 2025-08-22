@@ -8,8 +8,8 @@ if TYPE_CHECKING:
 
 
 class FailureResponse(AbstractResponse):
-    exception: Optional[Any] = None
-    message: Optional[str] = None
+    exception: Any | None = None
+    message: str | None = None
 
     def get_printable(self) -> ResponsePrintable:
         # Build a string representation from exception and/or message
