@@ -1,5 +1,5 @@
-from typing import TYPE_CHECKING, Any
 from collections.abc import Callable
+from typing import TYPE_CHECKING, Any
 
 from pydantic import BaseModel
 from wexample_app.common.abstract_kernel_child import AbstractKernelChild
