@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Optional, Union, cast
+from typing import TYPE_CHECKING, cast
 
 from wexample_app.const.registries import (
     REGISTRY_KERNEL_COMMAND_RESOLVER,
