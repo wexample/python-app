@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, List
+from typing import TYPE_CHECKING, Any
 
 from wexample_app.const.types import ResponsePrintable
 from wexample_app.exception.response_invalid_content_type_exception import (

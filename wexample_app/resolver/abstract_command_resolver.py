@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from typing import TYPE_CHECKING, Optional, Type
+from typing import TYPE_CHECKING, Optional
 
 from pydantic import BaseModel
 from wexample_app.common.abstract_kernel_child import AbstractKernelChild

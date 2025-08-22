@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List, Optional, Union, cast
+from typing import TYPE_CHECKING, Optional, Union, cast
 
 from pydantic import BaseModel, Field, PrivateAttr
 from wexample_app.common.abstract_kernel_child import AbstractKernelChild

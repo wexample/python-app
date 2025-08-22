@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Dict, Optional, Type, Union, cast
+from typing import TYPE_CHECKING, Optional, Union, cast
 
 from wexample_app.const.registries import (
     REGISTRY_KERNEL_COMMAND_RESOLVER,
