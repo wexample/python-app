@@ -17,7 +17,7 @@ if TYPE_CHECKING:
 
 class CommandRunnerKernel:
     def _init_resolvers(
-        self: Union["CommandRunnerKernel", "ServiceContainerMixin"],
+        self: CommandRunnerKernel | ServiceContainerMixin,
     ) -> None:
         from wexample_app.service.service_registry import ServiceRegistry
 
@@ -28,7 +28,7 @@ class CommandRunnerKernel:
             ),
         ).instantiate_all(kernel=self)
 
-    def _init_runners(self: ["CommandRunnerKernel", "ServiceContainerMixin"]) -> None:
+    def _init_runners(self: [CommandRunnerKernel, ServiceContainerMixin]) -> None:
         from wexample_app.service.service_registry import ServiceRegistry
 
         cast(
@@ -38,10 +38,10 @@ class CommandRunnerKernel:
             ),
         ).instantiate_all(kernel=self)
 
-    def _get_command_resolvers(self) -> list[type["AbstractCommandResolver"]]:
+    def _get_command_resolvers(self) -> list[type[AbstractCommandResolver]]:
         return []
 
-    def _get_command_runners(self) -> list[type["AbstractCommandRunner"]]:
+    def _get_command_runners(self) -> list[type[AbstractCommandRunner]]:
         from wexample_app.runner.python_command_runner import PythonCommandRunner
 
         return [
@@ -51,7 +51,7 @@ class CommandRunnerKernel:
 
     def get_resolver(
         self: ServiceContainerMixin, type: str
-    ) -> Optional["AbstractCommandResolver"]:
+    ) -> AbstractCommandResolver | None:
         return cast(
             "AbstractCommandResolver",
             self.get_service_registry(REGISTRY_KERNEL_COMMAND_RESOLVER).get(key=type),
@@ -59,7 +59,7 @@ class CommandRunnerKernel:
 
     def get_resolvers(
         self: ServiceContainerMixin,
-    ) -> dict[str, "AbstractCommandResolver"]:
+    ) -> dict[str, AbstractCommandResolver]:
         return cast(
             dict[str, "AbstractCommandResolver"],
             self.get_service_registry(REGISTRY_KERNEL_COMMAND_RESOLVER).all_instances(),

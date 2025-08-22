@@ -35,8 +35,8 @@ class CommandRequest(AbstractKernelChild, BaseModel):
     path: str | None = None
     type: str | None = None
     _match: StringsMatch | None = None
-    _resolver: Optional["AbstractCommandResolver"] = PrivateAttr(default=None)
-    _runner: Optional["AbstractCommandRunner"] = PrivateAttr(default=None)
+    _resolver: AbstractCommandResolver | None = PrivateAttr(default=None)
+    _runner: AbstractCommandRunner | None = PrivateAttr(default=None)
 
     def __init__(self, kernel: AbstractKernel, **kwargs) -> None:
         BaseModel.__init__(self, **kwargs)
@@ -78,7 +78,7 @@ class CommandRequest(AbstractKernelChild, BaseModel):
         self._runner = value
 
     @property
-    def kernel(self) -> Union["AbstractKernel", "CommandRunnerKernel"]:
+    def kernel(self) -> AbstractKernel | CommandRunnerKernel:
         # Enforce typing
         return cast("CommandRunnerKernel", super().kernel)
 
@@ -104,7 +104,7 @@ class CommandRequest(AbstractKernelChild, BaseModel):
             raise CommandResolverNotFoundException(self.type)
         return resolver
 
-    def _guess_runner(self) -> Optional["AbstractCommandRunner"]:
+    def _guess_runner(self) -> AbstractCommandRunner | None:
         for runner in self.kernel.get_runners().values():
             if runner.will_run(self):
                 return runner

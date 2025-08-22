@@ -35,7 +35,7 @@ class AbstractCommandResolver(
     def get_type(cls) -> str:
         pass
 
-    def get_command_class_type(cls) -> type["Command"]:
+    def get_command_class_type(cls) -> type[Command]:
         from wexample_app.common.command import Command
 
         return Command
@@ -47,12 +47,10 @@ class AbstractCommandResolver(
         return re.match(cls.get_pattern(), command) if command else None
 
     # @abstractmethod
-    def build_command(self, request: CommandRequest) -> Optional["Command"]:
+    def build_command(self, request: CommandRequest) -> Command | None:
         return request.runner.build_runnable_command(request)
 
-    def build_command_path(
-        self, request: CommandRequest, extension: str
-    ) -> str | None:
+    def build_command_path(self, request: CommandRequest, extension: str) -> str | None:
         return None
 
     def build_command_function_name(self, request: CommandRequest) -> str | None:
@@ -60,7 +58,7 @@ class AbstractCommandResolver(
 
     def build_execution_context(
         self,
-        middleware: Optional["AbstractMiddleware"],
+        middleware: AbstractMiddleware | None,
         command_wrapper: CommandMethodWrapper,
         request: CommandRequest,
         function_kwargs: Kwargs,

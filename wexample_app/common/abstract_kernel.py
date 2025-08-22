@@ -49,7 +49,7 @@ class AbstractKernel(
 
         return self
 
-    def _get_command_request_class(self) -> type["CommandRequest"]:
+    def _get_command_request_class(self) -> type[CommandRequest]:
         from wexample_app.common.command_request import CommandRequest
 
         return CommandRequest

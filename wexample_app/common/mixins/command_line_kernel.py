@@ -41,7 +41,7 @@ class CommandLineKernel:
 
     def _build_command_requests_from_arguments(
         self: AbstractKernel, arguments: CommandLineArgumentsList
-    ) -> list["CommandRequest"]:
+    ) -> list[CommandRequest]:
         # By default, allow one request per execution call.
         return self._build_single_command_request_from_arguments(arguments)
 

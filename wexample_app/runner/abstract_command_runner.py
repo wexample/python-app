@@ -49,7 +49,7 @@ class AbstractCommandRunner(
     def will_run(self, request: CommandRequest) -> bool:
         return False
 
-    def build_runnable_command(self, request: CommandRequest) -> Optional["Command"]:
+    def build_runnable_command(self, request: CommandRequest) -> Command | None:
         from wexample_app.common.command import Command
 
         function = self._build_command_function_or_fail(request=request)

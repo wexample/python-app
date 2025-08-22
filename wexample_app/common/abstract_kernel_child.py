@@ -7,7 +7,7 @@ if TYPE_CHECKING:
 
 
 class AbstractKernelChild:
-    _kernel: Optional["AbstractKernel"]
+    _kernel: AbstractKernel | None
 
     def __init__(self, kernel: AbstractKernel) -> None:
         from wexample_app.common.abstract_kernel import AbstractKernel
