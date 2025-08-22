@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from typing import TYPE_CHECKING, Any, cast
 
 from wexample_helpers.service.mixins.registry_container_mixin import (

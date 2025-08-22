@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 def debug_handle_app_error(
     e: Exception, debug_config_file_name: str = ".env.yml"
 ) -> None:

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from typing import Any
 
 from wexample_app.common.service.service_mixin import ServiceMixin
