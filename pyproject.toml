@@ -22,7 +22,6 @@ dependencies = [
     "dotenv",
     "pip-tools",
     "pydantic",
-    "pytest",
     "python-dotenv",
     "wexample-filestate",
     "wexample-helpers-yaml",
@@ -38,6 +37,8 @@ text = "MIT"
 [project.urls]
 homepage = "https://github.com/wexample/python-app"
 
+[project.optional-dependencies]
+dev = ["pytest"]
 [tool.setuptools.packages.find]
 include = [
     "*",
