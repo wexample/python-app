@@ -1,6 +1,0 @@
-dotenv
-pip-tools
-pydantic
-python-dotenv
-wexample-filestate
-wexample-helpers-yaml
