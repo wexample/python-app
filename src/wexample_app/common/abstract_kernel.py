@@ -3,11 +3,12 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Any
 
 from pydantic import BaseModel, Field
+
 from wexample_app.const.globals import ENV_VAR_NAME_APP_ENV
 from wexample_app.service.mixins.service_container_mixin import ServiceContainerMixin
 from wexample_filestate.mixins.with_workdir_mixin import WithWorkdirMixin
-from wexample_helpers.classes.mixin.has_env_keys_file import HasEnvKeysFile
 from wexample_helpers.classes.mixin.printable_mixin import PrintableMixin
+from wexample_helpers_yaml.classes.mixin.has_yaml_env_keys_file import HasYamlEnvKeysFile
 from wexample_prompt.mixins.with_io_methods import WithIoMethods
 
 if TYPE_CHECKING:
@@ -17,7 +18,7 @@ if TYPE_CHECKING:
 
 class AbstractKernel(
     ServiceContainerMixin,
-    HasEnvKeysFile,
+    HasYamlEnvKeysFile,
     WithWorkdirMixin,
     WithIoMethods,
     PrintableMixin,
@@ -30,7 +31,7 @@ class AbstractKernel(
 
     def __init__(self, **kwargs) -> None:
         BaseModel.__init__(self, **kwargs)
-        HasEnvKeysFile.__init__(self)
+        HasYamlEnvKeysFile.__init__(self)
 
     def get_expected_env_keys(self) -> list[str]:
         return [ENV_VAR_NAME_APP_ENV]
