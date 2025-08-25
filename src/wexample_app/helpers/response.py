@@ -4,10 +4,10 @@ from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
     from wexample_app.response.abstract_response import AbstractResponse
-    from wexample_wex_core.common.kernel import Kernel
+    from wexample_app.common.abstract_kernel import AbstractKernel
 
 
-def response_normalize(kernel: Kernel, response: Any) -> AbstractResponse:
+def response_normalize(kernel: AbstractKernel, response: Any) -> AbstractResponse:
     from wexample_app.response.abstract_response import AbstractResponse
     from wexample_app.response.null_response import NullResponse
 
