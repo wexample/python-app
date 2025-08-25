@@ -4,18 +4,16 @@ from abc import abstractmethod
 from typing import TYPE_CHECKING
 
 from pydantic import BaseModel
+
 from wexample_app.common.abstract_kernel_child import AbstractKernelChild
 from wexample_app.common.service.service_mixin import ServiceMixin
 from wexample_helpers.classes.mixin.printable_mixin import PrintableMixin
-from wexample_helpers.const.types import Kwargs, StringsList, StringsMatch
+from wexample_helpers.const.types import StringsList, StringsMatch
 
 if TYPE_CHECKING:
     from wexample_app.common.abstract_kernel import AbstractKernel
     from wexample_app.common.command import Command
     from wexample_app.common.command_request import CommandRequest
-    from wexample_wex_core.common.command_method_wrapper import CommandMethodWrapper
-    from wexample_wex_core.context.execution_context import ExecutionContext
-    from wexample_wex_core.middleware.abstract_middleware import AbstractMiddleware
 
 
 class AbstractCommandResolver(
@@ -55,22 +53,6 @@ class AbstractCommandResolver(
 
     def build_command_function_name(self, request: CommandRequest) -> str | None:
         return None
-
-    def build_execution_context(
-        self,
-        middleware: AbstractMiddleware | None,
-        command_wrapper: CommandMethodWrapper,
-        request: CommandRequest,
-        function_kwargs: Kwargs,
-    ) -> ExecutionContext:
-        from wexample_wex_core.context.execution_context import ExecutionContext
-
-        return ExecutionContext(
-            middleware=middleware,
-            command_wrapper=command_wrapper,
-            request=request,
-            function_kwargs=function_kwargs,
-        )
 
     def supports(self, request: CommandRequest) -> StringsMatch | None:
         match = self.build_match(request.name)
