@@ -4,7 +4,6 @@ from abc import abstractmethod
 from typing import TYPE_CHECKING
 
 from pydantic import BaseModel
-
 from wexample_app.common.abstract_kernel_child import AbstractKernelChild
 from wexample_app.common.service.service_mixin import ServiceMixin
 from wexample_helpers.classes.mixin.printable_mixin import PrintableMixin
