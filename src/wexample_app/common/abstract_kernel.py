@@ -47,7 +47,7 @@ class AbstractKernel(
         workdir_resolved = f"{Path(self.entrypoint_path).parent}{os.sep}"
         self._init_env_file(f"{workdir_resolved}{FILE_NAME_ENV}")
         self._init_env_file_yaml(f"{workdir_resolved}{FILE_NAME_ENV_YAML}")
-        self._init_workdir(entrypoint_path=self.entrypoint_path, io_manager=self.io)
+        self._init_workdir(entrypoint_path=self.entrypoint_path, io=self.io)
 
         return self
 
