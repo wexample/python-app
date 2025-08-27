@@ -13,8 +13,8 @@ Version: 0.0.47
 - dotenv
 - pydantic>=2,<3
 - python-dotenv
-- wexample-filestate==0.0.46
-- wexample-helpers-yaml==0.0.64
+- wexample-filestate==0.0.47
+- wexample-helpers-yaml==0.0.65
 
 ## Installation
 
