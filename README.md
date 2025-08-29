@@ -2,7 +2,7 @@
 
 Helpers for building Python app or cli.
 
-Version: 0.0.47
+Version: 0.0.48
 
 ## Requirements
 
@@ -13,7 +13,7 @@ Version: 0.0.47
 - dotenv
 - pydantic>=2,<3
 - python-dotenv
-- wexample-filestate==0.0.47
+- wexample-filestate==0.0.49
 - wexample-helpers-yaml==0.0.65
 
 ## Installation
