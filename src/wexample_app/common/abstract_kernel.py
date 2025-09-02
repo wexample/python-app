@@ -38,15 +38,15 @@ class AbstractKernel(
         return [ENV_VAR_NAME_APP_ENV]
 
     def setup(self) -> AbstractKernel:
-        import os
         from pathlib import Path
 
         from wexample_helpers.const.globals import FILE_NAME_ENV, FILE_NAME_ENV_YAML
 
+        entrypoint_path = Path(self.entrypoint_path)
+
         self._init_io_manager()
-        workdir_resolved = f"{Path(self.entrypoint_path).parent}{os.sep}"
-        self._init_env_file(f"{workdir_resolved}{FILE_NAME_ENV}")
-        self._init_env_file_yaml(f"{workdir_resolved}{FILE_NAME_ENV_YAML}")
+        self._init_env_file(entrypoint_path.parent / "../" / FILE_NAME_ENV)
+        self._init_env_file_yaml(entrypoint_path.parent / "../" / FILE_NAME_ENV_YAML)
         self._init_workdir(entrypoint_path=self.entrypoint_path, io=self.io)
 
         return self
