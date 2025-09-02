@@ -31,8 +31,6 @@ class AbstractKernel(
     root_request: Any | None = None
 
     def __init__(self, **kwargs) -> None:
-        from wexample_filestate.file_state_manager import FileStateManager
-        FileStateManager.load_imports()
         BaseModel.__init__(self, **kwargs)
         HasYamlEnvKeysFile.__init__(self)
 
