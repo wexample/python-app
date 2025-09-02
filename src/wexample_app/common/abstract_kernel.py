@@ -3,7 +3,6 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Any
 
 from pydantic import BaseModel, Field
-
 from wexample_app.const.globals import ENV_VAR_NAME_APP_ENV
 from wexample_app.service.mixins.service_container_mixin import ServiceContainerMixin
 from wexample_filestate.mixins.with_workdir_mixin import WithWorkdirMixin
@@ -40,10 +39,13 @@ class AbstractKernel(
 
     def setup(self) -> AbstractKernel:
         from pathlib import Path
+
         from wexample_helpers.const.globals import FILE_NAME_ENV, FILE_NAME_ENV_YAML
 
         # Use entrypoint as env root if not defied.
-        self.env_files_directory = self.env_files_directory or str(Path(self.entrypoint_path).parent)
+        self.env_files_directory = self.env_files_directory or str(
+            Path(self.entrypoint_path).parent
+        )
 
         env_dir_path = self._get_env_files_directory()
         self._init_io_manager()
