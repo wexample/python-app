@@ -1,6 +1,6 @@
 [build-system]
-requires = ["setuptools>=69", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["pdm-backend>=2.2"]
+build-backend = "pdm.backend"
 
 [project]
 name = "app-manager"
@@ -8,6 +8,9 @@ version = "0.1.0"
 description = "App manager entrypoint"
 requires-python = ">=3.10"
 dependencies = []
+
+[tool.pdm]
+distribution = true
 
 [project.scripts]
 app-manager = "app_manager.app:main"

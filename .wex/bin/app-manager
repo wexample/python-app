@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -euo pipefail
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+APP_ROOT="${APP_ROOT:-$ROOT}"
+AM_DIR="$ROOT/.wex/python/app_manager"
+VENV="$AM_DIR/.venv"
+PY="$VENV/bin/python3"
+
+if [ ! -x "$PY" ]; then
+  python3 -m venv "$VENV"
+  "$PY" -m pip install -U pip wheel
+  (cd "$AM_DIR" && "$PY" -m pip install .)
+fi
+
+export APP_ROOT
+exec "$PY" -m app_manager "$@"
