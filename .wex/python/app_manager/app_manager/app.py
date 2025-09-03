@@ -9,7 +9,7 @@ def main(argv: list[str] | None = None) -> int:
 
     # Try to import the shared manager package if installed
     try:
-        from wex_app_manager import run as run_manager  # hypothetical shared package
+        from wexample_wex_core.app_manager import run as run_manager
     except Exception:
         app_root = os.getenv(
             "APP_ROOT",
@@ -17,7 +17,7 @@ def main(argv: list[str] | None = None) -> int:
         )
         print(
             "app-manager: manager package not found.\n"
-            f"Set APP_ROOT (current: {app_root}) or install 'wex-app-manager'.\n"
+            f"Set APP_ROOT (current: {app_root}) or install 'wexample-wex-core'.\n"
             f"Args: {' '.join(argv)}"
         )
         return 0
