@@ -7,7 +7,7 @@ def main(argv: list[str] | None = None) -> int:
         argv = sys.argv[1:]
 
     # TODO: Replace with real logic
-    print("files-state: hello world", " ".join(argv))
+    print("app-manager: hello world", " ".join(argv))
     return 0
 
 

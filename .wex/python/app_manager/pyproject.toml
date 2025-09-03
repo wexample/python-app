@@ -3,11 +3,11 @@ requires = ["setuptools>=69", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "files-state"
+name = "app-manager"
 version = "0.1.0"
-description = "Files state app"
+description = "App manager entrypoint"
 requires-python = ">=3.10"
 dependencies = []
 
 [project.scripts]
-files-state = "files_state.app:main"
+app-manager = "app_manager.app:main"
