@@ -11,14 +11,14 @@ if [ ! -x "$PY" ]; then
   "$PY" -m pip install -U pip wheel
 fi
 
-# Always install local app package (editable) to reflect latest changes
-(cd "$AM_DIR" && "$PY" -m pip install -e .)
-
 # Prefer local core in editable mode if available; fallback to PyPI dep
 CORE_DIR="$ROOT/../../wex-core"
 if [ -d "$CORE_DIR" ]; then
   "$PY" -m pip install -e "$CORE_DIR"
+else
+  # Ensure core from PyPI is present (respect pyproject if you later switch to PDM)
+  "$PY" -m pip install -U wexample-wex-core
 fi
 
 export APP_ROOT
-exec "$PY" -m app_manager "$@"
+exec "$PY" -c 'import os,sys; from wexample_wex_core.app_manager import run; run(sys.argv[1:], os.environ.get("APP_ROOT"))' -- "$@"
