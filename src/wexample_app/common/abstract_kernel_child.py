@@ -21,5 +21,5 @@ class AbstractKernelChild:
         return self._kernel
 
     @kernel.setter
-    def kernel(self, value: AbstractKernel):
+    def kernel(self, value: AbstractKernel) -> None:
         self._kernel = value
