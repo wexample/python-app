@@ -46,10 +46,10 @@ include = [
 distribution = true
 
 [tool.pdm.build]
-includes = [
-    "src/wexample_app/py.typed",
-]
 package-dir = "src"
+includes = [
+    'src/wexample_app/*',
+]
 
 [[tool.pdm.build.packages]]
 include = "wexample_app"
