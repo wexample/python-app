@@ -21,4 +21,4 @@ else
 fi
 
 export APP_ROOT
-exec "$PY" -c 'import os,sys; from wexample_wex_core.app_manager import run; run(sys.argv[1:], os.environ.get("APP_ROOT"))' -- "$@"
+exec "$PY" -m wexample_wex_core.app_manager -- "$@"
