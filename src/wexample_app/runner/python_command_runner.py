@@ -1,12 +1,15 @@
 from __future__ import annotations
+
 from typing import TYPE_CHECKING, Any
+
 from wexample_app.runner.abstract_file_command_runner import AbstractFileCommandRunner
 
 if TYPE_CHECKING:
-    from wexample_app.common.command_request import CommandRequest
-    from typing import Any
-    from wexample_helpers.const.types import AnyCallable
     from types import ModuleType
+    from typing import Any
+
+    from wexample_app.common.command_request import CommandRequest
+    from wexample_helpers.const.types import AnyCallable
 
 
 class PythonCommandRunner(AbstractFileCommandRunner):

@@ -2,10 +2,6 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, cast
 
-from wexample_app.const.registries import (
-    REGISTRY_KERNEL_COMMAND_RESOLVER,
-    REGISTRY_KERNEL_COMMAND_RUNNERS,
-)
 
 if TYPE_CHECKING:
     from wexample_app.resolver.abstract_command_resolver import AbstractCommandResolver

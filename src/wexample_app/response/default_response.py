@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
+
 from wexample_app.response.abstract_response import AbstractResponse
 
 if TYPE_CHECKING:

@@ -1,10 +1,11 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from wexample_helpers.exception.not_allowed_item_exception import (
-    NotAllowedItemException)
-from typing import TYPE_CHECKING
+    NotAllowedItemException,
+)
+
 if TYPE_CHECKING:
     from typing import Any
 

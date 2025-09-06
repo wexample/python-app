@@ -5,7 +5,6 @@ from typing import TYPE_CHECKING, Any
 
 from pydantic import BaseModel
 from wexample_app.common.abstract_kernel_child import AbstractKernelChild
-from wexample_app.helpers.response import response_normalize
 
 if TYPE_CHECKING:
     from wexample_app.common.abstract_kernel import AbstractKernel
@@ -28,6 +27,7 @@ class Command(AbstractKernelChild, BaseModel):
         self, request: CommandRequest
     ) -> AbstractResponse:
         from wexample_app.helpers.response import response_normalize
+
         return response_normalize(
             kernel=self.kernel, response=self.execute_request(request=request)
         )
