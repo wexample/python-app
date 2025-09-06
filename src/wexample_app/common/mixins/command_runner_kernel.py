@@ -20,6 +20,7 @@ class CommandRunnerKernel:
     def _init_resolvers(
         self: CommandRunnerKernel | ServiceContainerMixin,
     ) -> None:
+        from wexample_app.const.registries import REGISTRY_KERNEL_COMMAND_RESOLVER
         from wexample_app.service.service_registry import ServiceRegistry
 
         cast(
@@ -30,6 +31,7 @@ class CommandRunnerKernel:
         ).instantiate_all(kernel=self)
 
     def _init_runners(self: [CommandRunnerKernel, ServiceContainerMixin]) -> None:
+        from wexample_app.const.registries import REGISTRY_KERNEL_COMMAND_RUNNERS
         from wexample_app.service.service_registry import ServiceRegistry
 
         cast(
@@ -54,6 +56,7 @@ class CommandRunnerKernel:
         self: ServiceContainerMixin, type: str
     ) -> AbstractCommandResolver | None:
         from wexample_app.resolver.abstract_command_resolver import AbstractCommandResolver
+        from wexample_app.const.registries import REGISTRY_KERNEL_COMMAND_RESOLVER
         return cast(
             AbstractCommandResolver,
             self.get_service_registry(REGISTRY_KERNEL_COMMAND_RESOLVER).get(key=type),
@@ -63,6 +66,7 @@ class CommandRunnerKernel:
         self: ServiceContainerMixin,
     ) -> dict[str, AbstractCommandResolver]:
         from wexample_app.resolver.abstract_command_resolver import AbstractCommandResolver
+        from wexample_app.const.registries import REGISTRY_KERNEL_COMMAND_RESOLVER
         return cast(
             dict[str, AbstractCommandResolver],
             self.get_service_registry(REGISTRY_KERNEL_COMMAND_RESOLVER).all_instances(),
@@ -72,6 +76,7 @@ class CommandRunnerKernel:
         self: ServiceContainerMixin, type: str
     ) -> AbstractCommandRunner | None:
         from wexample_app.runner.abstract_command_runner import AbstractCommandRunner
+        from wexample_app.const.registries import REGISTRY_KERNEL_COMMAND_RUNNERS
         return cast(
             AbstractCommandRunner,
             self.get_service_registry(REGISTRY_KERNEL_COMMAND_RUNNERS).get(key=type),
@@ -79,6 +84,7 @@ class CommandRunnerKernel:
 
     def get_runners(self: ServiceContainerMixin) -> dict[str, AbstractCommandRunner]:
         from wexample_app.runner.abstract_command_runner import AbstractCommandRunner
+        from wexample_app.const.registries import REGISTRY_KERNEL_COMMAND_RUNNERS
         return cast(
             dict[str, AbstractCommandRunner],
             self.get_service_registry(REGISTRY_KERNEL_COMMAND_RUNNERS).all_instances(),
