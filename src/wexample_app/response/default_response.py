@@ -17,6 +17,7 @@ class DefaultResponse(AbstractResponse):
     content: Any
 
     def __init__(self, kernel: AbstractKernel, **kwargs) -> None:
+        from wexample_app.exception.response_invalid_content_type_exception import ResponseInvalidContentTypeException
         super().__init__(kernel, **kwargs)
 
         if not args_is_basic_value(self.content):
