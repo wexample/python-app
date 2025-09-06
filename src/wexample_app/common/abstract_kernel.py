@@ -35,12 +35,12 @@ class AbstractKernel(
         HasYamlEnvKeysFile.__init__(self)
 
     def get_expected_env_keys(self) -> list[str]:
+        from wexample_app.const.globals import ENV_VAR_NAME_APP_ENV
         return [ENV_VAR_NAME_APP_ENV]
 
     def setup(self) -> AbstractKernel:
-        from pathlib import Path
-
         from wexample_helpers.const.globals import FILE_NAME_ENV, FILE_NAME_ENV_YAML
+        from pathlib import Path
 
         # Use entrypoint as env root if not defied.
         self.env_files_directory = self.env_files_directory or str(
