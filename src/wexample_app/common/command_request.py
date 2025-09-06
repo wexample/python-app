@@ -24,8 +24,12 @@ class CommandRequest(AbstractKernelChild, BaseModel):
     _runner: AbstractCommandRunner | None = PrivateAttr(default=None)
 
     def __init__(self, kernel: AbstractKernel, **kwargs) -> None:
-        from wexample_app.exception.command_runner_not_found_exception import CommandRunnerNotFoundException
-        from wexample_app.exception.command_type_not_found_exception import CommandTypeNotFoundException
+        from wexample_app.exception.command_runner_not_found_exception import (
+            CommandRunnerNotFoundException,
+        )
+        from wexample_app.exception.command_type_not_found_exception import (
+            CommandTypeNotFoundException,
+        )
         BaseModel.__init__(self, **kwargs)
         AbstractKernelChild.__init__(self, kernel=kernel)
 
@@ -72,8 +76,12 @@ class CommandRequest(AbstractKernelChild, BaseModel):
         return cast(CommandRunnerKernel, super().kernel)
 
     def execute(self) -> AbstractResponse:
-        from wexample_app.exception.command_build_failed_exception import CommandBuildFailedException
-        from wexample_app.exception.command_runner_missing_exception import CommandRunnerMissingException
+        from wexample_app.exception.command_build_failed_exception import (
+            CommandBuildFailedException,
+        )
+        from wexample_app.exception.command_runner_missing_exception import (
+            CommandRunnerMissingException,
+        )
         if self.runner is None:
             raise CommandRunnerMissingException(command_name=self.name)
 
@@ -90,7 +98,9 @@ class CommandRequest(AbstractKernelChild, BaseModel):
             self.kernel.io.error(exception=e, fatal=True)
 
     def _get_resolver(self) -> AbstractCommandResolver:
-        from wexample_app.exception.command_resolver_not_found_exception import CommandResolverNotFoundException
+        from wexample_app.exception.command_resolver_not_found_exception import (
+            CommandResolverNotFoundException,
+        )
         resolver = self.kernel.get_resolver(self.type)
         if resolver is None:
             raise CommandResolverNotFoundException(self.type)

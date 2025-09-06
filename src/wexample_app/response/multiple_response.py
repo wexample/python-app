@@ -13,7 +13,9 @@ class MultipleResponse(AbstractResponse):
     responses: list[Any] = []
 
     def __init__(self, kernel: AbstractKernel, **kwargs) -> None:
-        from wexample_app.exception.response_invalid_content_type_exception import ResponseInvalidContentTypeException
+        from wexample_app.exception.response_invalid_content_type_exception import (
+            ResponseInvalidContentTypeException,
+        )
         super().__init__(kernel, **kwargs)
 
         if not isinstance(self.responses, list):
@@ -26,7 +28,9 @@ class MultipleResponse(AbstractResponse):
         return str(self.responses)
 
     def append(self, response: AbstractResponse) -> None:
-        from wexample_app.exception.response_invalid_content_type_exception import ResponseInvalidContentTypeException
+        from wexample_app.exception.response_invalid_content_type_exception import (
+            ResponseInvalidContentTypeException,
+        )
         if not isinstance(response, AbstractResponse):
             raise ResponseInvalidContentTypeException(
                 content=response, allowed_content_types=[AbstractResponse]

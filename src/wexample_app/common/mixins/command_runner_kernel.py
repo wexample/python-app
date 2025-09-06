@@ -9,7 +9,6 @@ if TYPE_CHECKING:
         ServiceContainerMixin,
     )
     from wexample_app.runner.abstract_command_runner import AbstractCommandRunner
-    from wexample_app.service.service_registry import ServiceRegistry
 
 
 class CommandRunnerKernel:

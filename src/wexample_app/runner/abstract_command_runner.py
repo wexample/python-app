@@ -31,7 +31,9 @@ class AbstractCommandRunner(
         pass
 
     def _build_command_function_or_fail(self, request: CommandRequest) -> AnyCallable:
-        from wexample_app.exception.command_function_not_found_exception import CommandFunctionNotFoundException
+        from wexample_app.exception.command_function_not_found_exception import (
+            CommandFunctionNotFoundException,
+        )
         function = self._build_command_function(request=request)
 
         if not function:

@@ -19,8 +19,11 @@ class PythonCommandRunner(AbstractFileCommandRunner):
         return FILE_EXTENSION_PYTHON
 
     def _load_command_python_module(self, request: CommandRequest) -> ModuleType:
-        from wexample_app.exception.command_module_load_error_exception import CommandModuleLoadErrorException
         import importlib.util
+
+        from wexample_app.exception.command_module_load_error_exception import (
+            CommandModuleLoadErrorException,
+        )
 
         path = self.build_command_path(request)
         path_str = str(path)
@@ -36,7 +39,9 @@ class PythonCommandRunner(AbstractFileCommandRunner):
         return module
 
     def _load_command_python_function(self, request: CommandRequest) -> AnyCallable:
-        from wexample_app.exception.command_function_name_missing_exception import CommandFunctionNameMissingException
+        from wexample_app.exception.command_function_name_missing_exception import (
+            CommandFunctionNameMissingException,
+        )
         function_name = request.resolver.build_command_function_name(request)
 
         if not function_name:
