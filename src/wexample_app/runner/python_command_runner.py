@@ -26,11 +26,12 @@ class PythonCommandRunner(AbstractFileCommandRunner):
         import importlib.util
 
         path = self.build_command_path(request)
+        path_str = str(path)
 
         # Import module and load function.
-        spec = importlib.util.spec_from_file_location(path, path)
+        spec = importlib.util.spec_from_file_location(path_str, path_str)
         if not spec or not spec.loader:
-            raise CommandModuleLoadErrorException(file_path=path)
+            raise CommandModuleLoadErrorException(file_path=path_str)
 
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)

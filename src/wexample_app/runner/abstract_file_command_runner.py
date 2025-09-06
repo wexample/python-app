@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from abc import abstractmethod
+from pathlib import Path
 from typing import TYPE_CHECKING
 
 from wexample_app.runner.abstract_command_runner import AbstractCommandRunner
@@ -14,7 +15,7 @@ class AbstractFileCommandRunner(AbstractCommandRunner):
     def get_file_extension(self) -> str:
         pass
 
-    def build_command_path(self, request: CommandRequest) -> str:
+    def build_command_path(self, request: CommandRequest) -> Path:
         return request.resolver.build_command_path(
             request=request, extension=self.get_file_extension()
         )
