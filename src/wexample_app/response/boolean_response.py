@@ -1,7 +1,8 @@
 from __future__ import annotations
-
-from wexample_app.const.types import ResponsePrintable
 from wexample_app.response.abstract_response import AbstractResponse
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from wexample_app.const.types import ResponsePrintable
 
 
 class BooleanResponse(AbstractResponse):

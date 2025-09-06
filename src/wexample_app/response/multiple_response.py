@@ -1,12 +1,11 @@
 from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
-
-from wexample_app.const.types import ResponsePrintable
 from wexample_app.response.abstract_response import AbstractResponse
 
 if TYPE_CHECKING:
     from wexample_app.common.abstract_kernel import AbstractKernel
+    from wexample_app.const.types import ResponsePrintable
 
 
 class MultipleResponse(AbstractResponse):
