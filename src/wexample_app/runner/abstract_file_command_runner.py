@@ -1,13 +1,13 @@
 from __future__ import annotations
 
 from abc import abstractmethod
-from pathlib import Path
 from typing import TYPE_CHECKING
 
 from wexample_app.runner.abstract_command_runner import AbstractCommandRunner
 
 if TYPE_CHECKING:
     from wexample_app.common.command_request import CommandRequest
+    from pathlib import Path
 
 
 class AbstractFileCommandRunner(AbstractCommandRunner):
