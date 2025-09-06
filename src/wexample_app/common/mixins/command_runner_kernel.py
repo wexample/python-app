@@ -6,13 +6,14 @@ from wexample_app.const.registries import (
     REGISTRY_KERNEL_COMMAND_RESOLVER,
     REGISTRY_KERNEL_COMMAND_RUNNERS,
 )
-from wexample_app.runner.abstract_command_runner import AbstractCommandRunner
 
 if TYPE_CHECKING:
     from wexample_app.resolver.abstract_command_resolver import AbstractCommandResolver
     from wexample_app.service.mixins.service_container_mixin import (
         ServiceContainerMixin,
     )
+    from wexample_app.runner.abstract_command_runner import AbstractCommandRunner
+    from wexample_app.service.service_registry import ServiceRegistry
 
 
 class CommandRunnerKernel:
@@ -52,8 +53,9 @@ class CommandRunnerKernel:
     def get_resolver(
         self: ServiceContainerMixin, type: str
     ) -> AbstractCommandResolver | None:
+        from wexample_app.resolver.abstract_command_resolver import AbstractCommandResolver
         return cast(
-            "AbstractCommandResolver",
+            AbstractCommandResolver,
             self.get_service_registry(REGISTRY_KERNEL_COMMAND_RESOLVER).get(key=type),
         )
 
@@ -61,19 +63,21 @@ class CommandRunnerKernel:
         self: ServiceContainerMixin,
     ) -> dict[str, AbstractCommandResolver]:
         return cast(
-            dict[str, "AbstractCommandResolver"],
+            dict[str, AbstractCommandResolver],
             self.get_service_registry(REGISTRY_KERNEL_COMMAND_RESOLVER).all_instances(),
         )
 
     def get_runner(
         self: ServiceContainerMixin, type: str
     ) -> AbstractCommandRunner | None:
+        from wexample_app.runner.abstract_command_runner import AbstractCommandRunner
         return cast(
             AbstractCommandRunner,
             self.get_service_registry(REGISTRY_KERNEL_COMMAND_RUNNERS).get(key=type),
         )
 
     def get_runners(self: ServiceContainerMixin) -> dict[str, AbstractCommandRunner]:
+        from wexample_app.runner.abstract_command_runner import AbstractCommandRunner
         return cast(
             dict[str, AbstractCommandRunner],
             self.get_service_registry(REGISTRY_KERNEL_COMMAND_RUNNERS).all_instances(),
