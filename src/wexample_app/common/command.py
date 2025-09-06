@@ -27,6 +27,7 @@ class Command(AbstractKernelChild, BaseModel):
     def execute_request_and_normalize(
         self, request: CommandRequest
     ) -> AbstractResponse:
+        from wexample_app.helpers.response import response_normalize
         return response_normalize(
             kernel=self.kernel, response=self.execute_request(request=request)
         )
