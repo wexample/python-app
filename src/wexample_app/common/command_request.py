@@ -66,8 +66,9 @@ class CommandRequest(AbstractKernelChild, BaseModel):
 
     @property
     def kernel(self) -> AbstractKernel | CommandRunnerKernel:
+        from wexample_app.common.mixins.command_runner_kernel import CommandRunnerKernel
         # Enforce typing
-        return cast("CommandRunnerKernel", super().kernel)
+        return cast(CommandRunnerKernel, super().kernel)
 
     def execute(self) -> AbstractResponse:
         from wexample_app.exception.command_build_failed_exception import CommandBuildFailedException
