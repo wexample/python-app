@@ -48,7 +48,9 @@ class AbstractCommandResolver(
     def build_command(self, request: CommandRequest) -> Command | None:
         return request.runner.build_runnable_command(request)
 
-    def build_command_path(self, request: CommandRequest, extension: str) -> Path | None:
+    def build_command_path(
+        self, request: CommandRequest, extension: str
+    ) -> Path | None:
         return None
 
     def build_command_function_name(self, request: CommandRequest) -> str | None:
