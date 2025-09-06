@@ -62,6 +62,7 @@ class CommandRunnerKernel:
     def get_resolvers(
         self: ServiceContainerMixin,
     ) -> dict[str, AbstractCommandResolver]:
+        from wexample_app.resolver.abstract_command_resolver import AbstractCommandResolver
         return cast(
             dict[str, AbstractCommandResolver],
             self.get_service_registry(REGISTRY_KERNEL_COMMAND_RESOLVER).all_instances(),
