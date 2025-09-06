@@ -3,8 +3,10 @@ from __future__ import annotations
 from typing import Any
 
 from wexample_helpers.exception.not_allowed_item_exception import (
-    NotAllowedItemException,
-)
+    NotAllowedItemException)
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from typing import Any
 
 
 class ResponseInvalidContentTypeException(NotAllowedItemException):
