@@ -49,9 +49,6 @@ distribution = true
 
 [tool.pdm.build]
 package-dir = "src"
-includes = [
-    'src/wexample_app/*',
-]
 
 [[tool.pdm.build.packages]]
 include = "wexample_app"
