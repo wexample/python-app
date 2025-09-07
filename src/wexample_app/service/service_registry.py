@@ -8,9 +8,9 @@ from wexample_helpers.service.registry import Registry
 
 class ServiceRegistry(Registry[type[ServiceMixin]]):
     """Registry for managing services of type ServiceMixin."""
+    container: Any  # Will be ServiceMixinContainer at runtime
 
     _service_instances: dict[str, ServiceMixin]
-    container: Any  # Will be ServiceMixinContainer at runtime
 
     def __init__(self, container: Any) -> None:
         self._service_instances = {}

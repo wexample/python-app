@@ -15,8 +15,8 @@ if TYPE_CHECKING:
 
 
 class CommandRequest(AbstractKernelChild, BaseModel):
-    name: str
     arguments: list[str | int] = Field(default_factory=list)
+    name: str
     path: str | None = None
     type: str | None = None
     _match: StringsMatch | None = None

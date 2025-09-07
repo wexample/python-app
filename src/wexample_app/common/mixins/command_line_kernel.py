@@ -12,11 +12,11 @@ if TYPE_CHECKING:
 
 
 class CommandLineKernel:
-    _sys_argv: list[str] = PrivateAttr(default_factory=list)
-    _sys_argv_start_index: int = 1
-    _sys_argv_end_index: int | None = None
-    _core_argv: list[str] = PrivateAttr(default_factory=list)
     _call_workdir: FileStateManager = PrivateAttr()
+    _core_argv: list[str] = PrivateAttr(default_factory=list)
+    _sys_argv: list[str] = PrivateAttr(default_factory=list)
+    _sys_argv_end_index: int | None = None
+    _sys_argv_start_index: int = 1
 
     def _init_command_line_kernel(self: AbstractKernel) -> None:
         import os
