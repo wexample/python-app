@@ -16,6 +16,7 @@ class MultipleResponse(AbstractResponse):
         from wexample_app.exception.response_invalid_content_type_exception import (
             ResponseInvalidContentTypeException,
         )
+
         super().__init__(kernel, **kwargs)
 
         if not isinstance(self.responses, list):
@@ -31,6 +32,7 @@ class MultipleResponse(AbstractResponse):
         from wexample_app.exception.response_invalid_content_type_exception import (
             ResponseInvalidContentTypeException,
         )
+
         if not isinstance(response, AbstractResponse):
             raise ResponseInvalidContentTypeException(
                 content=response, allowed_content_types=[AbstractResponse]

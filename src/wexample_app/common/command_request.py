@@ -30,6 +30,7 @@ class CommandRequest(AbstractKernelChild, BaseModel):
         from wexample_app.exception.command_type_not_found_exception import (
             CommandTypeNotFoundException,
         )
+
         BaseModel.__init__(self, **kwargs)
         AbstractKernelChild.__init__(self, kernel=kernel)
 
@@ -82,6 +83,7 @@ class CommandRequest(AbstractKernelChild, BaseModel):
         from wexample_app.exception.command_runner_missing_exception import (
             CommandRunnerMissingException,
         )
+
         if self.runner is None:
             raise CommandRunnerMissingException(command_name=self.name)
 
@@ -101,6 +103,7 @@ class CommandRequest(AbstractKernelChild, BaseModel):
         from wexample_app.exception.command_resolver_not_found_exception import (
             CommandResolverNotFoundException,
         )
+
         resolver = self.kernel.get_resolver(self.type)
         if resolver is None:
             raise CommandResolverNotFoundException(self.type)

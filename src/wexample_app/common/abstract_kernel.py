@@ -37,6 +37,7 @@ class AbstractKernel(
 
     def get_expected_env_keys(self) -> list[str]:
         from wexample_app.const.globals import ENV_VAR_NAME_APP_ENV
+
         return [ENV_VAR_NAME_APP_ENV]
 
     def setup(self) -> AbstractKernel:

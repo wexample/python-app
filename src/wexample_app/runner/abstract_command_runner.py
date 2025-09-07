@@ -34,6 +34,7 @@ class AbstractCommandRunner(
         from wexample_app.exception.command_function_not_found_exception import (
             CommandFunctionNotFoundException,
         )
+
         function = self._build_command_function(request=request)
 
         if not function:

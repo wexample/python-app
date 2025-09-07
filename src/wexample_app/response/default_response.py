@@ -18,6 +18,7 @@ class DefaultResponse(AbstractResponse):
         )
         from wexample_helpers.const.types import Scalar
         from wexample_helpers.helpers.args import args_is_basic_value
+
         super().__init__(kernel, **kwargs)
 
         if not args_is_basic_value(self.content):

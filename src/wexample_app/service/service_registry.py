@@ -12,7 +12,7 @@ class ServiceRegistry(Registry[type[ServiceMixin]]):
     _service_instances: dict[str, ServiceMixin]
     container: Any  # Will be ServiceMixinContainer at runtime
 
-    def __init__(self, container: Any):
+    def __init__(self, container: Any) -> None:
         self._service_instances = {}
         super().__init__(container=container)
 

@@ -42,6 +42,7 @@ class PythonCommandRunner(AbstractFileCommandRunner):
         from wexample_app.exception.command_function_name_missing_exception import (
             CommandFunctionNameMissingException,
         )
+
         function_name = request.resolver.build_command_function_name(request)
 
         if not function_name:
