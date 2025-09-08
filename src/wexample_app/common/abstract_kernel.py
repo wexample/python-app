@@ -25,7 +25,6 @@ class AbstractKernel(
     BaseModel,
 ):
     model_config = ConfigDict(extra="allow")
-
     entrypoint_path: str = Field(
         description="The main file placed at application root directory"
     )
