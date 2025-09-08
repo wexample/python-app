@@ -24,10 +24,10 @@ class AbstractKernel(
     PrintableMixin,
     BaseModel,
 ):
-    model_config = ConfigDict(extra="allow")
     entrypoint_path: str = Field(
         description="The main file placed at application root directory"
     )
+    model_config = ConfigDict(extra="allow")
     root_request: Any | None = None
 
     def __init__(self, **kwargs) -> None:

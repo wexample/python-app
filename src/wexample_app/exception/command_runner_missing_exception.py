@@ -8,11 +8,13 @@ from wexample_helpers.exception.undefined_exception import (
 
 class CommandRunnerMissingData(ExceptionData):
     """Data model for CommandRunnerMissing exception."""
+
     command_name: str
 
 
 class CommandRunnerMissingException(UndefinedException):
     """Exception raised when no runner is available for a command."""
+
     error_code: str = "COMMAND_RUNNER_MISSING"
 
     def __init__(

@@ -8,12 +8,14 @@ from wexample_helpers.exception.undefined_exception import (
 
 class CommandFunctionNotFoundData(ExceptionData):
     """Data model for CommandFunctionNotFound exception."""
+
     function_name: str
     module_path: str
 
 
 class CommandFunctionNotFoundException(UndefinedException):
     """Exception raised when a command function cannot be found in the module."""
+
     error_code: str = "COMMAND_FUNCTION_NOT_FOUND"
 
     def __init__(

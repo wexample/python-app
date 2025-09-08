@@ -8,11 +8,13 @@ from wexample_helpers.exception.undefined_exception import (
 
 class CommandResolverNotFoundData(ExceptionData):
     """Data model for CommandResolverNotFound exception."""
+
     command_type: str
 
 
 class CommandResolverNotFoundException(UndefinedException):
     """Exception raised when no resolver is found for a specific command type."""
+
     error_code: str = "COMMAND_RESOLVER_NOT_FOUND"
 
     def __init__(

@@ -8,11 +8,13 @@ from wexample_helpers.exception.undefined_exception import (
 
 class CommandFunctionNameMissingData(ExceptionData):
     """Data model for CommandFunctionNameMissing exception."""
+
     command_name: str
 
 
 class CommandFunctionNameMissingException(UndefinedException):
     """Exception raised when a command function name cannot be determined."""
+
     error_code: str = "COMMAND_FUNCTION_NAME_MISSING"
 
     def __init__(
