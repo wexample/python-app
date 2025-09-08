@@ -8,6 +8,7 @@ from wexample_helpers.service.registry import Registry
 
 class ServiceRegistry(Registry[type[ServiceMixin]]):
     """Registry for managing services of type ServiceMixin."""
+
     container: Any  # Will be ServiceMixinContainer at runtime
 
     _service_instances: dict[str, ServiceMixin]

@@ -68,6 +68,7 @@ class CommandRunnerKernel:
             # Default runner.
             PythonCommandRunner
         ]
+
     def _init_resolvers(
         self: CommandRunnerKernel | ServiceContainerMixin,
     ) -> None:

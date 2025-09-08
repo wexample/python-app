@@ -17,6 +17,7 @@ class AbstractFileCommandRunner(AbstractCommandRunner):
         return request.resolver.build_command_path(
             request=request, extension=self.get_file_extension()
         )
+
     @abstractmethod
     def get_file_extension(self) -> str:
         pass
