@@ -11,7 +11,6 @@ if TYPE_CHECKING:
 
 
 class CommandRunnerKernel:
-
     def get_resolver(
         self: ServiceContainerMixin, type: str
     ) -> AbstractCommandResolver | None:

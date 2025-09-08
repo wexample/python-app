@@ -12,7 +12,6 @@ if TYPE_CHECKING:
 
 
 class AbstractFileCommandRunner(AbstractCommandRunner):
-
     def build_command_path(self, request: CommandRequest) -> Path:
         return request.resolver.build_command_path(
             request=request, extension=self.get_file_extension()
