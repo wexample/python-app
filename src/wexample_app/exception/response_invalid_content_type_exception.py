@@ -12,6 +12,7 @@ if TYPE_CHECKING:
 
 class ResponseInvalidContentTypeException(NotAllowedItemException):
     """Exception raised when a response contains invalid content that cannot be properly processed."""
+
     error_code: str = "RESPONSE_INVALID_CONTENT"
 
     def __init__(

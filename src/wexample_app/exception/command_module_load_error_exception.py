@@ -8,11 +8,13 @@ from wexample_helpers.exception.undefined_exception import (
 
 class CommandModuleLoadErrorData(ExceptionData):
     """Data model for CommandModuleLoadError exception."""
+
     file_path: str
 
 
 class CommandModuleLoadErrorException(UndefinedException):
     """Exception raised when a Python module cannot be loaded from a command file."""
+
     error_code: str = "COMMAND_MODULE_LOAD_ERROR"
 
     def __init__(
