@@ -26,6 +26,16 @@ class AbstractCommandRunner(
     def get_class_name_suffix(cls) -> str | None:
         return "CommandRunner"
 
+    def build_runnable_command(self, request: CommandRequest) -> Command | None:
+        from wexample_app.common.command import Command
+
+        function = self._build_command_function_or_fail(request=request)
+
+        return Command(kernel=self.kernel, function=function)
+
+    def will_run(self, request: CommandRequest) -> bool:
+        return False
+
     @abstractmethod
     def _build_command_function(self, request: CommandRequest) -> AnyCallable:
         pass
@@ -46,13 +56,3 @@ class AbstractCommandRunner(
             )
 
         return function
-
-    def will_run(self, request: CommandRequest) -> bool:
-        return False
-
-    def build_runnable_command(self, request: CommandRequest) -> Command | None:
-        from wexample_app.common.command import Command
-
-        function = self._build_command_function_or_fail(request=request)
-
-        return Command(kernel=self.kernel, function=function)

@@ -14,10 +14,14 @@ if TYPE_CHECKING:
 class ServiceContainerMixin(RegistryContainerMixin):
     """Container for managing multiple service registries."""
 
-    def _get_registry_class_type(self) -> type[ServiceRegistry]:
+    def get_service(self, registry_name: str, key: str) -> Any | None:
+        """Retrieve a service from a specific registry by its key."""
+        return self.get_item(registry_name, key)
+
+    def get_service_registry(self, registry_name: str) -> ServiceRegistry:
         from wexample_app.service.service_registry import ServiceRegistry
 
-        return ServiceRegistry
+        return cast(ServiceRegistry, self.get_registry(registry_name))
 
     def register_service(self, registry_name: str, key: str, service: Any) -> Registry:
         """Register a service in a specific registry."""
@@ -27,11 +31,7 @@ class ServiceContainerMixin(RegistryContainerMixin):
         """Register multiple services at once in a specific registry."""
         return self.register_items(registry_name, services)
 
-    def get_service(self, registry_name: str, key: str) -> Any | None:
-        """Retrieve a service from a specific registry by its key."""
-        return self.get_item(registry_name, key)
-
-    def get_service_registry(self, registry_name: str) -> ServiceRegistry:
+    def _get_registry_class_type(self) -> type[ServiceRegistry]:
         from wexample_app.service.service_registry import ServiceRegistry
 
-        return cast(ServiceRegistry, self.get_registry(registry_name))
+        return ServiceRegistry

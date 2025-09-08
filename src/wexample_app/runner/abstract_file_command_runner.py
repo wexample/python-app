@@ -12,14 +12,14 @@ if TYPE_CHECKING:
 
 
 class AbstractFileCommandRunner(AbstractCommandRunner):
-    @abstractmethod
-    def get_file_extension(self) -> str:
-        pass
 
     def build_command_path(self, request: CommandRequest) -> Path:
         return request.resolver.build_command_path(
             request=request, extension=self.get_file_extension()
         )
+    @abstractmethod
+    def get_file_extension(self) -> str:
+        pass
 
     def will_run(self, request: CommandRequest) -> bool:
         import os.path

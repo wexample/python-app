@@ -16,9 +16,13 @@ class ServiceRegistry(Registry[type[ServiceMixin]]):
         self._service_instances = {}
         super().__init__(container=container)
 
-    def register(self, key: str, service_class: type[ServiceMixin]) -> None:
-        """Register a service class in the registry."""
-        self._items[key] = service_class
+    def all_classes(self) -> list[type[ServiceMixin]]:
+        """Return all registered service classes."""
+        return list(self._items.values())
+
+    def all_instances(self) -> dict[str, ServiceMixin]:
+        """Return all instantiated services."""
+        return self._service_instances.copy()
 
     def get(self, key: str | type[ServiceMixin], **kwargs) -> ServiceMixin | None:
         """
@@ -52,6 +56,14 @@ class ServiceRegistry(Registry[type[ServiceMixin]]):
 
         return None
 
+    def get_all(self) -> dict[str, ServiceMixin]:
+        """Get all instantiated services."""
+        return self._service_instances
+
+    def get_class(self, key: str) -> type[ServiceMixin] | None:
+        """Get the service class without instantiating it."""
+        return self._items.get(key)
+
     def instantiate_all(self, **kwargs) -> dict[str, ServiceMixin]:
         """
         Instantiate all registered services with the given kwargs.
@@ -62,18 +74,6 @@ class ServiceRegistry(Registry[type[ServiceMixin]]):
                 self.get(key, **kwargs)
         return self.all_instances()
 
-    def get_class(self, key: str) -> type[ServiceMixin] | None:
-        """Get the service class without instantiating it."""
-        return self._items.get(key)
-
-    def all_classes(self) -> list[type[ServiceMixin]]:
-        """Return all registered service classes."""
-        return list(self._items.values())
-
-    def all_instances(self) -> dict[str, ServiceMixin]:
-        """Return all instantiated services."""
-        return self._service_instances.copy()
-
-    def get_all(self) -> dict[str, ServiceMixin]:
-        """Get all instantiated services."""
-        return self._service_instances
+    def register(self, key: str, service_class: type[ServiceMixin]) -> None:
+        """Register a service class in the registry."""
+        self._items[key] = service_class

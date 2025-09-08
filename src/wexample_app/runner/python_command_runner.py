@@ -18,6 +18,22 @@ class PythonCommandRunner(AbstractFileCommandRunner):
 
         return FILE_EXTENSION_PYTHON
 
+    def _build_command_function(self, request: CommandRequest) -> Any:
+        return self._load_command_python_function(request=request)
+
+    def _load_command_python_function(self, request: CommandRequest) -> AnyCallable:
+        from wexample_app.exception.command_function_name_missing_exception import (
+            CommandFunctionNameMissingException,
+        )
+
+        function_name = request.resolver.build_command_function_name(request)
+
+        if not function_name:
+            raise CommandFunctionNameMissingException(command_name=request.command_name)
+
+        module = self._load_command_python_module(request=request)
+        return getattr(module, function_name, None)
+
     def _load_command_python_module(self, request: CommandRequest) -> ModuleType:
         import importlib.util
 
@@ -37,19 +53,3 @@ class PythonCommandRunner(AbstractFileCommandRunner):
         spec.loader.exec_module(module)
 
         return module
-
-    def _load_command_python_function(self, request: CommandRequest) -> AnyCallable:
-        from wexample_app.exception.command_function_name_missing_exception import (
-            CommandFunctionNameMissingException,
-        )
-
-        function_name = request.resolver.build_command_function_name(request)
-
-        if not function_name:
-            raise CommandFunctionNameMissingException(command_name=request.command_name)
-
-        module = self._load_command_python_module(request=request)
-        return getattr(module, function_name, None)
-
-    def _build_command_function(self, request: CommandRequest) -> Any:
-        return self._load_command_python_function(request=request)

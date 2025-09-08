@@ -46,6 +46,13 @@ class CommandRequest(AbstractKernelChild, BaseModel):
         self.path = self.runner.build_command_path(request=self)
 
     @property
+    def kernel(self) -> AbstractKernel | CommandRunnerKernel:
+        from wexample_app.common.mixins.command_runner_kernel import CommandRunnerKernel
+
+        # Enforce typing
+        return cast(CommandRunnerKernel, super().kernel)
+
+    @property
     def match(self) -> StringsMatch:
         return self._match
 
@@ -68,13 +75,6 @@ class CommandRequest(AbstractKernelChild, BaseModel):
     @runner.setter
     def runner(self, value: AbstractCommandRunner) -> None:
         self._runner = value
-
-    @property
-    def kernel(self) -> AbstractKernel | CommandRunnerKernel:
-        from wexample_app.common.mixins.command_runner_kernel import CommandRunnerKernel
-
-        # Enforce typing
-        return cast(CommandRunnerKernel, super().kernel)
 
     def execute(self) -> AbstractResponse:
         from wexample_app.exception.command_build_failed_exception import (

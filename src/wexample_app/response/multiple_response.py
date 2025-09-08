@@ -24,10 +24,6 @@ class MultipleResponse(AbstractResponse):
                 content=self.responses, allowed_content_types=[list]
             )
 
-    def get_printable(self) -> ResponsePrintable:
-        # For now consider every output as a string
-        return str(self.responses)
-
     def append(self, response: AbstractResponse) -> None:
         from wexample_app.exception.response_invalid_content_type_exception import (
             ResponseInvalidContentTypeException,
@@ -39,3 +35,7 @@ class MultipleResponse(AbstractResponse):
             )
 
         self.responses.append(response)
+
+    def get_printable(self) -> ResponsePrintable:
+        # For now consider every output as a string
+        return str(self.responses)

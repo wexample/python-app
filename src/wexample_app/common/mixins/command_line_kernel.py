@@ -18,42 +18,6 @@ class CommandLineKernel:
     _sys_argv_end_index: int | None = None
     _sys_argv_start_index: int = 1
 
-    def _init_command_line_kernel(self: AbstractKernel) -> None:
-        import os
-        import sys
-
-        self._sys_argv = sys.argv.copy()
-        self._call_workdir = FileStateManager.create_from_path(
-            path=os.getcwd(), config={}, io=self.io
-        )
-
-        self._handle_core_args()
-
-    def _get_core_args(self: AbstractKernel) -> list[dict[str, Any]]:
-        return []
-
-    def _handle_core_args(self: AbstractKernel) -> None:
-        from wexample_helpers.helpers.args import args_shift_one
-
-        for arg_config in self._get_core_args():
-            if args_shift_one(self._sys_argv, arg_config["arg"], True) is not None:
-                setattr(self, f"_config_arg_{arg_config['attr']}", arg_config["value"])
-
-    def _build_command_requests_from_arguments(
-        self: AbstractKernel, arguments: CommandLineArgumentsList
-    ) -> list[CommandRequest]:
-        # By default, allow one request per execution call.
-        return self._build_single_command_request_from_arguments(arguments)
-
-    def _build_single_command_request_from_arguments(
-        self: AbstractKernel, arguments: CommandLineArgumentsList
-    ):
-        return [
-            self._get_command_request_class()(
-                kernel=self, name=arguments[0], arguments=arguments[1:]
-            )
-        ]
-
     @property
     def call_workdir(self) -> FileStateManager:
         # Getter is non-optional and always returns a conformant type
@@ -75,3 +39,39 @@ class CommandLineKernel:
 
         for command_request in command_requests:
             self.execute_kernel_command_and_print(command_request)
+
+    def _build_command_requests_from_arguments(
+        self: AbstractKernel, arguments: CommandLineArgumentsList
+    ) -> list[CommandRequest]:
+        # By default, allow one request per execution call.
+        return self._build_single_command_request_from_arguments(arguments)
+
+    def _build_single_command_request_from_arguments(
+        self: AbstractKernel, arguments: CommandLineArgumentsList
+    ):
+        return [
+            self._get_command_request_class()(
+                kernel=self, name=arguments[0], arguments=arguments[1:]
+            )
+        ]
+
+    def _get_core_args(self: AbstractKernel) -> list[dict[str, Any]]:
+        return []
+
+    def _handle_core_args(self: AbstractKernel) -> None:
+        from wexample_helpers.helpers.args import args_shift_one
+
+        for arg_config in self._get_core_args():
+            if args_shift_one(self._sys_argv, arg_config["arg"], True) is not None:
+                setattr(self, f"_config_arg_{arg_config['attr']}", arg_config["value"])
+
+    def _init_command_line_kernel(self: AbstractKernel) -> None:
+        import os
+        import sys
+
+        self._sys_argv = sys.argv.copy()
+        self._call_workdir = FileStateManager.create_from_path(
+            path=os.getcwd(), config={}, io=self.io
+        )
+
+        self._handle_core_args()

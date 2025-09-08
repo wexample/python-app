@@ -26,6 +26,12 @@ class AbstractCommandResolver(
         AbstractKernelChild.__init__(self, kernel=kernel)
 
     @classmethod
+    def build_match(cls, command: str) -> StringsMatch | None:
+        import re
+
+        return re.match(cls.get_pattern(), command) if command else None
+
+    @classmethod
     def get_class_name_suffix(cls) -> str | None:
         return "CommandResolver"
 
@@ -34,28 +40,29 @@ class AbstractCommandResolver(
     def get_type(cls) -> str:
         pass
 
-    def get_command_class_type(cls) -> type[Command]:
-        from wexample_app.common.command import Command
-
-        return Command
-
-    @classmethod
-    def build_match(cls, command: str) -> StringsMatch | None:
-        import re
-
-        return re.match(cls.get_pattern(), command) if command else None
-
     # @abstractmethod
     def build_command(self, request: CommandRequest) -> Command | None:
         return request.runner.build_runnable_command(request)
+
+    def build_command_function_name(self, request: CommandRequest) -> str | None:
+        return None
 
     def build_command_path(
         self, request: CommandRequest, extension: str
     ) -> Path | None:
         return None
 
-    def build_command_function_name(self, request: CommandRequest) -> str | None:
-        return None
+    def get_command_class_type(cls) -> type[Command]:
+        from wexample_app.common.command import Command
+
+        return Command
+
+    def get_function_name_parts(self, parts: StringsList) -> StringsList:
+        return [
+            parts[0],
+            parts[1],
+            parts[2],
+        ]
 
     def supports(self, request: CommandRequest) -> StringsMatch | None:
         match = self.build_match(request.name)
@@ -64,10 +71,3 @@ class AbstractCommandResolver(
             return match
 
         return None
-
-    def get_function_name_parts(self, parts: StringsList) -> StringsList:
-        return [
-            parts[0],
-            parts[1],
-            parts[2],
-        ]

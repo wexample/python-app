@@ -35,6 +35,15 @@ class AbstractKernel(
         BaseModel.__init__(self, **kwargs)
         HasYamlEnvKeysFile.__init__(self)
 
+    def execute_kernel_command(self, request: CommandRequest) -> AbstractResponse:
+        # Save unique root request
+        self.root_request = self.root_request if self.root_request else request
+
+        return request.execute()
+
+    def execute_kernel_command_and_print(self, request: CommandRequest) -> None:
+        self.execute_kernel_command(request=request)
+
     def get_expected_env_keys(self) -> list[str]:
         from wexample_app.const.globals import ENV_VAR_NAME_APP_ENV
 
@@ -62,12 +71,3 @@ class AbstractKernel(
         from wexample_app.common.command_request import CommandRequest
 
         return CommandRequest
-
-    def execute_kernel_command(self, request: CommandRequest) -> AbstractResponse:
-        # Save unique root request
-        self.root_request = self.root_request if self.root_request else request
-
-        return request.execute()
-
-    def execute_kernel_command_and_print(self, request: CommandRequest) -> None:
-        self.execute_kernel_command(request=request)

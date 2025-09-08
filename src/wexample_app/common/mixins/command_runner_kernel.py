@@ -11,40 +11,6 @@ if TYPE_CHECKING:
 
 
 class CommandRunnerKernel:
-    def _init_resolvers(
-        self: CommandRunnerKernel | ServiceContainerMixin,
-    ) -> None:
-        from wexample_app.const.registries import REGISTRY_KERNEL_COMMAND_RESOLVER
-        from wexample_app.service.service_registry import ServiceRegistry
-
-        cast(
-            ServiceRegistry,
-            self.register_services(
-                REGISTRY_KERNEL_COMMAND_RESOLVER, self._get_command_resolvers()
-            ),
-        ).instantiate_all(kernel=self)
-
-    def _init_runners(self: [CommandRunnerKernel, ServiceContainerMixin]) -> None:
-        from wexample_app.const.registries import REGISTRY_KERNEL_COMMAND_RUNNERS
-        from wexample_app.service.service_registry import ServiceRegistry
-
-        cast(
-            ServiceRegistry,
-            self.register_services(
-                REGISTRY_KERNEL_COMMAND_RUNNERS, self._get_command_runners()
-            ),
-        ).instantiate_all(kernel=self)
-
-    def _get_command_resolvers(self) -> list[type[AbstractCommandResolver]]:
-        return []
-
-    def _get_command_runners(self) -> list[type[AbstractCommandRunner]]:
-        from wexample_app.runner.python_command_runner import PythonCommandRunner
-
-        return [
-            # Default runner.
-            PythonCommandRunner
-        ]
 
     def get_resolver(
         self: ServiceContainerMixin, type: str
@@ -91,3 +57,37 @@ class CommandRunnerKernel:
             dict[str, AbstractCommandRunner],
             self.get_service_registry(REGISTRY_KERNEL_COMMAND_RUNNERS).all_instances(),
         )
+
+    def _get_command_resolvers(self) -> list[type[AbstractCommandResolver]]:
+        return []
+
+    def _get_command_runners(self) -> list[type[AbstractCommandRunner]]:
+        from wexample_app.runner.python_command_runner import PythonCommandRunner
+
+        return [
+            # Default runner.
+            PythonCommandRunner
+        ]
+    def _init_resolvers(
+        self: CommandRunnerKernel | ServiceContainerMixin,
+    ) -> None:
+        from wexample_app.const.registries import REGISTRY_KERNEL_COMMAND_RESOLVER
+        from wexample_app.service.service_registry import ServiceRegistry
+
+        cast(
+            ServiceRegistry,
+            self.register_services(
+                REGISTRY_KERNEL_COMMAND_RESOLVER, self._get_command_resolvers()
+            ),
+        ).instantiate_all(kernel=self)
+
+    def _init_runners(self: [CommandRunnerKernel, ServiceContainerMixin]) -> None:
+        from wexample_app.const.registries import REGISTRY_KERNEL_COMMAND_RUNNERS
+        from wexample_app.service.service_registry import ServiceRegistry
+
+        cast(
+            ServiceRegistry,
+            self.register_services(
+                REGISTRY_KERNEL_COMMAND_RUNNERS, self._get_command_runners()
+            ),
+        ).instantiate_all(kernel=self)
