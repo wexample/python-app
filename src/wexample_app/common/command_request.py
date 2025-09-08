@@ -2,7 +2,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, cast
 
-from pydantic import BaseModel, Field, PrivateAttr
+import attrs
+from wexample_helpers.classes.base_class import BaseClass
 from wexample_app.common.abstract_kernel_child import AbstractKernelChild
 
 if TYPE_CHECKING:
@@ -14,16 +15,19 @@ if TYPE_CHECKING:
     from wexample_helpers.const.types import StringsMatch
 
 
-class CommandRequest(AbstractKernelChild, BaseModel):
-    arguments: list[str | int] = Field(default_factory=list)
+@attrs.define(kw_only=True)
+class CommandRequest(AbstractKernelChild, BaseClass):
+    arguments: list[str | int] = attrs.field(factory=list)
     name: str
-    path: str | None = None
-    type: str | None = None
-    _match: StringsMatch | None = None
-    _resolver: AbstractCommandResolver | None = PrivateAttr(default=None)
-    _runner: AbstractCommandRunner | None = PrivateAttr(default=None)
+    path: str | None = attrs.field(default=None)
+    type: str | None = attrs.field(default=None)
+    _match: StringsMatch | None = attrs.field(default=None, init=False)
+    _resolver: AbstractCommandResolver | None = attrs.field(default=None, init=False)
+    _runner: AbstractCommandRunner | None = attrs.field(default=None, init=False)
 
-    def __init__(self, kernel: AbstractKernel, **kwargs) -> None:
+    kernel: AbstractKernel = attrs.field()
+
+    def __attrs_post_init__(self) -> None:
         from wexample_app.exception.command_runner_not_found_exception import (
             CommandRunnerNotFoundException,
         )
@@ -31,8 +35,7 @@ class CommandRequest(AbstractKernelChild, BaseModel):
             CommandTypeNotFoundException,
         )
 
-        BaseModel.__init__(self, **kwargs)
-        AbstractKernelChild.__init__(self, kernel=kernel)
+        AbstractKernelChild.__init__(self, kernel=self.kernel)
 
         self.type = self._guess_type()
         if self.type is None:

@@ -2,7 +2,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
 
-from pydantic import BaseModel, ConfigDict, Field
+import attrs
+from wexample_helpers.classes.base_class import BaseClass
 from wexample_app.service.mixins.service_container_mixin import ServiceContainerMixin
 from wexample_filestate.mixins.with_workdir_mixin import WithWorkdirMixin
 from wexample_helpers.classes.mixin.printable_mixin import PrintableMixin
@@ -16,22 +17,19 @@ if TYPE_CHECKING:
     from wexample_app.response.abstract_response import AbstractResponse
 
 
+@attrs.define(kw_only=True)
 class AbstractKernel(
     ServiceContainerMixin,
     HasYamlEnvKeysFile,
     WithWorkdirMixin,
     WithIoMethods,
     PrintableMixin,
-    BaseModel,
+    BaseClass,
 ):
-    entrypoint_path: str = Field(
-        description="The main file placed at application root directory"
-    )
-    model_config = ConfigDict(extra="allow")
-    root_request: Any | None = None
+    entrypoint_path: str = attrs.field(metadata={"description": "The main file placed at application root directory"})
+    root_request: Any | None = attrs.field(default=None)
 
-    def __init__(self, **kwargs) -> None:
-        BaseModel.__init__(self, **kwargs)
+    def __attrs_post_init__(self) -> None:
         HasYamlEnvKeysFile.__init__(self)
 
     def execute_kernel_command(self, request: CommandRequest) -> AbstractResponse:

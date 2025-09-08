@@ -3,7 +3,8 @@ from __future__ import annotations
 from abc import abstractmethod
 from typing import TYPE_CHECKING
 
-from pydantic import BaseModel
+import attrs
+from wexample_helpers.classes.base_class import BaseClass
 from wexample_app.common.abstract_kernel_child import AbstractKernelChild
 from wexample_app.common.service.service_mixin import ServiceMixin
 from wexample_helpers.classes.mixin.printable_mixin import PrintableMixin
@@ -15,12 +16,14 @@ if TYPE_CHECKING:
     from wexample_helpers.const.types import AnyCallable
 
 
+@attrs.define(kw_only=True)
 class AbstractCommandRunner(
-    AbstractKernelChild, ServiceMixin, PrintableMixin, BaseModel
+    AbstractKernelChild, ServiceMixin, PrintableMixin, BaseClass
 ):
-    def __init__(self, kernel: AbstractKernel, **kwargs) -> None:
-        BaseModel.__init__(self, **kwargs)
-        AbstractKernelChild.__init__(self, kernel=kernel)
+    kernel: AbstractKernel = attrs.field()
+
+    def __attrs_post_init__(self) -> None:
+        AbstractKernelChild.__init__(self, kernel=self.kernel)
 
     @classmethod
     def get_class_name_suffix(cls) -> str | None:

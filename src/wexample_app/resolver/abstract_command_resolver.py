@@ -4,7 +4,8 @@ from abc import abstractmethod
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-from pydantic import BaseModel
+import attrs
+from wexample_helpers.classes.base_class import BaseClass
 from wexample_app.common.abstract_kernel_child import AbstractKernelChild
 from wexample_app.common.service.service_mixin import ServiceMixin
 from wexample_helpers.classes.mixin.printable_mixin import PrintableMixin
@@ -17,13 +18,15 @@ if TYPE_CHECKING:
     from wexample_helpers.const.types import StringsList
 
 
+@attrs.define(kw_only=True)
 class AbstractCommandResolver(
-    AbstractKernelChild, ServiceMixin, PrintableMixin, BaseModel
+    AbstractKernelChild, ServiceMixin, PrintableMixin, BaseClass
 ):
-    def __init__(self, kernel: AbstractKernel, **kwargs) -> None:
-        BaseModel.__init__(self, **kwargs)
+    kernel: AbstractKernel = attrs.field()
+
+    def __attrs_post_init__(self) -> None:
         ServiceMixin.__init__(self)
-        AbstractKernelChild.__init__(self, kernel=kernel)
+        AbstractKernelChild.__init__(self, kernel=self.kernel)
 
     @classmethod
     def build_match(cls, command: str) -> StringsMatch | None:

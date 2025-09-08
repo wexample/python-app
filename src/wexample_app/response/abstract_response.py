@@ -3,7 +3,8 @@ from __future__ import annotations
 from abc import abstractmethod
 from typing import TYPE_CHECKING, Any
 
-from pydantic import BaseModel
+import attrs
+from wexample_helpers.classes.base_class import BaseClass
 from wexample_app.common.abstract_kernel_child import AbstractKernelChild
 
 if TYPE_CHECKING:
@@ -11,10 +12,12 @@ if TYPE_CHECKING:
     from wexample_app.const.types import ResponsePrintable
 
 
-class AbstractResponse(AbstractKernelChild, BaseModel):
-    def __init__(self, /, kernel: AbstractKernel, **kwargs: Any) -> None:
-        BaseModel.__init__(self, **kwargs)
-        AbstractKernelChild.__init__(self, kernel=kernel)
+@attrs.define(kw_only=True)
+class AbstractResponse(AbstractKernelChild, BaseClass):
+    kernel: AbstractKernel = attrs.field()
+
+    def __attrs_post_init__(self) -> None:
+        AbstractKernelChild.__init__(self, kernel=self.kernel)
 
     @abstractmethod
     def get_printable(self) -> ResponsePrintable:

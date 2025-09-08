@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
 
-from pydantic import PrivateAttr
+import attrs
 from wexample_filestate.file_state_manager import FileStateManager
 
 if TYPE_CHECKING:
@@ -11,12 +11,13 @@ if TYPE_CHECKING:
     from wexample_app.const.types import CommandLineArgumentsList
 
 
+@attrs.define(kw_only=True)
 class CommandLineKernel:
-    _call_workdir: FileStateManager = PrivateAttr()
-    _core_argv: list[str] = PrivateAttr(default_factory=list)
-    _sys_argv: list[str] = PrivateAttr(default_factory=list)
-    _sys_argv_end_index: int | None = None
-    _sys_argv_start_index: int = 1
+    _call_workdir: FileStateManager = attrs.field(init=False)
+    _core_argv: list[str] = attrs.field(factory=list, init=False)
+    _sys_argv: list[str] = attrs.field(factory=list, init=False)
+    _sys_argv_end_index: int | None = attrs.field(default=None, init=False)
+    _sys_argv_start_index: int = attrs.field(default=1, init=False)
 
     @property
     def call_workdir(self) -> FileStateManager:
