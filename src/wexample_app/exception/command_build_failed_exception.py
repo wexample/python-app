@@ -8,14 +8,12 @@ from wexample_helpers.exception.undefined_exception import (
 
 class CommandBuildFailedData(ExceptionData):
     """Data model for CommandBuildFailed exception."""
-
     command_name: str
     resolver_name: str
 
 
 class CommandBuildFailedException(UndefinedException):
     """Exception raised when a command cannot be built by its resolver."""
-
     error_code: str = "COMMAND_BUILD_FAILED"
 
     def __init__(

@@ -13,7 +13,6 @@ if TYPE_CHECKING:
 
 class ServiceContainerMixin(RegistryContainerMixin):
     """Container for managing multiple service registries."""
-
     def get_service(self, registry_name: str, key: str) -> Any | None:
         """Retrieve a service from a specific registry by its key."""
         return self.get_item(registry_name, key)

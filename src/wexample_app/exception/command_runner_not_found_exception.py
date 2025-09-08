@@ -9,7 +9,6 @@ class CommandRunnerNotFoundException(UndefinedException):
     This exception is thrown when the system cannot find an appropriate runner
     to execute a command, which means the command cannot be executed.
     """
-
     error_code: str = "COMMAND_RUNNER_NOT_FOUND"
 
     def __init__(

@@ -8,13 +8,11 @@ from wexample_helpers.exception.undefined_exception import (
 
 class CommandTypeNotFoundData(ExceptionData):
     """Data model for CommandTypeNotFound exception."""
-
     command_name: str
 
 
 class CommandTypeNotFoundException(UndefinedException):
     """Exception raised when the system cannot determine the type of a command."""
-
     error_code: str = "COMMAND_TYPE_NOT_FOUND"
 
     def __init__(
