@@ -4,7 +4,6 @@ from abc import abstractmethod
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-import attrs
 from wexample_app.common.abstract_kernel_child import AbstractKernelChild
 from wexample_app.common.service.service_mixin import ServiceMixin
 from wexample_helpers.classes.base_class import BaseClass
@@ -18,8 +17,9 @@ if TYPE_CHECKING:
     from wexample_app.common.command_request import CommandRequest
     from wexample_helpers.const.types import StringsList
 
-
 from wexample_helpers.decorator.base_class import base_class
+
+
 @base_class
 class AbstractCommandResolver(
     AbstractKernelChild, ServiceMixin, PrintableMixin, BaseClass

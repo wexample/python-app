@@ -14,8 +14,7 @@ class ServiceRegistry(Registry[type[ServiceMixin]]):
 
     container: ServiceContainerMixin = public_field(description="The service container")
     _service_instances: dict[str, ServiceMixin] = private_field(
-        description="The service container",
-        factory=dict
+        description="The service container", factory=dict
     )
 
     def all_classes(self) -> list[type[ServiceMixin]]:

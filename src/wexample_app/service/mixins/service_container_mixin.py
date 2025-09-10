@@ -6,11 +6,10 @@ from wexample_helpers.service.mixins.registry_container_mixin import (
     RegistryContainerMixin,
 )
 
+from wexample_helpers.decorator.base_class import base_class
 if TYPE_CHECKING:
     from wexample_app.service.service_registry import ServiceRegistry
     from wexample_helpers.service.registry import Registry
-
-from wexample_helpers.decorator.base_class import base_class
 
 
 @base_class

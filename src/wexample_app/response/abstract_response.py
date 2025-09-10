@@ -12,8 +12,9 @@ if TYPE_CHECKING:
     from wexample_app.common.abstract_kernel import AbstractKernel
     from wexample_app.const.types import ResponsePrintable
 
-
 from wexample_helpers.decorator.base_class import base_class
+
+
 @base_class
 class AbstractResponse(AbstractKernelChild, BaseClass):
     kernel: AbstractKernel = public_field(description="The kernel that produced the response")
