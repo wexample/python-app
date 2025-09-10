@@ -31,10 +31,6 @@ class CommandLineKernel(BaseClass):
         default=1, description="Start index for processing sys.argv slice"
     )
 
-    def __init__(self, *args, **kwargs):
-        # Forward all arguments to parent class
-        super().__init__(*args, **kwargs)
-
     @property
     def call_workdir(self) -> FileStateManager:
         # Getter is non-optional and always returns a conformant type

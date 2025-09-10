@@ -7,7 +7,10 @@ from wexample_helpers.classes.mixin.has_snake_short_class_name_class_mixin impor
 from wexample_helpers.classes.mixin.has_two_steps_init import HasTwoStepInit
 from wexample_prompt.mixins.with_io_methods import WithIoMethods
 
+from wexample_helpers.decorator.base_class import base_class
 
+
+@base_class
 class ServiceMixin(
     WithIoMethods,
     HasSnakeShortClassNameClassMixin,

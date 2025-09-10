@@ -58,8 +58,7 @@ class CommandRequest(AbstractKernelChild, BaseClass):
             CommandTypeNotFoundException,
         )
 
-        AbstractKernelChild.__init__(self, kernel=self.kernel)
-
+        super().__attrs_post_init__()
         self.type = self._guess_type()
         if self.type is None:
             raise CommandTypeNotFoundException(self.name)

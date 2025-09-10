@@ -6,18 +6,17 @@ from typing import TYPE_CHECKING, Any
 import attrs
 from wexample_app.common.abstract_kernel_child import AbstractKernelChild
 from wexample_helpers.classes.base_class import BaseClass
+from wexample_helpers.classes.field import public_field
 
 if TYPE_CHECKING:
     from wexample_app.common.abstract_kernel import AbstractKernel
     from wexample_app.const.types import ResponsePrintable
 
 
-@attrs.define(kw_only=True)
+from wexample_helpers.decorator.base_class import base_class
+@base_class
 class AbstractResponse(AbstractKernelChild, BaseClass):
-    kernel: AbstractKernel = attrs.field()
-
-    def __attrs_post_init__(self) -> None:
-        AbstractKernelChild.__init__(self, kernel=self.kernel)
+    kernel: AbstractKernel = public_field(description="The kernel that produced the response")
 
     @abstractmethod
     def get_printable(self) -> ResponsePrintable:

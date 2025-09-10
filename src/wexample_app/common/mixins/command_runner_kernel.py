@@ -15,10 +15,6 @@ if TYPE_CHECKING:
 
 @base_class
 class CommandRunnerKernel(BaseClass):
-    def __init__(self, *args, **kwargs):
-        # Forward all arguments to parent class
-        super().__init__(*args, **kwargs)
-
     def get_resolver(
         self: ServiceContainerMixin, type: str
     ) -> AbstractCommandResolver | None:

@@ -3,28 +3,23 @@ from __future__ import annotations
 from abc import abstractmethod
 from typing import TYPE_CHECKING
 
-import attrs
 from wexample_app.common.abstract_kernel_child import AbstractKernelChild
 from wexample_app.common.service.service_mixin import ServiceMixin
 from wexample_helpers.classes.base_class import BaseClass
 from wexample_helpers.classes.mixin.printable_mixin import PrintableMixin
 
 if TYPE_CHECKING:
-    from wexample_app.common.abstract_kernel import AbstractKernel
     from wexample_app.common.command import Command
     from wexample_app.common.command_request import CommandRequest
     from wexample_helpers.const.types import AnyCallable
 
+from wexample_helpers.decorator.base_class import base_class
 
-@attrs.define(kw_only=True)
+
+@base_class
 class AbstractCommandRunner(
     AbstractKernelChild, ServiceMixin, PrintableMixin, BaseClass
 ):
-    kernel: AbstractKernel = attrs.field()
-
-    def __attrs_post_init__(self) -> None:
-        AbstractKernelChild.__init__(self, kernel=self.kernel)
-
     @classmethod
     def get_class_name_suffix(cls) -> str | None:
         return "CommandRunner"
@@ -51,7 +46,6 @@ class AbstractCommandRunner(
         function = self._build_command_function(request=request)
 
         if not function:
-
             path = self.build_command_path(request)
             function_name = request.resolver.build_command_function_name(request)
             raise CommandFunctionNotFoundException(

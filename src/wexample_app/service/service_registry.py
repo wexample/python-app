@@ -1,20 +1,20 @@
 from __future__ import annotations
 
-from typing import Any
-
 from wexample_app.common.service.service_mixin import ServiceMixin
+from wexample_app.service.mixins.service_container_mixin import ServiceContainerMixin
+from wexample_helpers.classes.field import public_field
+from wexample_helpers.classes.private_field import private_field
 from wexample_helpers.service.registry import Registry
 
 
 class ServiceRegistry(Registry[type[ServiceMixin]]):
     """Registry for managing services of type ServiceMixin."""
 
-    container: Any  # Will be ServiceMixinContainer at runtime
-    _service_instances: dict[str, ServiceMixin]
-
-    def __init__(self, container: Any) -> None:
-        self._service_instances = {}
-        super().__init__(container=container)
+    container: ServiceContainerMixin = public_field(description="The service container")
+    _service_instances: dict[str, ServiceMixin] = private_field(
+        description="The service container",
+        factory=dict
+    )
 
     def all_classes(self) -> list[type[ServiceMixin]]:
         """Return all registered service classes."""

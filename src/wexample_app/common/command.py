@@ -21,9 +21,6 @@ class Command(AbstractKernelChild, BaseClass):
     )
     kernel: AbstractKernel = public_field(default=None, description="The app kernel")
 
-    def __attrs_post_init__(self) -> None:
-        AbstractKernelChild.__init__(self, kernel=self.kernel)
-
     def execute_request(self, request: CommandRequest) -> Any:
         # Basic way to execute command.
         return self.function(kernel=self.kernel, arguments=request.arguments)

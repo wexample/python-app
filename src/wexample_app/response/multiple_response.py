@@ -5,19 +5,21 @@ from typing import TYPE_CHECKING, Any
 from wexample_app.response.abstract_response import AbstractResponse
 
 if TYPE_CHECKING:
-    from wexample_app.common.abstract_kernel import AbstractKernel
     from wexample_app.const.types import ResponsePrintable
 
+from wexample_helpers.decorator.base_class import base_class
 
+
+@base_class
 class MultipleResponse(AbstractResponse):
     responses: list[Any] = []
 
-    def __init__(self, kernel: AbstractKernel, **kwargs) -> None:
+    def __attrs_post_init__(self) -> None:
         from wexample_app.exception.response_invalid_content_type_exception import (
             ResponseInvalidContentTypeException,
         )
 
-        super().__init__(kernel, **kwargs)
+        super().__attrs_post_init__()
 
         if not isinstance(self.responses, list):
             raise ResponseInvalidContentTypeException(

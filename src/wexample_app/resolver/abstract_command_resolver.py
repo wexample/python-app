@@ -19,7 +19,8 @@ if TYPE_CHECKING:
     from wexample_helpers.const.types import StringsList
 
 
-@attrs.define(kw_only=True)
+from wexample_helpers.decorator.base_class import base_class
+@base_class
 class AbstractCommandResolver(
     AbstractKernelChild, ServiceMixin, PrintableMixin, BaseClass
 ):
