@@ -3,7 +3,6 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from wexample_app.common.abstract_kernel_child import AbstractKernelChild
-from wexample_helpers.classes.base_class import BaseClass
 from wexample_helpers.classes.field import public_field
 from wexample_helpers.classes.private_field import private_field
 
@@ -18,7 +17,7 @@ from wexample_helpers.decorator.base_class import base_class
 
 
 @base_class
-class CommandRequest(AbstractKernelChild, BaseClass):
+class CommandRequest(AbstractKernelChild):
     arguments: list[str | int] = public_field(
         factory=list,
         description="List of command arguments passed to the request",
@@ -58,7 +57,6 @@ class CommandRequest(AbstractKernelChild, BaseClass):
             CommandTypeNotFoundException,
         )
 
-        super().__attrs_post_init__()
         self.type = self._guess_type()
         if self.type is None:
             raise CommandTypeNotFoundException(self.name)

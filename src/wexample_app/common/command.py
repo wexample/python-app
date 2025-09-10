@@ -4,7 +4,6 @@ from collections.abc import Callable
 from typing import TYPE_CHECKING, Any
 
 from wexample_app.common.abstract_kernel_child import AbstractKernelChild
-from wexample_helpers.classes.base_class import BaseClass
 from wexample_helpers.classes.field import public_field
 from wexample_helpers.decorator.base_class import base_class
 
@@ -15,7 +14,7 @@ if TYPE_CHECKING:
 
 
 @base_class
-class Command(AbstractKernelChild, BaseClass):
+class Command(AbstractKernelChild):
     function: Callable[..., Any] = public_field(
         default=None, description="The function to execute"
     )
@@ -26,7 +25,7 @@ class Command(AbstractKernelChild, BaseClass):
         return self.function(kernel=self.kernel, arguments=request.arguments)
 
     def execute_request_and_normalize(
-        self, request: CommandRequest
+            self, request: CommandRequest
     ) -> AbstractResponse:
         from wexample_app.helpers.response import response_normalize
 
