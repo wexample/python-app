@@ -3,9 +3,10 @@ from __future__ import annotations
 from collections.abc import Callable
 from typing import TYPE_CHECKING, Any
 
-import attrs
-from wexample_helpers.classes.base_class import BaseClass
 from wexample_app.common.abstract_kernel_child import AbstractKernelChild
+from wexample_helpers.classes.base_class import BaseClass
+from wexample_helpers.classes.field import public_field
+from wexample_helpers.decorator.base_class import base_class
 
 if TYPE_CHECKING:
     from wexample_app.common.abstract_kernel import AbstractKernel
@@ -13,10 +14,12 @@ if TYPE_CHECKING:
     from wexample_app.response.abstract_response import AbstractResponse
 
 
+@base_class
 class Command(AbstractKernelChild, BaseClass):
-    function: Callable[..., Any] = attrs.field(default=None)
-
-    kernel: AbstractKernel = attrs.field()
+    function: Callable[..., Any] = public_field(
+        default=None, description="The function to execute"
+    )
+    kernel: AbstractKernel = public_field(default=None, description="The app kernel")
 
     def __attrs_post_init__(self) -> None:
         AbstractKernelChild.__init__(self, kernel=self.kernel)

@@ -1,31 +1,54 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, cast
+from typing import TYPE_CHECKING
 
-import attrs
-from wexample_helpers.classes.base_class import BaseClass
 from wexample_app.common.abstract_kernel_child import AbstractKernelChild
+from wexample_helpers.classes.base_class import BaseClass
+from wexample_helpers.classes.field import public_field
+from wexample_helpers.classes.private_field import private_field
 
 if TYPE_CHECKING:
-    from wexample_app.common.abstract_kernel import AbstractKernel
     from wexample_app.common.mixins.command_runner_kernel import CommandRunnerKernel
     from wexample_app.resolver.abstract_command_resolver import AbstractCommandResolver
     from wexample_app.response.abstract_response import AbstractResponse
     from wexample_app.runner.abstract_command_runner import AbstractCommandRunner
     from wexample_helpers.const.types import StringsMatch
 
+from wexample_helpers.decorator.base_class import base_class
 
-@attrs.define(kw_only=True)
+
+@base_class
 class CommandRequest(AbstractKernelChild, BaseClass):
-    arguments: list[str | int] = attrs.field(factory=list)
-    name: str
-    path: str | None = attrs.field(default=None)
-    type: str | None = attrs.field(default=None)
-    _match: StringsMatch | None = attrs.field(default=None, init=False)
-    _resolver: AbstractCommandResolver | None = attrs.field(default=None, init=False)
-    _runner: AbstractCommandRunner | None = attrs.field(default=None, init=False)
-
-    kernel: AbstractKernel = attrs.field()
+    arguments: list[str | int] = public_field(
+        factory=list,
+        description="List of command arguments passed to the request",
+    )
+    name: str = public_field(
+        description="Name of the command to execute",
+    )
+    path: str | None = public_field(
+        default=None,
+        description="Optional path context for the command",
+    )
+    type: str | None = public_field(
+        default=None,
+        description="Optional type classification of the command",
+    )
+    _match: StringsMatch | None = private_field(
+        default=None,
+        description="Internal string matching result used during command resolution",
+    )
+    kernel: CommandRunnerKernel = public_field(
+        description="Reference to the main command runner kernel"
+    )
+    _resolver: AbstractCommandResolver | None = private_field(
+        default=None,
+        description="Command resolver instance responsible for analyzing the request",
+    )
+    _runner: AbstractCommandRunner | None = private_field(
+        default=None,
+        description="Command runner instance responsible for executing the request",
+    )
 
     def __attrs_post_init__(self) -> None:
         from wexample_app.exception.command_runner_not_found_exception import (
@@ -47,13 +70,6 @@ class CommandRequest(AbstractKernelChild, BaseClass):
             raise CommandRunnerNotFoundException(command_name=self.name)
 
         self.path = self.runner.build_command_path(request=self)
-
-    @property
-    def kernel(self) -> AbstractKernel | CommandRunnerKernel:
-        from wexample_app.common.mixins.command_runner_kernel import CommandRunnerKernel
-
-        # Enforce typing
-        return cast(CommandRunnerKernel, super().kernel)
 
     @property
     def match(self) -> StringsMatch:

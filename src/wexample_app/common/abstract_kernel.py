@@ -3,10 +3,12 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Any
 
 import attrs
-from wexample_helpers.classes.base_class import BaseClass
 from wexample_app.service.mixins.service_container_mixin import ServiceContainerMixin
 from wexample_filestate.mixins.with_workdir_mixin import WithWorkdirMixin
+from wexample_helpers.classes.base_class import BaseClass
+from wexample_helpers.classes.field import public_field
 from wexample_helpers.classes.mixin.printable_mixin import PrintableMixin
+from wexample_helpers.decorator.base_class import base_class
 from wexample_helpers_yaml.classes.mixin.has_yaml_env_keys_file import (
     HasYamlEnvKeysFile,
 )
@@ -17,20 +19,16 @@ if TYPE_CHECKING:
     from wexample_app.response.abstract_response import AbstractResponse
 
 
-@attrs.define(kw_only=True)
+@base_class
 class AbstractKernel(
     ServiceContainerMixin,
     HasYamlEnvKeysFile,
     WithWorkdirMixin,
     WithIoMethods,
     PrintableMixin,
-    BaseClass,
 ):
-    entrypoint_path: str = attrs.field(metadata={"description": "The main file placed at application root directory"})
-    root_request: Any | None = attrs.field(default=None)
-
-    def __attrs_post_init__(self) -> None:
-        HasYamlEnvKeysFile.__init__(self)
+    entrypoint_path: str = public_field(description="The main file placed at application root directory")
+    root_request: Any | None = public_field(default=None, description="The initial request that may have launched sub requests")
 
     def execute_kernel_command(self, request: CommandRequest) -> AbstractResponse:
         # Save unique root request

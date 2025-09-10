@@ -2,6 +2,9 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, cast
 
+from wexample_helpers.classes.base_class import BaseClass
+from wexample_helpers.decorator.base_class import base_class
+
 if TYPE_CHECKING:
     from wexample_app.resolver.abstract_command_resolver import AbstractCommandResolver
     from wexample_app.runner.abstract_command_runner import AbstractCommandRunner
@@ -10,7 +13,12 @@ if TYPE_CHECKING:
     )
 
 
-class CommandRunnerKernel:
+@base_class
+class CommandRunnerKernel(BaseClass):
+    def __init__(self, *args, **kwargs):
+        # Forward all arguments to parent class
+        super().__init__(*args, **kwargs)
+
     def get_resolver(
         self: ServiceContainerMixin, type: str
     ) -> AbstractCommandResolver | None:

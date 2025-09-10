@@ -40,13 +40,6 @@ class ServiceRegistry(Registry[type[ServiceMixin]]):
         # Get service class and create new instance if exists
         service_class = self._items.get(key)
         if service_class:
-            # Rebuild model if it's a Pydantic model using HasClassDependencies mixin.
-            if hasattr(service_class, "import_dependencies_and_rebuild"):
-                service_class.import_dependencies_and_rebuild()
-            # Rebuild model if it's a Pydantic model
-            elif hasattr(service_class, "model_rebuild"):
-                service_class.model_rebuild()
-
             # Create instance with kernel
             instance = service_class(**kwargs).setup()
             self._service_instances[key] = instance

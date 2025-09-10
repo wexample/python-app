@@ -10,7 +10,10 @@ if TYPE_CHECKING:
     from wexample_app.service.service_registry import ServiceRegistry
     from wexample_helpers.service.registry import Registry
 
+from wexample_helpers.decorator.base_class import base_class
 
+
+@base_class
 class ServiceContainerMixin(RegistryContainerMixin):
     """Container for managing multiple service registries."""
 

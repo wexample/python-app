@@ -4,8 +4,8 @@ from abc import abstractmethod
 from typing import TYPE_CHECKING, Any
 
 import attrs
-from wexample_helpers.classes.base_class import BaseClass
 from wexample_app.common.abstract_kernel_child import AbstractKernelChild
+from wexample_helpers.classes.base_class import BaseClass
 
 if TYPE_CHECKING:
     from wexample_app.common.abstract_kernel import AbstractKernel

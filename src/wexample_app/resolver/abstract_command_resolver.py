@@ -5,9 +5,10 @@ from pathlib import Path
 from typing import TYPE_CHECKING
 
 import attrs
-from wexample_helpers.classes.base_class import BaseClass
 from wexample_app.common.abstract_kernel_child import AbstractKernelChild
 from wexample_app.common.service.service_mixin import ServiceMixin
+from wexample_helpers.classes.base_class import BaseClass
+from wexample_helpers.classes.field import public_field
 from wexample_helpers.classes.mixin.printable_mixin import PrintableMixin
 from wexample_helpers.const.types import StringsMatch
 
@@ -22,11 +23,7 @@ if TYPE_CHECKING:
 class AbstractCommandResolver(
     AbstractKernelChild, ServiceMixin, PrintableMixin, BaseClass
 ):
-    kernel: AbstractKernel = attrs.field()
-
-    def __attrs_post_init__(self) -> None:
-        ServiceMixin.__init__(self)
-        AbstractKernelChild.__init__(self, kernel=self.kernel)
+    kernel: AbstractKernel = public_field(description="The app kernel")
 
     @classmethod
     def build_match(cls, command: str) -> StringsMatch | None:

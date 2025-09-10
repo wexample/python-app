@@ -2,24 +2,14 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from wexample_helpers.classes.base_class import BaseClass
+from wexample_helpers.classes.field import public_field
+from wexample_helpers.decorator.base_class import base_class
+
 if TYPE_CHECKING:
     from wexample_app.common.abstract_kernel import AbstractKernel
 
 
-class AbstractKernelChild:
-    _kernel: AbstractKernel | None
-
-    def __init__(self, kernel: AbstractKernel) -> None:
-        from wexample_app.common.abstract_kernel import AbstractKernel
-
-        assert isinstance(kernel, AbstractKernel)
-
-        self._kernel = kernel
-
-    @property
-    def kernel(self) -> None:
-        return self._kernel
-
-    @kernel.setter
-    def kernel(self, value: AbstractKernel) -> None:
-        self._kernel = value
+@base_class
+class AbstractKernelChild(BaseClass):
+    kernel: AbstractKernel = public_field(description="Reference to the main kernel")

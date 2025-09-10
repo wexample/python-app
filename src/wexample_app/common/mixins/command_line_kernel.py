@@ -2,8 +2,10 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
 
-import attrs
 from wexample_filestate.file_state_manager import FileStateManager
+from wexample_helpers.classes.base_class import BaseClass
+from wexample_helpers.classes.private_field import private_field
+from wexample_helpers.decorator.base_class import base_class
 
 if TYPE_CHECKING:
     from wexample_app.common.abstract_kernel import AbstractKernel
@@ -11,13 +13,27 @@ if TYPE_CHECKING:
     from wexample_app.const.types import CommandLineArgumentsList
 
 
-@attrs.define(kw_only=True)
-class CommandLineKernel:
-    _call_workdir: FileStateManager = attrs.field(init=False)
-    _core_argv: list[str] = attrs.field(factory=list, init=False)
-    _sys_argv: list[str] = attrs.field(factory=list, init=False)
-    _sys_argv_end_index: int | None = attrs.field(default=None, init=False)
-    _sys_argv_start_index: int = attrs.field(default=1, init=False)
+@base_class
+class CommandLineKernel(BaseClass):
+    _call_workdir: FileStateManager = private_field(
+        description="The directory path from where the call has been run"
+    )
+    _core_argv: list[str] = private_field(
+        factory=list, description="Core command arguments processed by the kernel"
+    )
+    _sys_argv: list[str] = private_field(
+        factory=list, description="System command line arguments from sys.argv"
+    )
+    _sys_argv_end_index: int | None = private_field(
+        default=None, description="End index for processing sys.argv slice"
+    )
+    _sys_argv_start_index: int = private_field(
+        default=1, description="Start index for processing sys.argv slice"
+    )
+
+    def __init__(self, *args, **kwargs):
+        # Forward all arguments to parent class
+        super().__init__(*args, **kwargs)
 
     @property
     def call_workdir(self) -> FileStateManager:
