@@ -20,7 +20,7 @@ class DefaultResponse(AbstractResponse):
         from wexample_helpers.const.types import Scalar
         from wexample_helpers.helpers.args import args_is_basic_value
 
-        super().__attrs_post_init__()
+        self._execute_super_attrs_post_init_if_exists()
 
         if not args_is_basic_value(self.content):
             raise ResponseInvalidContentTypeException(

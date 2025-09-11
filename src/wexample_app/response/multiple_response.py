@@ -18,7 +18,7 @@ class MultipleResponse(AbstractResponse):
             ResponseInvalidContentTypeException,
         )
 
-        super().__attrs_post_init__()
+        super()._execute_super_attrs_post_init_if_exists()
 
         if not isinstance(self.responses, list):
             raise ResponseInvalidContentTypeException(
