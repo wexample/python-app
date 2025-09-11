@@ -21,6 +21,9 @@ class CommandRequest(AbstractKernelChild):
         factory=list,
         description="List of command arguments passed to the request",
     )
+    kernel: CommandRunnerKernel = public_field(
+        description="Reference to the main command runner kernel"
+    )
     name: str = public_field(
         description="Name of the command to execute",
     )
@@ -35,9 +38,6 @@ class CommandRequest(AbstractKernelChild):
     _match: StringsMatch | None = private_field(
         default=None,
         description="Internal string matching result used during command resolution",
-    )
-    kernel: CommandRunnerKernel = public_field(
-        description="Reference to the main command runner kernel"
     )
     _resolver: AbstractCommandResolver | None = private_field(
         default=None,

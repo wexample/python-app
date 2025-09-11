@@ -10,8 +10,8 @@ from wexample_helpers.classes.base_class import BaseClass
 from wexample_helpers.classes.field import public_field
 from wexample_helpers.classes.mixin.printable_mixin import PrintableMixin
 from wexample_helpers.const.types import StringsMatch
-
 from wexample_helpers.decorator.base_class import base_class
+
 if TYPE_CHECKING:
     from wexample_app.common.abstract_kernel import AbstractKernel
     from wexample_app.common.command import Command
