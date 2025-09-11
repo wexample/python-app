@@ -6,7 +6,7 @@ AM_DIR="$ROOT/.wex/python/app_manager"
 
 # Require PDM to manage env and dependencies declared in pyproject.toml
 if ! command -v pdm >/dev/null 2>&1; then
-  echo "Error: 'pdm' is required but not installed. Please install PDM: https://pdm.fming.dev" >&2
+  echo Error: 'pdm' is required but not installed. Please install PDM: https://pdm.fming.dev >&2
   exit 1
 fi
 
