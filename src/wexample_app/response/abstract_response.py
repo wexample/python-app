@@ -15,7 +15,9 @@ if TYPE_CHECKING:
 
 @base_class
 class AbstractResponse(AbstractKernelChild, BaseClass):
-    kernel: AbstractKernel = public_field(description="The kernel that produced the response")
+    kernel: AbstractKernel = public_field(
+        description="The kernel that produced the response"
+    )
 
     @abstractmethod
     def get_printable(self) -> ResponsePrintable:
