@@ -25,8 +25,13 @@ class AbstractKernel(
     WithIoMethods,
     PrintableMixin,
 ):
-    entrypoint_path: str = public_field(description="The main file placed at application root directory")
-    root_request: Any | None = public_field(default=None, description="The initial request that may have launched sub requests")
+    entrypoint_path: str = public_field(
+        description="The main file placed at application root directory"
+    )
+    root_request: Any | None = public_field(
+        default=None,
+        description="The initial request that may have launched sub requests",
+    )
 
     def execute_kernel_command(self, request: CommandRequest) -> AbstractResponse:
         # Save unique root request

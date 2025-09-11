@@ -1,9 +1,8 @@
 from __future__ import annotations
 
 from abc import abstractmethod
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
 
-import attrs
 from wexample_app.common.abstract_kernel_child import AbstractKernelChild
 from wexample_helpers.classes.base_class import BaseClass
 from wexample_helpers.classes.field import public_field

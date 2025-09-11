@@ -3,8 +3,8 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Any
 
 from wexample_app.response.abstract_response import AbstractResponse
-
 from wexample_helpers.decorator.base_class import base_class
+
 if TYPE_CHECKING:
     from wexample_app.const.types import ResponsePrintable
 

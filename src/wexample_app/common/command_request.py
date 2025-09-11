@@ -5,8 +5,8 @@ from typing import TYPE_CHECKING
 from wexample_app.common.abstract_kernel_child import AbstractKernelChild
 from wexample_helpers.classes.field import public_field
 from wexample_helpers.classes.private_field import private_field
-
 from wexample_helpers.decorator.base_class import base_class
+
 if TYPE_CHECKING:
     from wexample_app.common.mixins.command_runner_kernel import CommandRunnerKernel
     from wexample_app.resolver.abstract_command_resolver import AbstractCommandResolver
