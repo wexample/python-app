@@ -17,6 +17,8 @@ if TYPE_CHECKING:
     from wexample_app.common.command import Command
     from wexample_app.common.command_request import CommandRequest
     from wexample_helpers.const.types import StringsList
+    from pathlib import Path
+    from wexample_helpers.const.types import StringsMatch
 
 
 @base_class

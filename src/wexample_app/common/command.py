@@ -11,6 +11,7 @@ if TYPE_CHECKING:
     from wexample_app.common.abstract_kernel import AbstractKernel
     from wexample_app.common.command_request import CommandRequest
     from wexample_app.response.abstract_response import AbstractResponse
+    from collections.abc import Callable
 
 
 @base_class

@@ -6,6 +6,9 @@ from wexample_helpers.classes.field import public_field
 from wexample_helpers.classes.private_field import private_field
 from wexample_helpers.decorator.base_class import base_class
 from wexample_helpers.service.registry import Registry
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from wexample_app.service.mixins.service_container_mixin import ServiceContainerMixin
 
 
 @base_class
