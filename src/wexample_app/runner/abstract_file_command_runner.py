@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from abc import abstractmethod
 from typing import TYPE_CHECKING
 
 from wexample_app.runner.abstract_command_runner import AbstractCommandRunner
+from wexample_helpers.classes.abstract_method import abstract_method
 
 if TYPE_CHECKING:
     from pathlib import Path
@@ -17,7 +17,7 @@ class AbstractFileCommandRunner(AbstractCommandRunner):
             request=request, extension=self.get_file_extension()
         )
 
-    @abstractmethod
+    @abstract_method
     def get_file_extension(self) -> str:
         pass
 

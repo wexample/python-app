@@ -1,11 +1,11 @@
 from __future__ import annotations
 
-from abc import abstractmethod
 from pathlib import Path
 from typing import TYPE_CHECKING
 
 from wexample_app.common.abstract_kernel_child import AbstractKernelChild
 from wexample_app.common.service.service_mixin import ServiceMixin
+from wexample_helpers.classes.abstract_method import abstract_method
 from wexample_helpers.classes.base_class import BaseClass
 from wexample_helpers.classes.field import public_field
 from wexample_helpers.classes.mixin.printable_mixin import PrintableMixin
@@ -36,7 +36,7 @@ class AbstractCommandResolver(
         return "CommandResolver"
 
     @classmethod
-    @abstractmethod
+    @abstract_method
     def get_type(cls) -> str:
         pass
 
@@ -48,7 +48,7 @@ class AbstractCommandResolver(
         return None
 
     def build_command_path(
-        self, request: CommandRequest, extension: str
+            self, request: CommandRequest, extension: str
     ) -> Path | None:
         return None
 

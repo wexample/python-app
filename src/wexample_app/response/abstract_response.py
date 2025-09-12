@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from abc import abstractmethod
 from typing import TYPE_CHECKING
 
 from wexample_app.common.abstract_kernel_child import AbstractKernelChild
+from wexample_helpers.classes.abstract_method import abstract_method
 from wexample_helpers.classes.base_class import BaseClass
 from wexample_helpers.classes.field import public_field
 from wexample_helpers.decorator.base_class import base_class
@@ -19,7 +19,7 @@ class AbstractResponse(AbstractKernelChild, BaseClass):
         description="The kernel that produced the response"
     )
 
-    @abstractmethod
+    @abstract_method
     def get_printable(self) -> ResponsePrintable:
         pass
 

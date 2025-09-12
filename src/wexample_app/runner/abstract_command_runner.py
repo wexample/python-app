@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from abc import abstractmethod
 from typing import TYPE_CHECKING
 
 from wexample_app.common.abstract_kernel_child import AbstractKernelChild
@@ -8,6 +7,7 @@ from wexample_app.common.service.service_mixin import ServiceMixin
 from wexample_helpers.classes.base_class import BaseClass
 from wexample_helpers.classes.mixin.printable_mixin import PrintableMixin
 from wexample_helpers.decorator.base_class import base_class
+from wexample_helpers.classes.abstract_method import abstract_method
 
 if TYPE_CHECKING:
     from wexample_app.common.command import Command
@@ -33,7 +33,7 @@ class AbstractCommandRunner(
     def will_run(self, request: CommandRequest) -> bool:
         return False
 
-    @abstractmethod
+    @abstract_method
     def _build_command_function(self, request: CommandRequest) -> AnyCallable:
         pass
 
