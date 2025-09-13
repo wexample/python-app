@@ -8,10 +8,11 @@ from wexample_helpers.classes.field import public_field
 from wexample_helpers.decorator.base_class import base_class
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+
     from wexample_app.common.abstract_kernel import AbstractKernel
     from wexample_app.common.command_request import CommandRequest
     from wexample_app.response.abstract_response import AbstractResponse
-    from collections.abc import Callable
 
 
 @base_class

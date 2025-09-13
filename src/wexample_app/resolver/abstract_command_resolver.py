@@ -13,12 +13,12 @@ from wexample_helpers.const.types import StringsMatch
 from wexample_helpers.decorator.base_class import base_class
 
 if TYPE_CHECKING:
+    from pathlib import Path
+
     from wexample_app.common.abstract_kernel import AbstractKernel
     from wexample_app.common.command import Command
     from wexample_app.common.command_request import CommandRequest
-    from wexample_helpers.const.types import StringsList
-    from pathlib import Path
-    from wexample_helpers.const.types import StringsMatch
+    from wexample_helpers.const.types import StringsList, StringsMatch
 
 
 @base_class

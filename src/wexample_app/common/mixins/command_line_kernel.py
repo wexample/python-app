@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
+
 from wexample_helpers.classes.base_class import BaseClass
 from wexample_helpers.classes.private_field import private_field
 from wexample_helpers.decorator.base_class import base_class
@@ -78,9 +79,10 @@ class CommandLineKernel(BaseClass):
                 setattr(self, f"_config_arg_{arg_config['attr']}", arg_config["value"])
 
     def _init_command_line_kernel(self: AbstractKernel) -> None:
-        from wexample_filestate.file_state_manager import FileStateManager
         import os
         import sys
+
+        from wexample_filestate.file_state_manager import FileStateManager
 
         self._sys_argv = sys.argv.copy()
         self._call_workdir = FileStateManager.create_from_path(
