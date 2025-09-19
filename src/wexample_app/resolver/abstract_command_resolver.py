@@ -50,7 +50,7 @@ class AbstractCommandResolver(
         return None
 
     def build_command_path(
-            self, request: CommandRequest, extension: str
+        self, request: CommandRequest, extension: str
     ) -> Path | None:
         return None
 
