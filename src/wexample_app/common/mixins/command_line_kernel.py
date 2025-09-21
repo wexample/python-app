@@ -10,7 +10,7 @@ if TYPE_CHECKING:
     from wexample_app.common.abstract_kernel import AbstractKernel
     from wexample_app.common.command_request import CommandRequest
     from wexample_app.const.types import CommandLineArgumentsList
-    from wexample_filestate.file_state_manager import FileStateManager
+    from wexample_filestate.utils.file_state_manager import FileStateManager
 
 
 @base_class
@@ -82,7 +82,7 @@ class CommandLineKernel(BaseClass):
         import os
         import sys
 
-        from wexample_filestate.file_state_manager import FileStateManager
+        from wexample_filestate.utils.file_state_manager import FileStateManager
 
         self._sys_argv = sys.argv.copy()
         self._call_workdir = FileStateManager.create_from_path(
