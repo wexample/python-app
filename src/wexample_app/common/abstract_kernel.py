@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Any
 
 from wexample_app.service.mixins.service_container_mixin import ServiceContainerMixin
-from wexample_filestate.mixins.with_workdir_mixin import WithWorkdirMixin
+from wexample_filestate.workdir.mixin.with_workdir_mixin import WithWorkdirMixin
 from wexample_helpers.classes.field import public_field
 from wexample_helpers.classes.mixin.printable_mixin import PrintableMixin
 from wexample_helpers.decorator.base_class import base_class
