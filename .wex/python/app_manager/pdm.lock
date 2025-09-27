@@ -5,7 +5,7 @@
 groups = ["default"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:e179378dd912abeac004b5270b439f201802d0902e420579e683b81bf88d6075"
+content_hash = "sha256:47bc33e9545535fc0220af5ea2b7a50a2095d9f35c574f6f98dcf78e3cc8fc1f"
 
 [[metadata.targets]]
 requires_python = ">=3.10"
@@ -718,6 +718,22 @@ dependencies = [
 files = [
     {file = "wexample_prompt-0.0.52-py3-none-any.whl", hash = "sha256:e47caddeb7af00dd6615e453089d8cdf475124908bfdd890a26cd8724fdb1186"},
     {file = "wexample_prompt-0.0.52.tar.gz", hash = "sha256:c0f4229d2279bcfdf4eacbc9d2957064bd40d4030e55611867d0950d849ab0d4"},
+]
+
+[[package]]
+name = "wexample-wex-addon-app"
+version = "0.0.46"
+requires_python = ">=3.10"
+summary = "App management with wex"
+groups = ["default"]
+dependencies = [
+    "attrs>=23.1.0",
+    "cattrs>=23.1.0",
+    "wexample-wex-core==6.0.48",
+]
+files = [
+    {file = "wexample_wex_addon_app-0.0.46-py3-none-any.whl", hash = "sha256:41c46f486381e814350ca8806662c18969e8dbedc4c483ea5f7fc92dd1e2880f"},
+    {file = "wexample_wex_addon_app-0.0.46.tar.gz", hash = "sha256:bb97695ff23347f7bde80a34bc0346892436bccd1cbde840303949eb90dd95ff"},
 ]
 
 [[package]]
