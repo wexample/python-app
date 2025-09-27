@@ -1,15 +1,6 @@
 from __future__ import annotations
 
-from wexample_helpers.exception.undefined_exception import (
-    ExceptionData,
-    UndefinedException,
-)
-
-
-class CommandTypeNotFoundData(ExceptionData):
-    """Data model for CommandTypeNotFound exception."""
-
-    command_name: str
+from wexample_helpers.exception.undefined_exception import UndefinedException
 
 
 class CommandTypeNotFoundException(UndefinedException):
@@ -23,15 +14,12 @@ class CommandTypeNotFoundException(UndefinedException):
         cause: Exception | None = None,
         previous: Exception | None = None,
     ) -> None:
-        # Create structured data using Pydantic model
-        data_model = CommandTypeNotFoundData(command_name=command_name)
-
-        # Store command_name as instance attribute for backward compatibility
+        # Store command_name as instance attribute
         self.command_name = command_name
 
         super().__init__(
             message=f"Unable to determine command type for: {command_name}",
-            data=data_model.model_dump(),
+            data={"command_name": command_name},
             cause=cause,
             previous=previous,
         )
