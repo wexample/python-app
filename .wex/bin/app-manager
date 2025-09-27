@@ -6,4 +6,4 @@ AM_DIR="$ROOT/.wex/python/app_manager"
 
 export APP_ROOT
 "$AM_DIR/.venv/bin/python" -c "import sys; print('Using venv:', sys.executable)"
-exec "$AM_DIR/.venv/bin/python" -m wexample_wex_core.app_manager "$@"
+exec "$AM_DIR/.venv/bin/python" "$AM_DIR/__main__.py" "$@"
