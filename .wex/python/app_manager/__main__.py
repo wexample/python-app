@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Main entry point for the application."""
+from wexample_wex_core.common.app_manager_kernel import AppManagerKernel
 
 if __name__ == "__main__":
     try:
@@ -14,7 +15,7 @@ if __name__ == "__main__":
         from wexample_wex_addon_app.app_addon_manager import AppAddonManager
 
         (
-            Kernel(
+            AppManagerKernel(
                 entrypoint_path=__file__,
             )
             .setup(addons=[
