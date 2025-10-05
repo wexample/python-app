@@ -4,6 +4,9 @@ Helpers for building Python app or cli.
 
 Version: 0.0.53
 
+## Introduction
+Provides essential base classes that facilitate quick development of simple, well-structured CLI programs.
+
 ## Requirements
 
 - Python >=3.10
