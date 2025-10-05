@@ -3,9 +3,10 @@ from __future__ import annotations
 from collections.abc import Callable
 from typing import TYPE_CHECKING, Any
 
-from wexample_app.common.abstract_kernel_child import AbstractKernelChild
 from wexample_helpers.classes.field import public_field
 from wexample_helpers.decorator.base_class import base_class
+
+from wexample_app.common.abstract_kernel_child import AbstractKernelChild
 
 if TYPE_CHECKING:
     from collections.abc import Callable

@@ -7,10 +7,11 @@ from wexample_helpers.classes.private_field import private_field
 from wexample_helpers.decorator.base_class import base_class
 
 if TYPE_CHECKING:
+    from wexample_filestate.utils.file_state_manager import FileStateManager
+
     from wexample_app.common.abstract_kernel import AbstractKernel
     from wexample_app.common.command_request import CommandRequest
     from wexample_app.const.types import CommandLineArgumentsList
-    from wexample_filestate.utils.file_state_manager import FileStateManager
 
 
 @base_class
