@@ -4,9 +4,4 @@ from wexample_wex_addon_dev_python.workdir.python_package_workdir import PythonP
 
 
 class AppWorkdir(PythonPackageWorkdir):
-    def get_ordered_readme_files_names(self) -> list[str]:
-        return [
-            "introduction",
-            "quickstart",
-            "contribution-guidelines"
-        ]
+    pass
