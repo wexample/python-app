@@ -6,16 +6,36 @@ Helpers for building Python app or cli.
 
 ## Table of Contents
 
+- [Status Compatibility](#status-compatibility)
+- [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Quickstart](#quickstart)
 - [Basic Usage](#basic-usage)
 - [Configuration](#configuration)
-- [API Reference](#api-reference)
+- [Logging](#logging)
+- [Api Reference](#api-reference)
 - [Examples](#examples)
 - [Tests](#tests)
+- [Code Quality](#code-quality)
+- [Versioning](#versioning)
+- [Changelog](#changelog)
+- [Migration Notes](#migration-notes)
+- [Roadmap](#roadmap)
 - [Troubleshooting](#troubleshooting)
-- [Contributing](#contribution-guidelines)
+- [Security](#security)
+- [Privacy](#privacy)
+- [Support](#support)
+- [Contribution Guidelines](#contribution-guidelines)
+- [Maintainers](#maintainers)
 - [License](#license)
+- [Useful Links](#useful-links)
+- [Suite Integration](#suite-integration)
+- [Compatibility Matrix](#compatibility-matrix)
+- [Requirements](#requirements)
+- [Dependencies](#dependencies)
+- [Links](#links)
+- [Suite Signature](#suite-signature)
+
 
 ## Status & Compatibility
 
@@ -39,7 +59,7 @@ pip install wexample-app
 
 ## Quickstart
 
-Get started with **wexample-app** (version 0.0.53) in seconds:
+Get started with **wexample-app** in seconds:
 
 ```python
 # Your first example with wexample-app
