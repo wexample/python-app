@@ -41,16 +41,6 @@ We welcome contributions to the Wexample suite!
 4. **Test** thoroughly
 5. **Submit** a pull request
 
-### Code Standards
-
-All packages in the Wexample suite follow strict quality standards:
-- Type hints required
-- Comprehensive tests
-- Clear documentation
-- Consistent style
-
-For more details, visit our contribution guide.
-
 ## Links
 
 - Homepage: https://github.com/wexample/python-app
@@ -73,11 +63,3 @@ For more details, visit our contribution guide.
 
 MIT
 
-
-# About us
-
-Wexample stands as a cornerstone of the digital ecosystem — a collective of seasoned engineers, researchers, and creators driven by a relentless pursuit of technological excellence. More than a media platform, it has grown into a vibrant community where innovation meets craftsmanship, and where every line of code reflects a commitment to clarity, durability, and shared intelligence.
-
-This packages suite embodies this spirit. Trusted by professionals and enthusiasts alike, it delivers a consistent, high-quality foundation for modern development — open, elegant, and battle-tested. Its reputation is built on years of collaboration, refinement, and rigorous attention to detail, making it a natural choice for those who demand both robustness and beauty in their tools.
-
-Wexample cultivates a culture of mastery. Each package, each contribution carries the mark of a community that values precision, ethics, and innovation — a community proud to shape the future of digital craftsmanship.
