@@ -1,9 +1,15 @@
 ## Basic Usage
 
 ```python
-from {{ package_name }} import main
+from wexample_helpers.decorator.base_class import base_class
 
-# Basic example
-result = main()
-print(result)
+from wexample_app.common.abstract_kernel import AbstractKernel
+from wexample_app.common.mixins.command_line_kernel import CommandLineKernel
+from wexample_app.common.mixins.command_runner_kernel import CommandRunnerKernel
+
+@base_class
+class MyApp(CommandRunnerKernel, CommandLineKernel, AbstractKernel):
+    pass
+
+my_app = MyApp()
 ```
