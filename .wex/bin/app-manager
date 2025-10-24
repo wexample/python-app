@@ -2,18 +2,11 @@
 set -uo pipefail
 
 CONFIG_FILE="/etc/wex.conf"
+[[ -f "$CONFIG_FILE" ]] && source "$CONFIG_FILE" || CORE_BIN="$(command -v wex)"
 
-if [[ -f "$CONFIG_FILE" ]]; then
-  source "$CONFIG_FILE"
-else
-  CORE_BIN="$(which wex)"
-fi
-
-SCRIPT_PATH="$("$CORE_BIN" app::shell/manager-path)"
 HANDLER_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+APP_ROOT="$(cd "$HANDLER_DIR/../.." && pwd)"
+SCRIPT_PATH="$("$CORE_BIN" app::shell/manager-path)"
 
-# Forward to app-manager.sh
-(
-  cd "$HANDLER_DIR"
-  source "$SCRIPT_PATH" "$@"
-)
+export APP_ROOT
+source "$SCRIPT_PATH" "$@"
