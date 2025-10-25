@@ -1,10 +1,13 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from wexample_helpers.classes.base_class import BaseClass
 from wexample_helpers.classes.field import public_field
 from wexample_helpers.decorator.base_class import base_class
+
+if TYPE_CHECKING:
+    from wexample_helpers.validator.abstract_validator import AbstractValidator
 
 
 @base_class
@@ -38,6 +41,10 @@ class Option(BaseClass):
     )
     type: type = public_field(
         description="Expected Python type for the option value",
+    )
+    validators: list[AbstractValidator] = public_field(
+        factory=list,
+        description="List of validators to apply to the option value",
     )
     value: Any = public_field(
         default=None,

@@ -21,6 +21,10 @@ class CommandLineKernel(BaseClass):
     _call_workdir: FileStateManager = private_field(
         description="The directory path from where the call has been run"
     )
+    _command_argv: list[str] = private_field(
+        factory=list,
+        description="User command line arguments with core options filtered out",
+    )
     _core_argv: list[str] = private_field(
         factory=list, description="Core command arguments processed by the kernel"
     )
@@ -32,10 +36,6 @@ class CommandLineKernel(BaseClass):
     )
     _sys_argv_start_index: int = private_field(
         default=1, description="Start index for processing sys.argv slice"
-    )
-    _command_argv: list[str] = private_field(
-        factory=list,
-        description="User command line arguments with core options filtered out",
     )
 
     @property
