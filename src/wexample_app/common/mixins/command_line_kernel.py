@@ -26,6 +26,9 @@ class CommandLineKernel(BaseClass):
     _sys_argv: list[str] = private_field(
         factory=list, description="System command line arguments from sys.argv"
     )
+    _user_argv: list[str] = private_field(
+        factory=list, description="User command line arguments with core options filtered out"
+    )
     _sys_argv_end_index: int | None = private_field(
         default=None, description="End index for processing sys.argv slice"
     )
@@ -45,7 +48,7 @@ class CommandLineKernel(BaseClass):
         """
         try:
             command_requests = self._build_command_requests_from_arguments(
-                self._sys_argv[self._sys_argv_start_index : self._sys_argv_end_index]
+                self._user_argv[self._sys_argv_start_index : self._sys_argv_end_index]
             )
         except Exception as e:
             self.io.error(exception=e, fatal=True)
@@ -74,12 +77,17 @@ class CommandLineKernel(BaseClass):
         return []
 
     def _handle_core_args(self: AbstractKernel) -> None:
-        """Parse and handle core arguments, removing them from _sys_argv."""
-        from wexample_app.helpers.argument import argument_parse_options
+        """Parse and handle core arguments, creating filtered _user_argv."""
+        from wexample_app.helpers.argument import (
+            argument_filter_core_options,
+            argument_parse_options,
+        )
 
         core_options = self._get_core_args()
         
         if not core_options:
+            # No core options, user_argv is same as sys_argv
+            self._user_argv = self._sys_argv.copy()
             return
 
         # Parse core arguments from sys_argv
@@ -91,6 +99,7 @@ class CommandLineKernel(BaseClass):
             )
         except Exception:
             # If parsing fails, silently continue (core args are optional)
+            self._user_argv = self._sys_argv.copy()
             return
 
         # Apply parsed values to kernel attributes
@@ -100,42 +109,11 @@ class CommandLineKernel(BaseClass):
                 value = option.value if option.value is not None else parsed_core_args[option.name]
                 setattr(self, f"_config_arg_{option.name}", value)
 
-        # Remove core arguments from _sys_argv to prevent them from being passed to commands
-        self._remove_core_args_from_sys_argv(core_options)
+        # Create filtered user_argv without core options
+        self._user_argv = [self._sys_argv[0]] + argument_filter_core_options(
+            self._sys_argv[1:], core_options
+        )
 
-    def _remove_core_args_from_sys_argv(self: AbstractKernel, core_options: list[Option]) -> None:
-        """Remove core arguments from _sys_argv."""
-        i = 1  # Skip program name
-        while i < len(self._sys_argv):
-            arg = self._sys_argv[i]
-            removed = False
-
-            # Check for long option (--option)
-            if arg.startswith("--"):
-                option_name = arg[2:]
-                for option in core_options:
-                    if option.kebab_name == option_name:
-                        del self._sys_argv[i]
-                        # If not a flag, also remove the next argument (the value)
-                        if not option.is_flag and i < len(self._sys_argv) and not self._sys_argv[i].startswith("-"):
-                            del self._sys_argv[i]
-                        removed = True
-                        break
-
-            # Check for short option (-o)
-            elif arg.startswith("-") and len(arg) > 1:
-                short_name = arg[1:]
-                for option in core_options:
-                    if option.short_name == short_name:
-                        del self._sys_argv[i]
-                        # If not a flag, also remove the next argument (the value)
-                        if not option.is_flag and i < len(self._sys_argv) and not self._sys_argv[i].startswith("-"):
-                            del self._sys_argv[i]
-                        removed = True
-                        break
-
-            if not removed:
-                i += 1
 
     def _init_command_line_kernel(self: AbstractKernel) -> None:
         import os

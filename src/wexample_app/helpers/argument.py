@@ -126,3 +126,65 @@ def argument_parse_options(
                 )
 
     return result
+
+
+def argument_filter_core_options(
+    arguments: list[str],
+    core_options: list[Option],
+) -> list[str]:
+    """Filter out core options from arguments list without modifying the original.
+
+    Args:
+        arguments: List of command line arguments
+        core_options: List of core Option objects to filter out
+
+    Returns:
+        New list with core options and their values removed
+    """
+    # Helper functions to find options
+    def find_option_by_kebab_name(kebab_name: str) -> Option | None:
+        for option in core_options:
+            if option.kebab_name == kebab_name:
+                return option
+        return None
+
+    def find_option_by_short_name(short_name: str) -> Option | None:
+        for option in core_options:
+            if option.short_name == short_name:
+                return option
+        return None
+
+    filtered = []
+    skip_next = False
+
+    for i, arg in enumerate(arguments):
+        if skip_next:
+            skip_next = False
+            continue
+
+        is_core_option = False
+
+        # Check for long option (--option)
+        if arg.startswith("--"):
+            option_name = arg[2:]
+            option = find_option_by_kebab_name(option_name)
+            if option:
+                is_core_option = True
+                # If not a flag, skip the next argument (the value)
+                if not option.is_flag and i + 1 < len(arguments) and not arguments[i + 1].startswith("-"):
+                    skip_next = True
+
+        # Check for short option (-o)
+        elif arg.startswith("-") and len(arg) > 1:
+            short_name = arg[1:]
+            option = find_option_by_short_name(short_name)
+            if option:
+                is_core_option = True
+                # If not a flag, skip the next argument (the value)
+                if not option.is_flag and i + 1 < len(arguments) and not arguments[i + 1].startswith("-"):
+                    skip_next = True
+
+        if not is_core_option:
+            filtered.append(arg)
+
+    return filtered
