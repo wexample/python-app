@@ -83,6 +83,7 @@ def argument_parse_options(
     arguments: list[str],
     options: list[Option],
     allowed_option_names: list[str] | None = None,
+    strict: bool = True,
 ) -> ParsedArgs:
     """Parse raw command line arguments into a dictionary of option name to value.
 
@@ -90,12 +91,13 @@ def argument_parse_options(
         arguments: List of command line arguments to parse
         options: List of Option objects defining the available options
         allowed_option_names: Optional list of allowed option names for error messages
+        strict: If True, raise exception on unknown options. If False, ignore them.
 
     Returns:
         Dictionary mapping option names to their parsed values
 
     Raises:
-        CommandUnexpectedArgumentException: If an unknown argument is encountered
+        CommandUnexpectedArgumentException: If an unknown argument is encountered (strict mode only)
         CommandArgumentConversionException: If argument value conversion fails
     """
     from wexample_helpers.helpers.cli import cli_argument_convert_value
@@ -135,11 +137,15 @@ def argument_parse_options(
             option = find_option_by_kebab_name(option_name)
 
             if not option:
-                # Raise exception for unexpected argument
-                raise CommandUnexpectedArgumentException(
-                    argument=arg,
-                    allowed_arguments=allowed_option_names or [],
-                )
+                if strict:
+                    # Raise exception for unexpected argument
+                    raise CommandUnexpectedArgumentException(
+                        argument=arg,
+                        allowed_arguments=allowed_option_names or [],
+                    )
+                else:
+                    # In non-strict mode, skip unknown options
+                    continue
 
             # Process the option
             if option.is_flag:
@@ -168,11 +174,15 @@ def argument_parse_options(
             option = find_option_by_short_name(short_name)
 
             if not option:
-                # Raise exception for unexpected argument
-                raise CommandUnexpectedArgumentException(
-                    argument=arg,
-                    allowed_arguments=allowed_option_names or [],
-                )
+                if strict:
+                    # Raise exception for unexpected argument
+                    raise CommandUnexpectedArgumentException(
+                        argument=arg,
+                        allowed_arguments=allowed_option_names or [],
+                    )
+                else:
+                    # In non-strict mode, skip unknown options
+                    continue
 
             # Process the option
             if option.is_flag:

@@ -50,7 +50,9 @@ class CommandLineKernel(BaseClass):
         """
         try:
             command_requests = self._build_command_requests_from_arguments(
-                self._command_argv[self._sys_argv_start_index : self._sys_argv_end_index]
+                self._command_argv[
+                    self._sys_argv_start_index : self._sys_argv_end_index
+                ]
             )
         except Exception as e:
             self.io.error(exception=e, fatal=True)
@@ -92,17 +94,14 @@ class CommandLineKernel(BaseClass):
             self._command_argv = self._sys_argv.copy()
             return
 
-        # Parse core arguments from sys_argv
-        try:
-            parsed_core_args = argument_parse_options(
-                arguments=self._sys_argv[1:],  # Skip program name
-                options=core_options,
-                allowed_option_names=[opt.name for opt in core_options],
-            )
-        except Exception:
-            # If parsing fails, silently continue (core args are optional)
-            self._command_argv = self._sys_argv.copy()
-            return
+        # Parse core arguments from sys_argv in non-strict mode
+        # (ignores unknown options that belong to commands)
+        parsed_core_args = argument_parse_options(
+            arguments=self._sys_argv[1:],  # Skip program name
+            options=core_options,
+            allowed_option_names=[opt.name for opt in core_options],
+            strict=False,
+        )
 
         # Apply parsed values to kernel attributes
         for option in core_options:
