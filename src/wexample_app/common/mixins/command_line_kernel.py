@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
 
 from wexample_app.command.option import Option
 from wexample_helpers.classes.base_class import BaseClass
@@ -26,14 +26,15 @@ class CommandLineKernel(BaseClass):
     _sys_argv: list[str] = private_field(
         factory=list, description="System command line arguments from sys.argv"
     )
-    _user_argv: list[str] = private_field(
-        factory=list, description="User command line arguments with core options filtered out"
-    )
     _sys_argv_end_index: int | None = private_field(
         default=None, description="End index for processing sys.argv slice"
     )
     _sys_argv_start_index: int = private_field(
         default=1, description="Start index for processing sys.argv slice"
+    )
+    _command_argv: list[str] = private_field(
+        factory=list,
+        description="User command line arguments with core options filtered out",
     )
 
     @property
@@ -48,7 +49,7 @@ class CommandLineKernel(BaseClass):
         """
         try:
             command_requests = self._build_command_requests_from_arguments(
-                self._user_argv[self._sys_argv_start_index : self._sys_argv_end_index]
+                self._command_argv[self._sys_argv_start_index : self._sys_argv_end_index]
             )
         except Exception as e:
             self.io.error(exception=e, fatal=True)
@@ -77,17 +78,17 @@ class CommandLineKernel(BaseClass):
         return []
 
     def _handle_core_args(self: AbstractKernel) -> None:
-        """Parse and handle core arguments, creating filtered _user_argv."""
+        """Parse and handle core arguments, creating filtered _command_argv."""
         from wexample_app.helpers.argument import (
             argument_filter_core_options,
             argument_parse_options,
         )
 
         core_options = self._get_core_args()
-        
+
         if not core_options:
             # No core options, user_argv is same as sys_argv
-            self._user_argv = self._sys_argv.copy()
+            self._command_argv = self._sys_argv.copy()
             return
 
         # Parse core arguments from sys_argv
@@ -99,21 +100,24 @@ class CommandLineKernel(BaseClass):
             )
         except Exception:
             # If parsing fails, silently continue (core args are optional)
-            self._user_argv = self._sys_argv.copy()
+            self._command_argv = self._sys_argv.copy()
             return
 
         # Apply parsed values to kernel attributes
         for option in core_options:
             if option.name in parsed_core_args:
                 # Use the option's value field if set, otherwise use parsed value
-                value = option.value if option.value is not None else parsed_core_args[option.name]
+                value = (
+                    option.value
+                    if option.value is not None
+                    else parsed_core_args[option.name]
+                )
                 setattr(self, f"_config_arg_{option.name}", value)
 
         # Create filtered user_argv without core options
-        self._user_argv = [self._sys_argv[0]] + argument_filter_core_options(
+        self._command_argv = [self._sys_argv[0]] + argument_filter_core_options(
             self._sys_argv[1:], core_options
         )
-
 
     def _init_command_line_kernel(self: AbstractKernel) -> None:
         import os
