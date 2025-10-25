@@ -75,7 +75,7 @@ class CommandLineKernel(BaseClass):
 
     def _handle_core_args(self: AbstractKernel) -> None:
         """Parse and handle core arguments, removing them from _sys_argv."""
-        from wexample_wex_core.helpers.argument_parser import parse_arguments
+        from wexample_app.helpers.argument import argument_parse_options
 
         core_options = self._get_core_args()
         
@@ -84,7 +84,7 @@ class CommandLineKernel(BaseClass):
 
         # Parse core arguments from sys_argv
         try:
-            parsed_core_args = parse_arguments(
+            parsed_core_args = argument_parse_options(
                 arguments=self._sys_argv[1:],  # Skip program name
                 options=core_options,
                 allowed_option_names=[opt.name for opt in core_options],
