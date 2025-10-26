@@ -13,12 +13,10 @@ if TYPE_CHECKING:
 @base_class
 class FailureResponse(AbstractResponse):
     exception: Any | None = public_field(
-        description="The message to display",
-        default=None
+        description="The message to display", default=None
     )
     message: str = public_field(
-        description="The original exception instance",
-        default=None
+        description="The original exception instance", default=None
     )
 
     def get_printable(self) -> ResponsePrintable:

@@ -131,19 +131,19 @@ def argument_parse_options(
 
     def process_option_value(option: Option, i: int) -> tuple[Any, bool]:
         """Process the value for a given option.
-        
+
         Returns:
             Tuple of (value, should_skip_next)
         """
         if option.is_flag:
             return True, False
-        
+
         # Check if there's a next argument
         if i + 1 >= len(arguments):
             return option.default if option.default is not None else None, False
-        
+
         next_arg = arguments[i + 1]
-        
+
         # Accept the next argument as value if:
         # 1. It doesn't start with "-", OR
         # 2. It starts with "-" but is NOT a valid option
@@ -172,7 +172,7 @@ def argument_parse_options(
             continue
 
         option = None
-        
+
         # Check if the argument is an option (starts with - or --)
         if arg.startswith("--"):
             # Long option name (e.g., --version)

@@ -113,7 +113,7 @@ class CommandRequest(AbstractKernelChild):
 
             return command.execute_request_and_normalize(self)
         except Exception as e:
-            if hasattr(e, 'message'):
+            if hasattr(e, "message"):
                 self.kernel.io.error(message=e.message)
             else:
                 raise e
