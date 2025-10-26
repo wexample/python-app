@@ -121,6 +121,47 @@ def argument_parse_options(
                 return option
         return None
 
+    def is_valid_option(arg: str) -> bool:
+        """Check if an argument is a valid option (not just any string starting with -)."""
+        if arg.startswith("--"):
+            return find_option_by_kebab_name(arg[2:]) is not None
+        elif arg.startswith("-") and len(arg) > 1:
+            return find_option_by_short_name(arg[1:]) is not None
+        return False
+
+    def process_option_value(option: Option, i: int) -> tuple[Any, bool]:
+        """Process the value for a given option.
+        
+        Returns:
+            Tuple of (value, should_skip_next)
+        """
+        if option.is_flag:
+            return True, False
+        
+        # Check if there's a next argument
+        if i + 1 >= len(arguments):
+            return option.default if option.default is not None else None, False
+        
+        next_arg = arguments[i + 1]
+        
+        # Accept the next argument as value if:
+        # 1. It doesn't start with "-", OR
+        # 2. It starts with "-" but is NOT a valid option
+        if not next_arg.startswith("-") or not is_valid_option(next_arg):
+            try:
+                value = cli_argument_convert_value(next_arg, option.type)
+                return value, True
+            except Exception as e:
+                raise CommandArgumentConversionException(
+                    argument_name=option.name,
+                    value=next_arg,
+                    target_type=option.type,
+                    cause=e,
+                )
+        else:
+            # Next arg is a valid option, use default
+            return option.default if option.default is not None else None, False
+
     result: dict[str, Any] = {}
     skip_next = False
 
@@ -130,79 +171,29 @@ def argument_parse_options(
             skip_next = False
             continue
 
+        option = None
+        
         # Check if the argument is an option (starts with - or --)
         if arg.startswith("--"):
             # Long option name (e.g., --version)
             option_name = arg[2:]
             option = find_option_by_kebab_name(option_name)
-
-            if not option:
-                if strict:
-                    # Raise exception for unexpected argument
-                    raise CommandUnexpectedArgumentException(
-                        argument=arg,
-                        allowed_arguments=allowed_option_names or [],
-                    )
-                else:
-                    # In non-strict mode, skip unknown options
-                    continue
-
-            # Process the option
-            if option.is_flag:
-                result[option.name] = True
-            elif i + 1 < len(arguments) and not arguments[i + 1].startswith("-"):
-                try:
-                    result[option.name] = cli_argument_convert_value(
-                        arguments[i + 1], option.type
-                    )
-                    skip_next = True
-                except Exception as e:
-                    raise CommandArgumentConversionException(
-                        argument_name=option.name,
-                        value=arguments[i + 1],
-                        target_type=option.type,
-                        cause=e,
-                    )
-            else:
-                result[option.name] = (
-                    option.default if option.default is not None else None
-                )
-
         elif arg.startswith("-") and len(arg) > 1:
             # Short option name (e.g., -v)
             short_name = arg[1:]
             option = find_option_by_short_name(short_name)
 
-            if not option:
-                if strict:
-                    # Raise exception for unexpected argument
-                    raise CommandUnexpectedArgumentException(
-                        argument=arg,
-                        allowed_arguments=allowed_option_names or [],
-                    )
-                else:
-                    # In non-strict mode, skip unknown options
-                    continue
-
-            # Process the option
-            if option.is_flag:
-                result[option.name] = True
-            elif i + 1 < len(arguments) and not arguments[i + 1].startswith("-"):
-                try:
-                    result[option.name] = cli_argument_convert_value(
-                        arguments[i + 1], option.type
-                    )
-                    skip_next = True
-                except Exception as e:
-                    raise CommandArgumentConversionException(
-                        argument_name=option.name,
-                        value=arguments[i + 1],
-                        target_type=option.type,
-                        cause=e,
-                    )
-            else:
-                result[option.name] = (
-                    option.default if option.default is not None else None
+        if option:
+            # Process the option value
+            value, skip_next = process_option_value(option, i)
+            result[option.name] = value
+        elif arg.startswith("-"):
+            # Unknown option
+            if strict:
+                raise CommandUnexpectedArgumentException(
+                    argument=arg,
+                    allowed_arguments=allowed_option_names or [],
                 )
+            # In non-strict mode, skip unknown options
 
     return result
