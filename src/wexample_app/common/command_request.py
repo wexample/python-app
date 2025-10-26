@@ -2,11 +2,10 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from wexample_app.common.abstract_kernel_child import AbstractKernelChild
 from wexample_helpers.classes.field import public_field
 from wexample_helpers.classes.private_field import private_field
 from wexample_helpers.decorator.base_class import base_class
-
-from wexample_app.common.abstract_kernel_child import AbstractKernelChild
 
 if TYPE_CHECKING:
     from wexample_helpers.const.types import StringsMatch
@@ -93,7 +92,7 @@ class CommandRequest(AbstractKernelChild):
     def runner(self, value: AbstractCommandRunner) -> None:
         self._runner = value
 
-    def execute(self) -> AbstractResponse:
+    def execute(self) -> None | AbstractResponse:
         from wexample_app.exception.command_build_failed_exception import (
             CommandBuildFailedException,
         )
@@ -114,7 +113,12 @@ class CommandRequest(AbstractKernelChild):
 
             return command.execute_request_and_normalize(self)
         except Exception as e:
-            self.kernel.io.error(exception=e, fatal=True)
+            if hasattr(e, 'message'):
+                self.kernel.io.error(message=e.message)
+            else:
+                raise e
+
+        return None
 
     def _get_resolver(self) -> AbstractCommandResolver:
         from wexample_app.exception.command_resolver_not_found_exception import (
