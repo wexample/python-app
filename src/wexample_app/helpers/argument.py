@@ -101,7 +101,7 @@ def argument_parse_options(
         CommandArgumentConversionException: If argument value conversion fails
     """
     from wexample_helpers.helpers.cli import cli_argument_convert_value
-    from wexample_wex_core.exception.command_argument_conversion_exception import (
+    from wexample_helpers.exception.command_argument_conversion_exception import (
         CommandArgumentConversionException,
     )
     from wexample_wex_core.exception.command_unexpected_argument_exception import (
