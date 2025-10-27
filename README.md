@@ -1,6 +1,6 @@
 # wexample-app
 
-Version: 0.0.53
+Version: 0.0.54
 
 Helpers for building Python app or cli.
 
@@ -279,8 +279,8 @@ Refer to each package's documentation for specific version compatibility require
 - dotenv
 - pydantic>=2,<3
 - python-dotenv
-- wexample-filestate==0.0.54
-- wexample-helpers-yaml==0.0.70
+- wexample-filestate==0.0.55
+- wexample-helpers-yaml==0.0.71
 
 ## Links
 
