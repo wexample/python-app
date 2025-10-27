@@ -2,7 +2,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from wexample_wex_core.const.globals import WORKDIR_SETUP_DIR
+CORE_COMMAND_NAME: str = "wex"
+WORKDIR_SETUP_DIR: Path = Path(f".{CORE_COMMAND_NAME}")
 
 # filestate: python-constant-sort
 APP_FILE_APP_CONFIG: str = "config.yml"
