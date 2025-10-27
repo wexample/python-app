@@ -2,12 +2,13 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from wexample_app.common.service.service_mixin import ServiceMixin
-from wexample_app.service.mixins.service_container_mixin import ServiceContainerMixin
 from wexample_helpers.classes.field import public_field
 from wexample_helpers.classes.private_field import private_field
 from wexample_helpers.decorator.base_class import base_class
 from wexample_helpers.service.registry import Registry
+
+from wexample_app.common.service.service_mixin import ServiceMixin
+from wexample_app.service.mixins.service_container_mixin import ServiceContainerMixin
 
 if TYPE_CHECKING:
     from wexample_app.service.mixins.service_container_mixin import (
