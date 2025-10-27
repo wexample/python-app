@@ -2,8 +2,9 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from wexample_app.runner.abstract_command_runner import AbstractCommandRunner
 from wexample_helpers.classes.abstract_method import abstract_method
+
+from wexample_app.runner.abstract_command_runner import AbstractCommandRunner
 
 if TYPE_CHECKING:
     from pathlib import Path

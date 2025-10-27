@@ -2,8 +2,9 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
 
-from wexample_app.response.abstract_response import AbstractResponse
 from wexample_helpers.decorator.base_class import base_class
+
+from wexample_app.response.abstract_response import AbstractResponse
 
 if TYPE_CHECKING:
     from wexample_app.const.types import ResponsePrintable
@@ -14,11 +15,12 @@ class DefaultResponse(AbstractResponse):
     content: Any
 
     def __attrs_post_init__(self) -> None:
+        from wexample_helpers.const.types import Scalar
+        from wexample_helpers.helpers.args import args_is_basic_value
+
         from wexample_app.exception.response_invalid_content_type_exception import (
             ResponseInvalidContentTypeException,
         )
-        from wexample_helpers.const.types import Scalar
-        from wexample_helpers.helpers.args import args_is_basic_value
 
         self._execute_super_attrs_post_init_if_exists()
 
