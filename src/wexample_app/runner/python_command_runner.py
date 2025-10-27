@@ -8,9 +8,8 @@ if TYPE_CHECKING:
     from types import ModuleType
     from typing import Any
 
-    from wexample_helpers.const.types import AnyCallable
-
     from wexample_app.common.command_request import CommandRequest
+    from wexample_helpers.const.types import AnyCallable
 
 
 class PythonCommandRunner(AbstractFileCommandRunner):
