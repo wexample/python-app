@@ -276,8 +276,8 @@ Refer to each package's documentation for specific version compatibility require
 
 - attrs>=23.1.0
 - cattrs>=23.1.0
-- dotenv
 - pydantic>=2,<3
+- dotenv
 - python-dotenv
 - wexample-filestate==0.0.55
 - wexample-helpers-yaml==0.0.71
