@@ -4,3 +4,4 @@ from __future__ import annotations
 ENV_NAME_DEV: str = "dev"
 ENV_NAME_LOCAL: str = "local"
 ENV_NAME_PROD: str = "prod"
+ENV_NAME_TEST: str = "test"
