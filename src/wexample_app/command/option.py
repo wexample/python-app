@@ -52,8 +52,9 @@ class Option(BaseClass):
     )
 
     def __attrs_post_init__(self) -> None:
-        from wexample_app.helpers.option import option_build_short_name
         from wexample_helpers.helpers.string import string_to_kebab_case
+
+        from wexample_app.helpers.option import option_build_short_name
 
         self.kebab_name = string_to_kebab_case(self.name)
         self.short_name = option_build_short_name(self.name)

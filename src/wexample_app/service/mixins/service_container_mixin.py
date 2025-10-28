@@ -8,8 +8,9 @@ from wexample_helpers.service.mixins.registry_container_mixin import (
 )
 
 if TYPE_CHECKING:
-    from wexample_app.service.service_registry import ServiceRegistry
     from wexample_helpers.service.registry import Registry
+
+    from wexample_app.service.service_registry import ServiceRegistry
 
 
 @base_class
