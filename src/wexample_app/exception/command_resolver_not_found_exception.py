@@ -1,18 +1,10 @@
 from __future__ import annotations
 
-from wexample_helpers.exception.undefined_exception import (
-    ExceptionData,
-    UndefinedException,
-)
+from wexample_app.exception.app_runtime_exception import AppRuntimeException
+from wexample_app.exception.exception_data import CommandResolverNotFoundData
 
 
-class CommandResolverNotFoundData(ExceptionData):
-    """Data model for CommandResolverNotFound exception."""
-
-    command_type: str
-
-
-class CommandResolverNotFoundException(UndefinedException):
+class CommandResolverNotFoundException(AppRuntimeException):
     """Exception raised when no resolver is found for a specific command type."""
 
     error_code: str = "COMMAND_RESOLVER_NOT_FOUND"
@@ -23,15 +15,11 @@ class CommandResolverNotFoundException(UndefinedException):
         cause: Exception | None = None,
         previous: Exception | None = None,
     ) -> None:
-        # Create structured data using Pydantic model
-        data_model = CommandResolverNotFoundData(command_type=command_type)
-
-        # Store command_type as instance attribute for backward compatibility
-        self.command_type = command_type
+        data: CommandResolverNotFoundData = {"command_type": command_type}
 
         super().__init__(
             message=f"No resolver found for command type: {command_type}",
-            data=data_model.model_dump(),
+            data=data,
             cause=cause,
             previous=previous,
         )

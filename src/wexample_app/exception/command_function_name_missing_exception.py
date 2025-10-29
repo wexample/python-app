@@ -1,18 +1,10 @@
 from __future__ import annotations
 
-from wexample_helpers.exception.undefined_exception import (
-    ExceptionData,
-    UndefinedException,
-)
+from wexample_app.exception.app_runtime_exception import AppRuntimeException
+from wexample_app.exception.exception_data import CommandFunctionNameMissingData
 
 
-class CommandFunctionNameMissingData(ExceptionData):
-    """Data model for CommandFunctionNameMissing exception."""
-
-    command_name: str
-
-
-class CommandFunctionNameMissingException(UndefinedException):
+class CommandFunctionNameMissingException(AppRuntimeException):
     """Exception raised when a command function name cannot be determined."""
 
     error_code: str = "COMMAND_FUNCTION_NAME_MISSING"
@@ -23,15 +15,11 @@ class CommandFunctionNameMissingException(UndefinedException):
         cause: Exception | None = None,
         previous: Exception | None = None,
     ) -> None:
-        # Create structured data using Pydantic model
-        data_model = CommandFunctionNameMissingData(command_name=command_name)
-
-        # Store command_name as instance attribute for backward compatibility
-        self.command_name = command_name
+        data: CommandFunctionNameMissingData = {"command_name": command_name}
 
         super().__init__(
             message=f"Command function name could not be determined for: {command_name}",
-            data=data_model.model_dump(),
+            data=data,
             cause=cause,
             previous=previous,
         )

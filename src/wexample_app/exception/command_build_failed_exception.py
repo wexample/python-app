@@ -1,19 +1,10 @@
 from __future__ import annotations
 
-from wexample_helpers.exception.undefined_exception import (
-    ExceptionData,
-    UndefinedException,
-)
+from wexample_app.exception.app_runtime_exception import AppRuntimeException
+from wexample_app.exception.exception_data import CommandBuildFailedData
 
 
-class CommandBuildFailedData(ExceptionData):
-    """Data model for CommandBuildFailed exception."""
-
-    command_name: str
-    resolver_name: str
-
-
-class CommandBuildFailedException(UndefinedException):
+class CommandBuildFailedException(AppRuntimeException):
     """Exception raised when a command cannot be built by its resolver."""
 
     error_code: str = "COMMAND_BUILD_FAILED"
@@ -25,18 +16,14 @@ class CommandBuildFailedException(UndefinedException):
         cause: Exception | None = None,
         previous: Exception | None = None,
     ) -> None:
-        # Create structured data using Pydantic model
-        data_model = CommandBuildFailedData(
-            command_name=command_name, resolver_name=resolver_name
-        )
-
-        # Store attributes as instance attributes for backward compatibility
-        self.command_name = command_name
-        self.resolver_name = resolver_name
+        data: CommandBuildFailedData = {
+            "command_name": command_name,
+            "resolver_name": resolver_name,
+        }
 
         super().__init__(
             message=f"Failed to build command '{command_name}' with resolver: {resolver_name}",
-            data=data_model.model_dump(),
+            data=data,
             cause=cause,
             previous=previous,
         )

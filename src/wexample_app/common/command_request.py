@@ -91,7 +91,9 @@ class CommandRequest(AbstractKernelChild):
     def runner(self, value: AbstractCommandRunner) -> None:
         self._runner = value
 
-    def execute(self) -> None | AbstractResponse:
+    def execute(self) -> AbstractResponse:
+        from wexample_app.response.null_response import NullResponse
+        from wexample_app.exception.app_runtime_exception import AppRuntimeException
         from wexample_app.exception.command_build_failed_exception import (
             CommandBuildFailedException,
         )
@@ -111,13 +113,12 @@ class CommandRequest(AbstractKernelChild):
                 )
 
             return command.execute_request_and_normalize(self)
-        except Exception as e:
-            if hasattr(e, "message"):
-                self.kernel.io.error(message=e.message)
-            else:
-                raise e
+        except AppRuntimeException as e:
+            self.kernel.error(
+                message=f"Runtime error: {e.message}"
+            )
 
-        return None
+        return NullResponse(kernel=self.kernel)
 
     def _get_resolver(self) -> AbstractCommandResolver:
         from wexample_app.exception.command_resolver_not_found_exception import (
