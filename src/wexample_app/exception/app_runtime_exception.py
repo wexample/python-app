@@ -40,6 +40,6 @@ class AppRuntimeException(UndefinedException):
         
         # Log additional context data if available
         if self.data:
-            kernel.log(f"Error details: {self.error_code}")
+            kernel.log(f"Error details: {self.error_code}", indentation=1)
             for key, value in self.data.items():
-                kernel.log(f"  {key}: {value}")
+                kernel.log(message=f"  {key}: {value}", indentation=1)
