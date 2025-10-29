@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from wexample_app.command.option import Option
+from wexample_app.output.abstract_app_output_handler import AbstractAppOutputHandler
 from wexample_helpers.classes.base_class import BaseClass
 from wexample_helpers.classes.private_field import private_field
 from wexample_helpers.decorator.base_class import base_class
@@ -59,6 +60,13 @@ class CommandLineKernel(BaseClass):
 
         for command_request in command_requests:
             self.execute_kernel_command_and_print(command_request)
+
+    def _get_default_output_handler_class(self) -> type[AbstractAppOutputHandler]:
+        from wexample_app.output.app_stdout_output_handler import (
+            AppStdoutOutputHandler,
+        )
+
+        return AppStdoutOutputHandler
 
     def _build_command_requests_from_arguments(
         self: AbstractKernel, arguments: CommandLineArgumentsList

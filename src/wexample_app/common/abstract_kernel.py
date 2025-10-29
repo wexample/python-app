@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING, Any
 
 from wexample_app.service.mixins.service_container_mixin import ServiceContainerMixin
 from wexample_filestate.workdir.mixin.with_workdir_mixin import WithWorkdirMixin
+from wexample_helpers.classes.abstract_method import abstract_method
 from wexample_helpers.classes.field import public_field
 from wexample_helpers.classes.mixin.printable_mixin import PrintableMixin
 from wexample_helpers.decorator.base_class import base_class
@@ -14,7 +15,9 @@ from wexample_prompt.mixins.with_io_methods import WithIoMethods
 
 if TYPE_CHECKING:
     from wexample_app.common.command_request import CommandRequest
-    from wexample_app.output.app_stdout_output_handler import AppStdoutOutputHandler
+    from wexample_app.output.abstract_app_output_handler import (
+        AbstractAppOutputHandler,
+    )
     from wexample_app.response.abstract_response import AbstractResponse
 
 
@@ -29,7 +32,7 @@ class AbstractKernel(
     entrypoint_path: str = public_field(
         description="The main file placed at application root directory"
     )
-    output: AppStdoutOutputHandler = public_field(
+    output: AbstractAppOutputHandler = public_field(
         default=None,
         description="Output handler for printing responses",
     )
@@ -82,11 +85,12 @@ class AbstractKernel(
 
         return CommandRequest
 
+    @abstract_method
+    def _get_default_output_handler_class(self) -> type[AbstractAppOutputHandler]:
+        pass
+
     def _init_output_handler(self) -> None:
         """Initialize the output handler if not already set."""
-        from wexample_app.output.app_stdout_output_handler import (
-            AppStdoutOutputHandler,
-        )
 
         if self.output is None:
-            self.output = AppStdoutOutputHandler()
+            self.output = self._get_default_output_handler_class()()

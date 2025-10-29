@@ -3,15 +3,17 @@ from __future__ import annotations
 import sys
 from typing import TYPE_CHECKING
 
-from wexample_helpers.classes.base_class import BaseClass
 from wexample_helpers.decorator.base_class import base_class
+from wexample_app.output.abstract_app_output_handler import (
+    AbstractAppOutputHandler,
+)
 
 if TYPE_CHECKING:
     from wexample_app.response.abstract_response import AbstractResponse
 
 
 @base_class
-class AppStdoutOutputHandler(BaseClass):
+class AppStdoutOutputHandler(AbstractAppOutputHandler):
     """Output handler for app responses that writes to stdout.
     
     This handler is specifically designed for AbstractResponse objects from the app package.
