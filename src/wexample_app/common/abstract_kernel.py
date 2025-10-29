@@ -14,6 +14,7 @@ from wexample_prompt.mixins.with_io_methods import WithIoMethods
 
 if TYPE_CHECKING:
     from wexample_app.common.command_request import CommandRequest
+    from wexample_app.output.app_stdout_output_handler import AppStdoutOutputHandler
     from wexample_app.response.abstract_response import AbstractResponse
 
 
@@ -28,6 +29,10 @@ class AbstractKernel(
     entrypoint_path: str = public_field(
         description="The main file placed at application root directory"
     )
+    output: AppStdoutOutputHandler = public_field(
+        default=None,
+        description="Output handler for printing responses",
+    )
     root_request: Any | None = public_field(
         default=None,
         description="The initial request that may have launched sub requests",
@@ -40,7 +45,13 @@ class AbstractKernel(
         return request.execute()
 
     def execute_kernel_command_and_print(self, request: CommandRequest) -> None:
-        self.execute_kernel_command(request=request)
+        """Execute a command and print its response using the output handler.
+        
+        Args:
+            request: The command request to execute
+        """
+        response = self.execute_kernel_command(request=request)
+        self.output.print(response=response)
 
     def get_expected_env_keys(self) -> list[str]:
         from wexample_app.const.globals import ENV_VAR_NAME_APP_ENV
@@ -59,6 +70,7 @@ class AbstractKernel(
 
         env_dir_path = self._get_env_files_directory()
         self._init_io_manager()
+        self._init_output_handler()
         self._init_env_file(env_dir_path / FILE_NAME_ENV)
         self._init_env_file_yaml(env_dir_path / FILE_NAME_ENV_YAML)
         self._init_workdir(entrypoint_path=self.entrypoint_path, io=self.io)
@@ -69,3 +81,12 @@ class AbstractKernel(
         from wexample_app.common.command_request import CommandRequest
 
         return CommandRequest
+
+    def _init_output_handler(self) -> None:
+        """Initialize the output handler if not already set."""
+        from wexample_app.output.app_stdout_output_handler import (
+            AppStdoutOutputHandler,
+        )
+
+        if self.output is None:
+            self.output = AppStdoutOutputHandler()

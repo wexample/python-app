@@ -114,7 +114,7 @@ class CommandRequest(AbstractKernelChild):
 
             return command.execute_request_and_normalize(self)
         except AppRuntimeException as e:
-            e.format_error_with_kernel(self.kernel)
+            e.format_error_with_kernel(kernel=self.kernel)
 
         return NullResponse(kernel=self.kernel)
 
