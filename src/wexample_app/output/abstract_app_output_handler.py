@@ -45,7 +45,7 @@ class AbstractAppOutputHandler(AbstractKernelChild):
 
         # Get the output format from request
         output_format = request.output_format
-        
+
         # Get formatted output (response handles io.print internally if needed)
         formatted = response.get_formatted(output_format=output_format)
         
