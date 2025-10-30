@@ -36,16 +36,48 @@ class DictResponse(AbstractResponse):
     def get_printable(self) -> ResponsePrintable:
         return str(self.content)
 
-    def print_response_io(self) -> AbstractPromptResponse:
-        """Convert dict response to properties prompt response for structured display.
+    def get_formatted(self, output_format: str) -> str:
+        """Get the formatted dict response according to the specified format.
         
+        Args:
+            output_format: The desired output format (str, json, yaml, etc.)
+            
         Returns:
-            PropertiesPromptResponse for displaying the dictionary as properties
+            The formatted response as a string
         """
-        from wexample_prompt.responses.data.properties_prompt_response import (
-            PropertiesPromptResponse,
+        from wexample_app.const.output import (
+            OUTPUT_FORMAT_JSON,
+            OUTPUT_FORMAT_STR,
+            OUTPUT_FORMAT_YAML,
         )
 
-        return PropertiesPromptResponse.create_properties(
-            properties=self.content,
-        )
+        if output_format == OUTPUT_FORMAT_JSON:
+            import json
+            return json.dumps(self.content, indent=2)
+        
+        elif output_format == OUTPUT_FORMAT_YAML:
+            import yaml
+            return yaml.dump(self.content, default_flow_style=False)
+        
+        elif output_format == OUTPUT_FORMAT_STR:
+            # Use io.properties() for structured display, then capture the output
+            from wexample_prompt.responses.data.properties_prompt_response import (
+                PropertiesPromptResponse,
+            )
+            
+            prompt_response = PropertiesPromptResponse.create_properties(
+                properties=self.content,
+                title="Response",
+            )
+            
+            # Print via kernel io and return empty string (io already printed)
+            if self.kernel and self.kernel.io:
+                self.kernel.io.print_response(response=prompt_response)
+                return ""
+            
+            # Fallback if no kernel
+            return str(self.content)
+        
+        else:
+            # Unknown format, fallback to string representation
+            return str(self.content)
