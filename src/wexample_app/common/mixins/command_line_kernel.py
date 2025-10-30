@@ -112,12 +112,12 @@ class CommandLineKernel(BaseClass):
         # Apply parsed values to kernel attributes
         for option in core_options:
             if option.name in parsed_core_args:
-                # Use the option's value field if set, otherwise use parsed value
-                value = (
-                    option.value
-                    if option.value is not None
-                    else parsed_core_args[option.name]
-                )
+                value = parsed_core_args[option.name]
+                
+                # Normalize to list if always_list is True
+                if option.always_list and not isinstance(value, list):
+                    value = [value]
+
                 setattr(self, f"_config_arg_{option.name}", value)
 
         # Create filtered user_argv without core options
