@@ -49,36 +49,6 @@ class AppFileOutputHandler(AbstractAppOutputHandler):
 
         return OUTPUT_TARGET_FILE
 
-    def print(self, request: CommandRequest, response: AbstractResponse) -> str | None:
-        """Write the response to a file.
-        
-        Overrides parent to use _get_file_path() for dynamic path building.
-        
-        Args:
-            request: The command request containing output format
-            response: The AbstractResponse to write
-            
-        Returns:
-            The written string, or None if nothing was written
-        """
-        from wexample_app.response.null_response import NullResponse
-
-        # Skip null responses
-        if isinstance(response, NullResponse):
-            return None
-
-        # Get the output format from request
-        output_format = request.output_format
-        
-        # Get formatted output
-        formatted = response.get_formatted(output_format=output_format)
-        
-        # Write to file if there's content
-        if formatted:
-            return self._write_output(request=request, content=formatted)
-        
-        return None
-
     def _write_output(self, request: CommandRequest, content: str) -> str | None:
         """Write the formatted content to a file.
         

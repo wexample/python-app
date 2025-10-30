@@ -51,15 +51,16 @@ class AbstractAppOutputHandler(AbstractKernelChild):
         
         # Delegate to subclass for actual output
         if formatted:
-            return self._write_output(formatted)
+            return self._write_output(request=request, content=formatted)
         
         return None
 
     @abstract_method
-    def _write_output(self, content: str) -> str | None:
+    def _write_output(self, request: CommandRequest, content: str) -> str | None:
         """Write the formatted content to the output destination.
         
         Args:
+            request: The command request (for dynamic path building or context)
             content: The formatted content to write
             
         Returns:

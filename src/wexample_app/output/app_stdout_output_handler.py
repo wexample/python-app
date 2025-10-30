@@ -33,10 +33,11 @@ class AppStdoutOutputHandler(AbstractAppOutputHandler):
         
         return OUTPUT_TARGET_STDOUT
 
-    def _write_output(self, content: str) -> str | None:
+    def _write_output(self, request: CommandRequest, content: str) -> str | None:
         """Write the formatted content to stdout.
         
         Args:
+            request: The command request (unused for stdout)
             content: The formatted content to write
             
         Returns:
