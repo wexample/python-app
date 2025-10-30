@@ -66,5 +66,4 @@ class ListResponse(AbstractResponse):
         
         return ListPromptResponse.create_list(
             items=self.content,
-            title="Response",
         )

@@ -64,4 +64,5 @@ class Option(BaseClass):
         from wexample_helpers.helpers.string import string_to_kebab_case
 
         self.kebab_name = string_to_kebab_case(self.name)
-        self.short_name = option_build_short_name(self.name)
+        if self.short_name is None:
+            self.short_name = option_build_short_name(self.name)
