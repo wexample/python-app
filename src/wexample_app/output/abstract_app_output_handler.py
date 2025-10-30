@@ -2,19 +2,16 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from wexample_app.common.abstract_kernel_child import AbstractKernelChild
 from wexample_helpers.classes.abstract_method import abstract_method
-from wexample_helpers.classes.base_class import BaseClass
 from wexample_helpers.decorator.base_class import base_class
-from wexample_helpers.classes.mixin.has_snake_short_class_name_class_mixin import (
-    HasSnakeShortClassNameClassMixin,
-)
 
 if TYPE_CHECKING:
     from wexample_app.response.abstract_response import AbstractResponse
 
 
 @base_class
-class AbstractAppOutputHandler(HasSnakeShortClassNameClassMixin, BaseClass):
+class AbstractAppOutputHandler(AbstractKernelChild):
     """Base class for app output handlers.
     
     Output handlers are responsible for processing and displaying AbstractResponse objects.
@@ -32,7 +29,3 @@ class AbstractAppOutputHandler(HasSnakeShortClassNameClassMixin, BaseClass):
             The printed/processed string, or None if nothing was output
         """
         self._raise_not_implemented_error()
-
-    @classmethod
-    def get_class_name_suffix(cls) -> str | None:
-        return "OutputHandler"

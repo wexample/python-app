@@ -32,10 +32,6 @@ class AbstractKernel(
     entrypoint_path: str = public_field(
         description="The main file placed at application root directory"
     )
-    outputs: list[AbstractAppOutputHandler] = public_field(
-        factory=list,
-        description="List of output handlers for printing responses",
-    )
     root_request: Any | None = public_field(
         default=None,
         description="The initial request that may have launched sub requests",
@@ -55,7 +51,7 @@ class AbstractKernel(
         """
         response = self.execute_kernel_command(request=request)
         
-        for output_handler in self.outputs:
+        for output_handler in self.create_output_handlers():
             output_handler.print(response=response)
 
     def get_expected_env_keys(self) -> list[str]:
@@ -75,7 +71,6 @@ class AbstractKernel(
 
         env_dir_path = self._get_env_files_directory()
         self._init_io_manager()
-        self._init_output_handler()
         self._init_env_file(env_dir_path / FILE_NAME_ENV)
         self._init_env_file_yaml(env_dir_path / FILE_NAME_ENV_YAML)
         self._init_workdir(entrypoint_path=self.entrypoint_path, io=self.io)
@@ -101,11 +96,10 @@ class AbstractKernel(
 
         return CommandRequest
 
-    def _init_output_handler(self) -> None:
-        """Initialize the output handlers if not already set."""
+    def create_output_handlers(self) -> [AbstractAppOutputHandler]:
+        """Initialize the output handlers with default stdout handler."""
         from wexample_app.output.app_stdout_output_handler import (
             AppStdoutOutputHandler,
         )
 
-        if not self.outputs:
-            self.outputs = [AppStdoutOutputHandler()]
+        return [AppStdoutOutputHandler(kernel=self)]

@@ -86,7 +86,7 @@ class CommandLineKernel(BaseClass):
     def _get_core_args(self: AbstractKernel) -> list[Option]:
         return []
 
-    def _handle_core_args(self: AbstractKernel) -> None:
+    def _init_command_line_core_args(self: AbstractKernel) -> None:
         """Parse and handle core arguments, creating filtered _command_argv."""
         from wexample_app.helpers.argument import (
             argument_filter_core_options,
@@ -136,4 +136,4 @@ class CommandLineKernel(BaseClass):
             path=os.getcwd(), config={}, io=self.io
         )
 
-        self._handle_core_args()
+        self._init_command_line_core_args()
