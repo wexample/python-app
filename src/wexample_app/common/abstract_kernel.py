@@ -32,9 +32,9 @@ class AbstractKernel(
     entrypoint_path: str = public_field(
         description="The main file placed at application root directory"
     )
-    output: AbstractAppOutputHandler = public_field(
-        default=None,
-        description="Output handler for printing responses",
+    outputs: list[AbstractAppOutputHandler] = public_field(
+        factory=list,
+        description="List of output handlers for printing responses",
     )
     root_request: Any | None = public_field(
         default=None,
@@ -48,13 +48,15 @@ class AbstractKernel(
         return request.execute()
 
     def execute_kernel_command_and_print(self, request: CommandRequest) -> None:
-        """Execute a command and print its response using the output handler.
+        """Execute a command and print its response using all active output handlers.
         
         Args:
             request: The command request to execute
         """
         response = self.execute_kernel_command(request=request)
-        self.output.print(response=response)
+        
+        for output_handler in self.outputs:
+            output_handler.print(response=response)
 
     def get_expected_env_keys(self) -> list[str]:
         from wexample_app.const.globals import ENV_VAR_NAME_APP_ENV
@@ -85,12 +87,11 @@ class AbstractKernel(
 
         return CommandRequest
 
-    @abstract_method
-    def _get_default_output_handler_class(self) -> type[AbstractAppOutputHandler]:
-        pass
-
     def _init_output_handler(self) -> None:
-        """Initialize the output handler if not already set."""
+        """Initialize the output handlers if not already set."""
+        from wexample_app.output.app_stdout_output_handler import (
+            AppStdoutOutputHandler,
+        )
 
-        if self.output is None:
-            self.output = self._get_default_output_handler_class()()
+        if not self.outputs:
+            self.outputs = [AppStdoutOutputHandler()]
