@@ -186,7 +186,14 @@ def argument_parse_options(
         if option:
             # Process the option value
             value, skip_next = process_option_value(option, i)
-            result[option.name] = value
+            
+            # Handle multiple values
+            if option.multiple:
+                if option.name not in result:
+                    result[option.name] = []
+                result[option.name].append(value)
+            else:
+                result[option.name] = value
         elif arg.startswith("-"):
             # Unknown option
             if strict:

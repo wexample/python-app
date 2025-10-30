@@ -20,9 +20,17 @@ class Option(BaseClass):
         default=None,
         description="Optional human-readable description of the option",
     )
+    always_list: bool = public_field(
+        default=False,
+        description="If True, the value will always be returned as a list, even with a single value",
+    )
     is_flag: bool = public_field(
         default=False,
         description="Indicates whether the option is a boolean flag",
+    )
+    multiple: bool = public_field(
+        default=False,
+        description="If True, the option can be specified multiple times to accumulate values",
     )
     kebab_name: str | None = public_field(
         default=None,
