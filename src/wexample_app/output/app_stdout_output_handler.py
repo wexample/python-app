@@ -33,7 +33,7 @@ class AppStdoutOutputHandler(AbstractAppOutputHandler):
         
         return OUTPUT_TARGET_STDOUT
 
-    def print(self, response: AbstractResponse) -> str | None:
+    def print(self, request: CommandRequest, response: AbstractResponse) -> str | None:
         """Print the response to stdout with appropriate rendering.
         
         Args:

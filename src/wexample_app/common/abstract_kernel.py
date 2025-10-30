@@ -88,11 +88,12 @@ class AbstractKernel(
         Returns:
             Dictionary mapping handler names to handler classes
         """
+        from wexample_app.const.output import OUTPUT_TARGET_STDOUT
         from wexample_app.output.app_stdout_output_handler import (
             AppStdoutOutputHandler,
         )
 
-        return {"stdout": AppStdoutOutputHandler}
+        return {OUTPUT_TARGET_STDOUT: AppStdoutOutputHandler}
 
     def _get_command_request_class(self) -> type[CommandRequest]:
         from wexample_app.common.command_request import CommandRequest

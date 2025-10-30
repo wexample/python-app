@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from wexample_app.common.abstract_kernel_child import AbstractKernelChild
+from wexample_app.const.output import OUTPUT_TARGET_STDOUT, OUTPUT_FORMAT_STR
 from wexample_helpers.classes.field import public_field
 from wexample_helpers.classes.private_field import private_field
 from wexample_helpers.decorator.base_class import base_class
@@ -76,10 +77,10 @@ class CommandRequest(AbstractKernelChild):
         self.path = self.runner.build_command_path(request=self)
 
         if self.output_target is None:
-            self.output_target = ["stdout"]
+            self.output_target = [OUTPUT_TARGET_STDOUT]
         
         if self.output_format is None:
-            self.output_format = "str"
+            self.output_format = OUTPUT_FORMAT_STR
 
     @property
     def match(self) -> StringsMatch:
