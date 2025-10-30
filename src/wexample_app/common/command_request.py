@@ -35,6 +35,14 @@ class CommandRequest(AbstractKernelChild):
         default=None,
         description="Optional type classification of the command",
     )
+    output_target: list[str] | None = public_field(
+        default=None,
+        description="The list of output targets (stdout, file, etc.)",
+    )
+    output_format: str | None = public_field(
+        default=None,
+        description="The output format (str, json, yaml, etc.)",
+    )
     _match: StringsMatch | None = private_field(
         default=None,
         description="Internal string matching result used during command resolution",
@@ -66,6 +74,12 @@ class CommandRequest(AbstractKernelChild):
             raise CommandRunnerNotFoundException(command_name=self.name)
 
         self.path = self.runner.build_command_path(request=self)
+
+        if self.output_target is None:
+            self.output_target = ["stdout"]
+        
+        if self.output_format is None:
+            self.output_format = "str"
 
     @property
     def match(self) -> StringsMatch:

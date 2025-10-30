@@ -50,9 +50,12 @@ class AbstractKernel(
             request: The command request to execute
         """
         response = self.execute_kernel_command(request=request)
-        
+
         for output_handler in self.create_output_handlers():
-            output_handler.print(response=response)
+            output_handler.print(
+                request=request,
+                response=response
+            )
 
     def get_expected_env_keys(self) -> list[str]:
         from wexample_app.const.globals import ENV_VAR_NAME_APP_ENV
