@@ -34,13 +34,17 @@ class AbstractResponse(AbstractKernelChild, BaseClass):
 
         return printable
 
-    def print_response_io(self) -> AbstractPromptResponse | None:
-        """Convert this response to a prompt response for IO display.
+    def get_formatted(self, output_format: str) -> str:
+        """Get the formatted response content according to the specified format.
         
-        By default, returns None which means the handler will use simple string output.
-        Subclasses can override to provide custom prompt response rendering.
+        This method handles all output formats and always returns a string.
+        For 'str' format, it may use io.properties() or other prompt responses internally.
         
+        Args:
+            output_format: The desired output format (str, json, yaml, etc.)
+            
         Returns:
-            A prompt response for display, or None for default string output
+            The formatted response as a string
         """
-        return None
+        # Default implementation: just return the printable string
+        return self.get_wrapped_printable()
