@@ -8,6 +8,9 @@ from wexample_helpers.decorator.base_class import base_class
 
 if TYPE_CHECKING:
     from wexample_app.const.types import ResponsePrintable
+    from wexample_prompt.responses.abstract_prompt_response import (
+        AbstractPromptResponse,
+    )
 
 
 @base_class
@@ -32,3 +35,18 @@ class DictResponse(AbstractResponse):
 
     def get_printable(self) -> ResponsePrintable:
         return str(self.content)
+
+    def print_response_io(self) -> AbstractPromptResponse:
+        """Convert dict response to properties prompt response for structured display.
+        
+        Returns:
+            PropertiesPromptResponse for displaying the dictionary as properties
+        """
+        from wexample_prompt.responses.data.properties_prompt_response import (
+            PropertiesPromptResponse,
+        )
+
+        return PropertiesPromptResponse.create_properties(
+            properties=self.content,
+            title="Response",
+        )

@@ -11,6 +11,9 @@ from wexample_helpers.decorator.base_class import base_class
 if TYPE_CHECKING:
     from wexample_app.common.abstract_kernel import AbstractKernel
     from wexample_app.const.types import ResponsePrintable
+    from wexample_prompt.responses.abstract_prompt_response import (
+        AbstractPromptResponse,
+    )
 
 
 @base_class
@@ -30,3 +33,14 @@ class AbstractResponse(AbstractKernelChild, BaseClass):
             return ""
 
         return printable
+
+    def print_response_io(self) -> AbstractPromptResponse | None:
+        """Convert this response to a prompt response for IO display.
+        
+        By default, returns None which means the handler will use simple string output.
+        Subclasses can override to provide custom prompt response rendering.
+        
+        Returns:
+            A prompt response for display, or None for default string output
+        """
+        return None

@@ -31,21 +31,19 @@ class AppStdoutOutputHandler(AbstractAppOutputHandler):
         Returns:
             The printed string, or None if nothing was printed
         """
-        from wexample_app.response.dict_response import DictResponse
         from wexample_app.response.null_response import NullResponse
 
         # Skip null responses
         if isinstance(response, NullResponse):
             return None
 
-        # Special rendering for DictResponse
-        if isinstance(response, DictResponse):
-            if self.kernel and self.kernel.io:
-                self.kernel.io.properties(
-                    properties=response.content,
-                    title="Response"
-                )
-                return str(response.content)
+        # Try to get a prompt response for structured display
+        prompt_response = response.print_response_io()
+        
+        if prompt_response and self.kernel and self.kernel.io:
+            # Use kernel's print_response for prompt-based rendering
+            self.kernel.io.print_response(response=prompt_response)
+            return str(response.get_printable())
         
         # Default: simple string output
         printable = response.get_wrapped_printable()
