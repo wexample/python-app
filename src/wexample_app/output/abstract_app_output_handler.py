@@ -5,11 +5,10 @@ from typing import TYPE_CHECKING
 from wexample_app.common.abstract_kernel_child import AbstractKernelChild
 from wexample_helpers.classes.abstract_method import abstract_method
 from wexample_helpers.decorator.base_class import base_class
-from wexample_wex_core.common.command_request import CommandRequest
 
 if TYPE_CHECKING:
+    from wexample_app.common.command_request import CommandRequest
     from wexample_app.response.abstract_response import AbstractResponse
-
 
 @base_class
 class AbstractAppOutputHandler(AbstractKernelChild):
@@ -28,14 +27,42 @@ class AbstractAppOutputHandler(AbstractKernelChild):
         """
         self._raise_not_implemented_error()
 
-    @abstract_method
     def print(self, request: CommandRequest, response: AbstractResponse) -> str | None:
         """Print or process the response.
         
         Args:
+            request: The command request containing output format
             response: The AbstractResponse to print or process
             
         Returns:
             The printed/processed string, or None if nothing was output
+        """
+        from wexample_app.response.null_response import NullResponse
+
+        # Skip null responses
+        if isinstance(response, NullResponse):
+            return None
+
+        # Get the output format from request
+        output_format = request.output_format
+        
+        # Get formatted output (response handles io.print internally if needed)
+        formatted = response.get_formatted(output_format=output_format)
+        
+        # Delegate to subclass for actual output
+        if formatted:
+            return self._write_output(formatted)
+        
+        return None
+
+    @abstract_method
+    def _write_output(self, content: str) -> str | None:
+        """Write the formatted content to the output destination.
+        
+        Args:
+            content: The formatted content to write
+            
+        Returns:
+            The written string, or None if nothing was written
         """
         self._raise_not_implemented_error()

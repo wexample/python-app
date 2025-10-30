@@ -33,35 +33,16 @@ class AppStdoutOutputHandler(AbstractAppOutputHandler):
         
         return OUTPUT_TARGET_STDOUT
 
-    def print(self, request: CommandRequest, response: AbstractResponse) -> str | None:
-        """Print the response to stdout with appropriate rendering.
+    def _write_output(self, content: str) -> str | None:
+        """Write the formatted content to stdout.
         
         Args:
-            response: The AbstractResponse to print
+            content: The formatted content to write
             
         Returns:
-            The printed string, or None if nothing was printed
+            The written string
         """
-        from wexample_app.response.null_response import NullResponse
+        sys.stdout.write(content + "\n")
+        sys.stdout.flush()
+        return content
 
-        # Skip null responses
-        if isinstance(response, NullResponse):
-            return None
-
-        from wexample_app.const.output import OUTPUT_FORMAT_STR
-
-        # Get the output format from kernel's root request
-        output_format = OUTPUT_FORMAT_STR
-        if self.kernel and self.kernel.root_request:
-            output_format = self.kernel.root_request.output_format or OUTPUT_FORMAT_STR
-        
-        # Get formatted output (response handles io.print internally if needed)
-        formatted = response.get_formatted(output_format=output_format)
-        
-        # Write to stdout if there's content
-        if formatted:
-            sys.stdout.write(formatted + "\n")
-            sys.stdout.flush()
-            return formatted
-        
-        return None
