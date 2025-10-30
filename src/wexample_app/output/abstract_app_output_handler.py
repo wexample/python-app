@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING
 from wexample_app.common.abstract_kernel_child import AbstractKernelChild
 from wexample_helpers.classes.abstract_method import abstract_method
 from wexample_helpers.decorator.base_class import base_class
+from wexample_wex_core.common.command_request import CommandRequest
 
 if TYPE_CHECKING:
     from wexample_app.response.abstract_response import AbstractResponse
@@ -19,7 +20,7 @@ class AbstractAppOutputHandler(AbstractKernelChild):
     """
 
     @abstract_method
-    def print(self, response: AbstractResponse) -> str | None:
+    def print(self, request: CommandRequest, response: AbstractResponse) -> str | None:
         """Print or process the response.
         
         Args:

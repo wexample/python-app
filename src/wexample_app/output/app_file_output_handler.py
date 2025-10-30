@@ -7,6 +7,7 @@ from wexample_app.output.abstract_app_output_handler import (
 )
 from wexample_helpers.classes.field import public_field
 from wexample_helpers.decorator.base_class import base_class
+from wexample_wex_core.common.command_request import CommandRequest
 
 if TYPE_CHECKING:
     from pathlib import Path
@@ -25,7 +26,7 @@ class AppFileOutputHandler(AbstractAppOutputHandler):
         description="Path to the output file"
     )
 
-    def print(self, response: AbstractResponse) -> str | None:
+    def print(self, request: CommandRequest, response: AbstractResponse) -> str | None:
         """Write the response to a file.
         
         Args:
