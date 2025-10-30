@@ -82,6 +82,20 @@ class AbstractKernel(
 
         return self
 
+    def _get_available_output_handlers(
+        self,
+    ) -> dict[str, type[AbstractAppOutputHandler]]:
+        """Get the registry of available output handlers.
+        
+        Returns:
+            Dictionary mapping handler names to handler classes
+        """
+        from wexample_app.output.app_stdout_output_handler import (
+            AppStdoutOutputHandler,
+        )
+
+        return {"stdout": AppStdoutOutputHandler}
+
     def _get_command_request_class(self) -> type[CommandRequest]:
         from wexample_app.common.command_request import CommandRequest
 
