@@ -26,6 +26,9 @@ class AppFileOutputHandler(AbstractAppOutputHandler):
         description="Path to the output file"
     )
 
+    def _get_file_path(self, request: CommandRequest) -> Path:
+        return self.file_path
+
     def get_target_name(self) -> str:
         """Get the target name for this handler.
         
@@ -33,10 +36,12 @@ class AppFileOutputHandler(AbstractAppOutputHandler):
             'file'
         """
         from wexample_app.const.output import OUTPUT_TARGET_FILE
-        
+
         return OUTPUT_TARGET_FILE
 
     def print(self, request: CommandRequest, response: AbstractResponse) -> str | None:
+        from wexample_helpers.helpers.cli import cli_make_clickable_path
+
         """Write the response to a file.
         
         Args:
@@ -46,9 +51,14 @@ class AppFileOutputHandler(AbstractAppOutputHandler):
             The written string, or None if nothing was written
         """
         printable = response.get_wrapped_printable()
-        
+
         if printable:
-            self.file_path.write_text(printable, encoding="utf-8")
+            file_path = self._get_file_path(
+                request
+            )
+
+            file_path.write_text(printable, encoding="utf-8")
+            self.kernel.log(f"Output saved into: {cli_make_clickable_path(file_path)}")
             return printable
-        
+
         return None
