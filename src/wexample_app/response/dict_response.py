@@ -48,5 +48,4 @@ class DictResponse(AbstractResponse):
 
         return PropertiesPromptResponse.create_properties(
             properties=self.content,
-            title="Response",
         )
