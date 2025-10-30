@@ -26,6 +26,16 @@ class AppFileOutputHandler(AbstractAppOutputHandler):
         description="Path to the output file"
     )
 
+    def get_target_name(self) -> str:
+        """Get the target name for this handler.
+        
+        Returns:
+            'file'
+        """
+        from wexample_app.const.output import OUTPUT_TARGET_FILE
+        
+        return OUTPUT_TARGET_FILE
+
     def print(self, request: CommandRequest, response: AbstractResponse) -> str | None:
         """Write the response to a file.
         

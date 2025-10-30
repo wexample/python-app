@@ -7,6 +7,7 @@ from wexample_app.output.abstract_app_output_handler import (
     AbstractAppOutputHandler,
 )
 from wexample_helpers.decorator.base_class import base_class
+from wexample_wex_core.common.command_request import CommandRequest
 
 if TYPE_CHECKING:
     from wexample_app.response.abstract_response import AbstractResponse
@@ -21,6 +22,16 @@ class AppStdoutOutputHandler(AbstractAppOutputHandler):
     - DictResponse: renders via io.properties() for structured display
     - Other responses: uses get_wrapped_printable() for simple string output
     """
+
+    def get_target_name(self) -> str:
+        """Get the target name for this handler.
+        
+        Returns:
+            'stdout'
+        """
+        from wexample_app.const.output import OUTPUT_TARGET_STDOUT
+        
+        return OUTPUT_TARGET_STDOUT
 
     def print(self, response: AbstractResponse) -> str | None:
         """Print the response to stdout with appropriate rendering.
@@ -37,20 +48,20 @@ class AppStdoutOutputHandler(AbstractAppOutputHandler):
         if isinstance(response, NullResponse):
             return None
 
-        # Try to get a prompt response for structured display
-        prompt_response = response.print_response_io()
+        from wexample_app.const.output import OUTPUT_FORMAT_STR
+
+        # Get the output format from kernel's root request
+        output_format = OUTPUT_FORMAT_STR
+        if self.kernel and self.kernel.root_request:
+            output_format = self.kernel.root_request.output_format or OUTPUT_FORMAT_STR
         
-        if prompt_response and self.kernel and self.kernel.io:
-            # Use kernel's print_response for prompt-based rendering
-            self.kernel.io.print_response(response=prompt_response)
-            return str(response.get_printable())
+        # Get formatted output (response handles io.print internally if needed)
+        formatted = response.get_formatted(output_format=output_format)
         
-        # Default: simple string output
-        printable = response.get_wrapped_printable()
-        
-        if printable:
-            sys.stdout.write(printable + "\n")
+        # Write to stdout if there's content
+        if formatted:
+            sys.stdout.write(formatted + "\n")
             sys.stdout.flush()
-            return printable
+            return formatted
         
         return None

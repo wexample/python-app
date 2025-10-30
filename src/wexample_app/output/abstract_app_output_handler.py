@@ -20,6 +20,15 @@ class AbstractAppOutputHandler(AbstractKernelChild):
     """
 
     @abstract_method
+    def get_target_name(self) -> str:
+        """Get the name of this output target.
+        
+        Returns:
+            The target name (e.g., 'stdout', 'file')
+        """
+        self._raise_not_implemented_error()
+
+    @abstract_method
     def print(self, request: CommandRequest, response: AbstractResponse) -> str | None:
         """Print or process the response.
         
