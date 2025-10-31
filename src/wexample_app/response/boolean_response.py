@@ -12,9 +12,7 @@ if TYPE_CHECKING:
 
 @base_class
 class BooleanResponse(AbstractResponse):
-    content: bool = public_field(
-        description="Boolean value of the response"
-    )
+    content: bool = public_field(description="Boolean value of the response")
 
     def get_printable(self) -> ResponsePrintable:
         from wexample_helpers.helpers.string import string_render_boolean

@@ -14,6 +14,6 @@ def debug_handle_app_error(
     debug_config = yaml_read_dict(os.path.join(os.getcwd(), debug_config_file_name))
 
     print(error_format(error=e, paths_map=debug_config.get("host_paths_map", {})))
-    
+
     # Exit with error code to signal failure to calling process
     sys.exit(1)

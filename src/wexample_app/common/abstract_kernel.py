@@ -45,17 +45,14 @@ class AbstractKernel(
 
     def execute_kernel_command_and_print(self, request: CommandRequest) -> None:
         """Execute a command and print its response using all active output handlers.
-        
+
         Args:
             request: The command request to execute
         """
         response = self.execute_kernel_command(request=request)
 
         for output_handler in self.create_output_handlers():
-            output_handler.print(
-                request=request,
-                response=response
-            )
+            output_handler.print(request=request, response=response)
 
     def get_expected_env_keys(self) -> list[str]:
         from wexample_app.const.globals import ENV_VAR_NAME_APP_ENV
@@ -84,7 +81,7 @@ class AbstractKernel(
         self,
     ) -> dict[str, type[AbstractAppOutputHandler]]:
         """Get the registry of available output handlers.
-        
+
         Returns:
             Dictionary mapping handler names to handler classes
         """

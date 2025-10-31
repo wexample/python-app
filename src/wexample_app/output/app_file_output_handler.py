@@ -16,22 +16,20 @@ if TYPE_CHECKING:
 @base_class
 class AppFileOutputHandler(AbstractAppOutputHandler):
     """Output handler for app responses that writes to a file.
-    
+
     This handler writes the response content to a specified file path.
     """
 
-    file_path: Path = public_field(
-        description="Path to the output file"
-    )
+    file_path: Path = public_field(description="Path to the output file")
 
     def _get_file_path(self, request: CommandRequest) -> Path:
         """Get the file path for output.
-        
+
         Can be overridden by subclasses to compute path dynamically.
-        
+
         Args:
             request: The command request
-            
+
         Returns:
             The file path to write to
         """
@@ -39,7 +37,7 @@ class AppFileOutputHandler(AbstractAppOutputHandler):
 
     def get_target_name(self) -> str:
         """Get the target name for this handler.
-        
+
         Returns:
             'file'
         """
@@ -49,11 +47,11 @@ class AppFileOutputHandler(AbstractAppOutputHandler):
 
     def _write_output(self, request: CommandRequest, content: str) -> str | None:
         """Write the formatted content to a file.
-        
+
         Args:
             request: The command request (for dynamic path building)
             content: The formatted content to write
-            
+
         Returns:
             The written string
         """

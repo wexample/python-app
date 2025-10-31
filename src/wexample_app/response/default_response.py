@@ -12,9 +12,7 @@ if TYPE_CHECKING:
 
 @base_class
 class DefaultResponse(AbstractResponse):
-    content: Any = public_field(
-        description="Scalar content of the response"
-    )
+    content: Any = public_field(description="Scalar content of the response")
 
     def __attrs_post_init__(self) -> None:
         from wexample_app.exception.response_invalid_content_type_exception import (

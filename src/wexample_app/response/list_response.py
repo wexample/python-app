@@ -38,32 +38,34 @@ class ListResponse(AbstractResponse):
 
     def _get_formatted_json_content(self) -> str:
         """Get the list content formatted as JSON.
-        
+
         Returns:
             JSON string representation of the list
         """
         import json
+
         return json.dumps(self.content, indent=2)
 
     def _get_formatted_yaml_content(self) -> str:
         """Get the list content formatted as YAML.
-        
+
         Returns:
             YAML string representation of the list
         """
         import yaml
+
         return yaml.dump(self.content, default_flow_style=False)
 
     def _get_formatted_prompt_response(self):
         """Get a list prompt response for structured display.
-        
+
         Returns:
             ListPromptResponse for displaying the list items
         """
         from wexample_prompt.responses.data.list_prompt_response import (
             ListPromptResponse,
         )
-        
+
         return ListPromptResponse.create_list(
             items=self.content,
         )

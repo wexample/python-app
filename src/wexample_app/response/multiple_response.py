@@ -12,10 +12,7 @@ if TYPE_CHECKING:
 
 @base_class
 class MultipleResponse(AbstractResponse):
-    responses: list[Any] = public_field(
-        factory=list,
-        description="List of responses"
-    )
+    responses: list[Any] = public_field(factory=list, description="List of responses")
 
     def __attrs_post_init__(self) -> None:
         from wexample_app.exception.response_invalid_content_type_exception import (

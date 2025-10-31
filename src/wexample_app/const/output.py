@@ -1,4 +1,5 @@
 """Constants for output handling."""
+from __future__ import annotations
 
 # Output targets
 OUTPUT_TARGET_STDOUT = "stdout"

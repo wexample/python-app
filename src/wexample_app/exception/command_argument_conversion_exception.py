@@ -19,12 +19,12 @@ class CommandArgumentConversionException(AppRuntimeException):
     error_code: str = "COMMAND_ARGUMENT_CONVERSION_ERROR"
 
     def __init__(
-            self,
-            argument_name: str,
-            value: str,
-            target_type: type,
-            cause: Exception | None = None,
-            previous: Exception | None = None,
+        self,
+        argument_name: str,
+        value: str,
+        target_type: type,
+        cause: Exception | None = None,
+        previous: Exception | None = None,
     ) -> None:
         data: CommandArgumentConversionData = {
             "argument_name": argument_name,

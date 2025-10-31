@@ -5,8 +5,9 @@ from typing import TYPE_CHECKING
 from wexample_app.runner.abstract_file_command_runner import AbstractFileCommandRunner
 
 if TYPE_CHECKING:
-    from wexample_app.common.command_request import CommandRequest
     from wexample_helpers.const.types import AnyCallable
+
+    from wexample_app.common.command_request import CommandRequest
 
 
 class YamlCommandRunner(AbstractFileCommandRunner):

@@ -78,7 +78,7 @@ class CommandRequest(AbstractKernelChild):
 
         if self.output_target is None:
             self.output_target = [OUTPUT_TARGET_STDOUT]
-        
+
         if self.output_format is None:
             self.output_format = OUTPUT_FORMAT_STR
 

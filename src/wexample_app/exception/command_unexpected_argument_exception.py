@@ -1,9 +1,10 @@
 from __future__ import annotations
 
-from wexample_app.exception.app_runtime_exception import AppRuntimeException
 from wexample_helpers.exception.mixin.not_allowed_item_mixin import (
     NotAllowedItemMixin,
 )
+
+from wexample_app.exception.app_runtime_exception import AppRuntimeException
 
 
 class CommandUnexpectedArgumentException(AppRuntimeException, NotAllowedItemMixin):

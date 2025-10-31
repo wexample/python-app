@@ -113,7 +113,7 @@ class CommandLineKernel(BaseClass):
         for option in core_options:
             if option.name in parsed_core_args:
                 value = parsed_core_args[option.name]
-                
+
                 # Normalize to list if always_list is True
                 if option.always_list and not isinstance(value, list):
                     value = [value]

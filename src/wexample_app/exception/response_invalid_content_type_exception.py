@@ -37,7 +37,9 @@ class ResponseInvalidContentTypeException(AppRuntimeException):
 
         # Build a descriptive message
         allowed_str = ", ".join(allowed_types)
-        message = f"Invalid content type '{content_type}'. Expected one of: {allowed_str}"
+        message = (
+            f"Invalid content type '{content_type}'. Expected one of: {allowed_str}"
+        )
 
         super().__init__(
             message=message,

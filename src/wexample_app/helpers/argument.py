@@ -186,7 +186,7 @@ def argument_parse_options(
         if option:
             # Process the option value
             value, skip_next = process_option_value(option, i)
-            
+
             # Handle multiple values
             if option.multiple:
                 if option.name not in result:
