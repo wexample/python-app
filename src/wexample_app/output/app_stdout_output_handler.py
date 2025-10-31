@@ -1,16 +1,12 @@
 from __future__ import annotations
 
 import sys
-from typing import TYPE_CHECKING
 
+from wexample_app.common.command_request import CommandRequest
 from wexample_app.output.abstract_app_output_handler import (
     AbstractAppOutputHandler,
 )
 from wexample_helpers.decorator.base_class import base_class
-from wexample_wex_core.common.command_request import CommandRequest
-
-if TYPE_CHECKING:
-    from wexample_app.response.abstract_response import AbstractResponse
 
 
 @base_class
@@ -30,7 +26,7 @@ class AppStdoutOutputHandler(AbstractAppOutputHandler):
             'stdout'
         """
         from wexample_app.const.output import OUTPUT_TARGET_STDOUT
-        
+
         return OUTPUT_TARGET_STDOUT
 
     def _write_output(self, request: CommandRequest, content: str) -> str | None:
@@ -46,4 +42,3 @@ class AppStdoutOutputHandler(AbstractAppOutputHandler):
         sys.stdout.write(content + "\n")
         sys.stdout.flush()
         return content
-
