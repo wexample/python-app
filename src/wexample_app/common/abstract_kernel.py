@@ -4,10 +4,10 @@ from typing import TYPE_CHECKING, Any
 
 from wexample_app.service.mixins.service_container_mixin import ServiceContainerMixin
 from wexample_filestate.workdir.mixin.with_workdir_mixin import WithWorkdirMixin
-from wexample_helpers.classes.abstract_method import abstract_method
 from wexample_helpers.classes.field import public_field
 from wexample_helpers.classes.mixin.printable_mixin import PrintableMixin
 from wexample_helpers.decorator.base_class import base_class
+from wexample_helpers.mixin.with_entrypoint_path_mixin import WithEntrypointPathMixin
 from wexample_helpers_yaml.classes.mixin.has_yaml_env_keys_file import (
     HasYamlEnvKeysFile,
 )
@@ -28,10 +28,8 @@ class AbstractKernel(
     WithWorkdirMixin,
     WithIoMethods,
     PrintableMixin,
+    WithEntrypointPathMixin
 ):
-    entrypoint_path: str = public_field(
-        description="The main file placed at application root directory"
-    )
     root_request: Any | None = public_field(
         default=None,
         description="The initial request that may have launched sub requests",
