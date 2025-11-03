@@ -56,7 +56,7 @@ class DictResponse(AbstractResponse):
 
         return yaml.dump(self.content, default_flow_style=False)
 
-    def _get_formatted_prompt_response(self):
+    def _get_formatted_prompt_response(self) -> AbstractPromptResponse:
         """Get a properties prompt response for structured display.
 
         Returns:
