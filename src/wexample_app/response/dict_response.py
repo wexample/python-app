@@ -46,16 +46,6 @@ class DictResponse(AbstractResponse):
 
         return json.dumps(self.content, indent=2)
 
-    def _get_formatted_yaml_content(self) -> str:
-        """Get the dict content formatted as YAML.
-
-        Returns:
-            YAML string representation of the dictionary
-        """
-        import yaml
-
-        return yaml.dump(self.content, default_flow_style=False)
-
     def _get_formatted_prompt_response(self) -> AbstractPromptResponse:
         """Get a properties prompt response for structured display.
 
@@ -69,3 +59,13 @@ class DictResponse(AbstractResponse):
         return PropertiesPromptResponse.create_properties(
             properties=self.content,
         )
+
+    def _get_formatted_yaml_content(self) -> str:
+        """Get the dict content formatted as YAML.
+
+        Returns:
+            YAML string representation of the dictionary
+        """
+        import yaml
+
+        return yaml.dump(self.content, default_flow_style=False)

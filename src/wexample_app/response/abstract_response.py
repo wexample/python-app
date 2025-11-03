@@ -22,18 +22,6 @@ class AbstractResponse(AbstractKernelChild, BaseClass):
         description="The kernel that produced the response"
     )
 
-    @abstract_method
-    def get_printable(self) -> ResponsePrintable:
-        pass
-
-    def get_wrapped_printable(self) -> str:
-        printable = self.get_printable()
-
-        if printable is None:
-            return ""
-
-        return printable
-
     def get_formatted(self, output_format: str) -> str:
         """Get the formatted response content according to the specified format.
 
@@ -73,6 +61,18 @@ class AbstractResponse(AbstractKernelChild, BaseClass):
             # Unknown format, fallback to string representation
             return self.get_wrapped_printable()
 
+    @abstract_method
+    def get_printable(self) -> ResponsePrintable:
+        pass
+
+    def get_wrapped_printable(self) -> str:
+        printable = self.get_printable()
+
+        if printable is None:
+            return ""
+
+        return printable
+
     def _get_formatted_json_content(self) -> str:
         """Get the response content formatted as JSON.
 
@@ -86,6 +86,17 @@ class AbstractResponse(AbstractKernelChild, BaseClass):
 
         return json.dumps(str(self.get_printable()), indent=2)
 
+    def _get_formatted_prompt_response(self) -> AbstractPromptResponse | None:
+        """Get a prompt response for structured IO display.
+
+        Default implementation returns None (no special prompt rendering).
+        Subclasses can override to provide custom prompt responses.
+
+        Returns:
+            A prompt response for display, or None for default string output
+        """
+        return None
+
     def _get_formatted_yaml_content(self) -> str:
         """Get the response content formatted as YAML.
 
@@ -98,14 +109,3 @@ class AbstractResponse(AbstractKernelChild, BaseClass):
         import yaml
 
         return yaml.dump(str(self.get_printable()), default_flow_style=False)
-
-    def _get_formatted_prompt_response(self) -> AbstractPromptResponse | None:
-        """Get a prompt response for structured IO display.
-
-        Default implementation returns None (no special prompt rendering).
-        Subclasses can override to provide custom prompt responses.
-
-        Returns:
-            A prompt response for display, or None for default string output
-        """
-        return None

@@ -22,6 +22,16 @@ class AppFileOutputHandler(AbstractAppOutputHandler):
 
     file_path: Path = public_field(description="Path to the output file")
 
+    def get_target_name(self) -> str:
+        """Get the target name for this handler.
+
+        Returns:
+            'file'
+        """
+        from wexample_app.const.output import OUTPUT_TARGET_FILE
+
+        return OUTPUT_TARGET_FILE
+
     def _get_file_path(self, request: CommandRequest) -> Path:
         """Get the file path for output.
 
@@ -34,16 +44,6 @@ class AppFileOutputHandler(AbstractAppOutputHandler):
             The file path to write to
         """
         return self.file_path
-
-    def get_target_name(self) -> str:
-        """Get the target name for this handler.
-
-        Returns:
-            'file'
-        """
-        from wexample_app.const.output import OUTPUT_TARGET_FILE
-
-        return OUTPUT_TARGET_FILE
 
     def _write_output(self, request: CommandRequest, content: str) -> str | None:
         """Write the formatted content to a file.

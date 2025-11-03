@@ -28,7 +28,7 @@ class AbstractKernel(
     WithWorkdirMixin,
     WithIoMethods,
     PrintableMixin,
-    WithEntrypointPathMixin
+    WithEntrypointPathMixin,
 ):
     root_request: Any | None = public_field(
         default=None,

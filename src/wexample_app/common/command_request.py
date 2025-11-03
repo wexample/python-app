@@ -28,6 +28,14 @@ class CommandRequest(AbstractKernelChild):
     name: str = public_field(
         description="Name of the command to execute",
     )
+    output_format: str | None = public_field(
+        default=None,
+        description="The output format (str, json, yaml, etc.)",
+    )
+    output_target: list[str] | None = public_field(
+        default=None,
+        description="The list of output targets (stdout, file, etc.)",
+    )
     path: str | None = public_field(
         default=None,
         description="Optional path context for the command",
@@ -35,14 +43,6 @@ class CommandRequest(AbstractKernelChild):
     type: str | None = public_field(
         default=None,
         description="Optional type classification of the command",
-    )
-    output_target: list[str] | None = public_field(
-        default=None,
-        description="The list of output targets (stdout, file, etc.)",
-    )
-    output_format: str | None = public_field(
-        default=None,
-        description="The output format (str, json, yaml, etc.)",
     )
     _match: StringsMatch | None = private_field(
         default=None,

@@ -61,13 +61,6 @@ class CommandLineKernel(BaseClass):
         for command_request in command_requests:
             self.execute_kernel_command_and_print(command_request)
 
-    def _get_default_output_handler_class(self) -> type[AbstractAppOutputHandler]:
-        from wexample_app.output.app_stdout_output_handler import (
-            AppStdoutOutputHandler,
-        )
-
-        return AppStdoutOutputHandler
-
     def _build_command_requests_from_arguments(
         self: AbstractKernel, arguments: CommandLineArgumentsList
     ) -> list[CommandRequest]:
@@ -85,6 +78,13 @@ class CommandLineKernel(BaseClass):
 
     def _get_core_args(self: AbstractKernel) -> list[Option]:
         return []
+
+    def _get_default_output_handler_class(self) -> type[AbstractAppOutputHandler]:
+        from wexample_app.output.app_stdout_output_handler import (
+            AppStdoutOutputHandler,
+        )
+
+        return AppStdoutOutputHandler
 
     def _init_command_line_core_args(self: AbstractKernel) -> None:
         """Parse and handle core arguments, creating filtered _command_argv."""

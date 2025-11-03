@@ -55,6 +55,7 @@ class CommandTypeNotFoundData(TypedDict):
 
 class ResponseInvalidContentTypeData(TypedDict):
     """Data structure for ResponseInvalidContentType exception."""
+
     allowed_types: list[str]
     content_type: str
     content_value: str

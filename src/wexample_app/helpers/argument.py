@@ -100,13 +100,14 @@ def argument_parse_options(
         CommandUnexpectedArgumentException: If an unknown argument is encountered (strict mode only)
         CommandArgumentConversionException: If argument value conversion fails
     """
+    from wexample_helpers.helpers.cli import cli_argument_convert_value
+
     from wexample_app.exception.command_argument_conversion_exception import (
         CommandArgumentConversionException,
     )
     from wexample_app.exception.command_unexpected_argument_exception import (
         CommandUnexpectedArgumentException,
     )
-    from wexample_helpers.helpers.cli import cli_argument_convert_value
 
     # Helper functions to find options
     def find_option_by_kebab_name(kebab_name: str) -> Option | None:
