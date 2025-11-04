@@ -13,6 +13,7 @@ class AppNoneOutputHandler(AbstractAppOutputHandler):
 
     def get_target_name(self) -> str:
         from wexample_app.const.output import OUTPUT_TARGET_NONE
+
         return OUTPUT_TARGET_NONE
 
     def _write_output(self, request: CommandRequest, content: str) -> str | None:

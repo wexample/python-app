@@ -2,17 +2,19 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from wexample_app.command.option import Option
-from wexample_app.output.abstract_app_output_handler import AbstractAppOutputHandler
 from wexample_helpers.classes.base_class import BaseClass
 from wexample_helpers.classes.private_field import private_field
 from wexample_helpers.decorator.base_class import base_class
 
+from wexample_app.command.option import Option
+from wexample_app.output.abstract_app_output_handler import AbstractAppOutputHandler
+
 if TYPE_CHECKING:
+    from wexample_filestate.utils.file_state_manager import FileStateManager
+
     from wexample_app.common.abstract_kernel import AbstractKernel
     from wexample_app.common.command_request import CommandRequest
     from wexample_app.const.types import CommandLineArgumentsList
-    from wexample_filestate.utils.file_state_manager import FileStateManager
 
 
 @base_class

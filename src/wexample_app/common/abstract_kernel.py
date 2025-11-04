@@ -35,6 +35,14 @@ class AbstractKernel(
         description="The initial request that may have launched sub requests",
     )
 
+    def create_output_handlers(self) -> [AbstractAppOutputHandler]:
+        """Initialize the output handlers with default stdout handler."""
+        from wexample_app.output.app_stdout_output_handler import (
+            AppStdoutOutputHandler,
+        )
+
+        return [AppStdoutOutputHandler(kernel=self)]
+
     def execute_kernel_command(self, request: CommandRequest) -> AbstractResponse:
         # Save unique root request
         self.root_request = self.root_request if self.root_request else request
@@ -94,11 +102,3 @@ class AbstractKernel(
         from wexample_app.common.command_request import CommandRequest
 
         return CommandRequest
-
-    def create_output_handlers(self) -> [AbstractAppOutputHandler]:
-        """Initialize the output handlers with default stdout handler."""
-        from wexample_app.output.app_stdout_output_handler import (
-            AppStdoutOutputHandler,
-        )
-
-        return [AppStdoutOutputHandler(kernel=self)]

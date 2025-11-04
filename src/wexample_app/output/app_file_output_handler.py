@@ -62,6 +62,6 @@ class AppFileOutputHandler(AbstractAppOutputHandler):
         file_path.write_text(content, encoding="utf-8")
         self.kernel.io.log(
             message=f"Output saved to: {cli_make_clickable_path(file_path)}",
-            verbosity=VerbosityLevel.MAXIMUM
+            verbosity=VerbosityLevel.MAXIMUM,
         )
         return content
