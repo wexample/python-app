@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from wexample_app.common.abstract_kernel_child import AbstractKernelChild
 from wexample_helpers.classes.abstract_method import abstract_method
@@ -20,6 +20,10 @@ if TYPE_CHECKING:
 class AbstractResponse(AbstractKernelChild, BaseClass):
     kernel: AbstractKernel = public_field(
         description="The kernel that produced the response"
+    )
+    content: Any = public_field(
+        default=None,
+        description="The response content"
     )
 
     def get_formatted(self, output_format: str) -> str:
@@ -84,7 +88,7 @@ class AbstractResponse(AbstractKernelChild, BaseClass):
         """
         import json
 
-        return json.dumps(str(self.get_printable()), indent=2)
+        return json.dumps(self.content, indent=2)
 
     def _get_formatted_prompt_response(self) -> AbstractPromptResponse | None:
         """Get a prompt response for structured IO display.

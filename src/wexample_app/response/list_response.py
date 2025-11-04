@@ -36,16 +36,6 @@ class ListResponse(AbstractResponse):
     def get_printable(self) -> ResponsePrintable:
         return str(self.content)
 
-    def _get_formatted_json_content(self) -> str:
-        """Get the list content formatted as JSON.
-
-        Returns:
-            JSON string representation of the list
-        """
-        import json
-
-        return json.dumps(self.content, indent=2)
-
     def _get_formatted_prompt_response(self) -> AbstractPromptResponse:
         """Get a list prompt response for structured display.
 

@@ -36,16 +36,6 @@ class DictResponse(AbstractResponse):
     def get_printable(self) -> ResponsePrintable:
         return str(self.content)
 
-    def _get_formatted_json_content(self) -> str:
-        """Get the dict content formatted as JSON.
-
-        Returns:
-            JSON string representation of the dictionary
-        """
-        import json
-
-        return json.dumps(self.content, indent=2)
-
     def _get_formatted_prompt_response(self) -> AbstractPromptResponse:
         """Get a properties prompt response for structured display.
 
