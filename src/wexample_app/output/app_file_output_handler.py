@@ -2,12 +2,13 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from wexample_app.common.command_request import CommandRequest
 from wexample_app.output.abstract_app_output_handler import (
     AbstractAppOutputHandler,
 )
 from wexample_helpers.classes.field import public_field
 from wexample_helpers.decorator.base_class import base_class
-from wexample_app.common.command_request import CommandRequest
+from wexample_prompt.enums.verbosity_level import VerbosityLevel
 
 if TYPE_CHECKING:
     from pathlib import Path
@@ -59,5 +60,8 @@ class AppFileOutputHandler(AbstractAppOutputHandler):
 
         file_path = self._get_file_path(request)
         file_path.write_text(content, encoding="utf-8")
-        self.kernel.io.log(f"Output saved to: {cli_make_clickable_path(file_path)}")
+        self.kernel.io.log(
+            message=f"Output saved to: {cli_make_clickable_path(file_path)}",
+            verbosity=VerbosityLevel.MAXIMUM
+        )
         return content
