@@ -8,7 +8,6 @@ from wexample_app.output.abstract_app_output_handler import (
 )
 from wexample_helpers.classes.field import public_field
 from wexample_helpers.decorator.base_class import base_class
-from wexample_prompt.enums.verbosity_level import VerbosityLevel
 
 if TYPE_CHECKING:
     from pathlib import Path
@@ -56,6 +55,7 @@ class AppFileOutputHandler(AbstractAppOutputHandler):
         Returns:
             The written string
         """
+        from wexample_prompt.enums.verbosity_level import VerbosityLevel
         from wexample_helpers.helpers.cli import cli_make_clickable_path
 
         file_path = self._get_file_path(request)

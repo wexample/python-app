@@ -18,10 +18,10 @@ if TYPE_CHECKING:
 
 @base_class
 class AbstractResponse(AbstractKernelChild, BaseClass):
+    content: Any = public_field(default=None, description="The response content")
     kernel: AbstractKernel = public_field(
         description="The kernel that produced the response"
     )
-    content: Any = public_field(default=None, description="The response content")
 
     def get_formatted(self, output_format: str) -> str:
         """Get the formatted response content according to the specified format.

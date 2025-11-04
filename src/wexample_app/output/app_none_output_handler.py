@@ -1,10 +1,11 @@
 from __future__ import annotations
 
+from wexample_helpers.decorator.base_class import base_class
+
 from wexample_app.common.command_request import CommandRequest
 from wexample_app.output.abstract_app_output_handler import (
     AbstractAppOutputHandler,
 )
-from wexample_helpers.decorator.base_class import base_class
 
 
 @base_class
