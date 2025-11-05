@@ -15,7 +15,6 @@ class ImlFile(XmlFile):
     """
 
     EXTENSION_IML: ClassVar[str] = "iml"
-    MODULE_DEFAULT_VERSION: ClassVar[str] = "4"
     MODULE_ROOT_COMPONENT_NAME: ClassVar[str] = "NewModuleRootManager"
     MODULE_ROOT_COMPONENT_INHERIT_COMPILER_OUTPUT: ClassVar[str] = "true"
     MODULE_DIR_URL: ClassVar[str] = "file://$MODULE_DIR$"
@@ -27,13 +26,15 @@ class ImlFile(XmlFile):
             return super().dumps(content)
 
         normalized = self._ensure_minimal_structure(content)
-        return unparse(
+        xml_body = unparse(
             normalized,
             pretty=True,
             short_empty_elements=True,
-            xml_declaration=True,
-            encoding="UTF-8",
+            full_document=False,
         )
+
+        # xmltodict does not emit a declaration when full_document=False; prepend one ourselves.
+        return '<?xml version="1.0" encoding="UTF-8"?>\n' + xml_body
 
     def loads(self, text: str, strict: bool = False) -> StructuredData:
         parsed = super().loads(text, strict=strict)
@@ -59,7 +60,9 @@ class ImlFile(XmlFile):
         module = container.get("module")
         if not isinstance(module, dict):
             module = {}
-        module.setdefault("@version", self.MODULE_DEFAULT_VERSION)
+        defaults = self._default_module_attributes()
+        for key, value in defaults.items():
+            module.setdefault(key, value)
         return module
 
     def _ensure_component_list(
@@ -99,21 +102,27 @@ class ImlFile(XmlFile):
             content = {}
 
         content.setdefault("@url", self.MODULE_DIR_URL)
-        content["sourceFolder"] = self._merge_with_defaults(
+
+        source_folders = self._merge_with_defaults(
             content.get("sourceFolder"),
             self._default_source_folders(),
             key="@url",
         )
-        content["excludeFolder"] = self._merge_with_defaults(
+        if source_folders:
+            content["sourceFolder"] = source_folders
+
+        exclude_folders = self._merge_with_defaults(
             content.get("excludeFolder"),
             self._default_exclude_folders(),
             key="@url",
         )
+        if exclude_folders:
+            content["excludeFolder"] = exclude_folders
 
         component["content"] = content
-        component["orderEntry"] = self._merge_order_entries(
-            component.get("orderEntry")
-        )
+        order_entries = self._merge_order_entries(component.get("orderEntry"))
+        if order_entries:
+            component["orderEntry"] = order_entries
 
     def _merge_with_defaults(
             self,
@@ -160,30 +169,17 @@ class ImlFile(XmlFile):
             return [value]
         return []
 
+    def _default_module_attributes(self) -> dict[str, str]:
+        return {"@version": "4"}
+
     def _default_source_folders(self) -> Iterable[dict[str, Any]]:
-        return (
-            {
-                "@url": f"{self.MODULE_DIR_URL}/src",
-                "@isTestSource": "false",
-            },
-            {
-                "@url": f"{self.MODULE_DIR_URL}/tests",
-                "@isTestSource": "true",
-            },
-        )
+        return ()
 
     def _default_exclude_folders(self) -> Iterable[dict[str, Any]]:
-        return (
-            {
-                "@url": f"{self.MODULE_DIR_URL}/dist",
-            },
-        )
+        return ()
 
     def _default_order_entries(self) -> Iterable[dict[str, Any]]:
-        return (
-            {"@type": "inheritedJdk"},
-            {"@type": "sourceFolder", "@forTests": "false"},
-        )
+        return ()
 
     def _expected_file_name_extension(self) -> str:
         return self.EXTENSION_IML
