@@ -11,11 +11,10 @@ if TYPE_CHECKING:
 
 class ImlFile(XmlFile):
     """
-    IntelliJ IDEA/PyCharm .iml helper with a minimal module skeleton pre-populated.
+    IntelliJ IDEA/PyCharm .iml helper with a minimal, editor-agnostic module skeleton pre-populated.
     """
 
     EXTENSION_IML: ClassVar[str] = "iml"
-    MODULE_DEFAULT_TYPE: ClassVar[str] = "PYTHON_MODULE"
     MODULE_DEFAULT_VERSION: ClassVar[str] = "4"
     MODULE_ROOT_COMPONENT_NAME: ClassVar[str] = "NewModuleRootManager"
     MODULE_ROOT_COMPONENT_INHERIT_COMPILER_OUTPUT: ClassVar[str] = "true"
@@ -60,7 +59,6 @@ class ImlFile(XmlFile):
         module = container.get("module")
         if not isinstance(module, dict):
             module = {}
-        module.setdefault("@type", self.MODULE_DEFAULT_TYPE)
         module.setdefault("@version", self.MODULE_DEFAULT_VERSION)
         return module
 
