@@ -42,7 +42,7 @@ class ImlFile(XmlFile):
         return self._ensure_minimal_structure(parsed)
 
     def _ensure_minimal_structure(
-        self, data: StructuredData | None
+            self, data: StructuredData | None
     ) -> StructuredData:
         draft: dict[str, Any] = deepcopy(data) if isinstance(data, dict) else {}
 
@@ -63,7 +63,7 @@ class ImlFile(XmlFile):
         return module
 
     def _ensure_component_list(
-        self, module: dict[str, Any]
+            self, module: dict[str, Any]
     ) -> list[dict[str, Any]]:
         component = module.get("component")
         if isinstance(component, list):
@@ -75,7 +75,7 @@ class ImlFile(XmlFile):
         return components
 
     def _ensure_root_component(
-        self, components: list[dict[str, Any]]
+            self, components: list[dict[str, Any]]
     ) -> dict[str, Any]:
         for component in components:
             if component.get("@name") == self.MODULE_ROOT_COMPONENT_NAME:
@@ -116,11 +116,11 @@ class ImlFile(XmlFile):
         )
 
     def _merge_with_defaults(
-        self,
-        current: Any,
-        defaults: Iterable[dict[str, Any]],
-        *,
-        key: str,
+            self,
+            current: Any,
+            defaults: Iterable[dict[str, Any]],
+            *,
+            key: str,
     ) -> list[dict[str, Any]]:
         items = self._coerce_list_of_dicts(current)
         seen = {item.get(key) for item in items}
@@ -187,3 +187,7 @@ class ImlFile(XmlFile):
 
     def _expected_file_name_extension(self) -> str:
         return self.EXTENSION_IML
+
+    @classmethod
+    def get_extension(cls) -> str:
+        return cls.EXTENSION_IML
