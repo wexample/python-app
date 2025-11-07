@@ -4,7 +4,7 @@ build-backend = "pdm.backend"
 
 [project]
 name = "wexample-app"
-version = "0.0.62"
+version = "0.0.66"
 description = "Helpers for building Python app or cli."
 authors = [{name = "weeger", email = "contact@wexample.com"}]
 requires-python = ">=3.10"
@@ -14,8 +14,8 @@ dependencies = [
     "cattrs>=23.1.0",
     "dotenv",
     "python-dotenv",
-    "wexample-filestate==0.0.61",
-    "wexample-helpers-yaml==0.0.106",
+    "wexample-filestate==0.0.69",
+    "wexample-helpers-yaml==0.0.108",
 ]
 
 [project.readme]
