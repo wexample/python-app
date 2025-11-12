@@ -1,2 +1,4 @@
-name: app
-version: 0.0.47
+global:
+  description: Helpers for building Python app or cli.
+  name: app
+  version: 0.0.67

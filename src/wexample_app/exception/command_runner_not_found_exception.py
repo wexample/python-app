@@ -1,9 +1,10 @@
 from __future__ import annotations
 
-from wexample_helpers.exception.undefined_exception import UndefinedException
+from wexample_app.exception.app_runtime_exception import AppRuntimeException
+from wexample_app.exception.exception_data import CommandRunnerNotFoundData
 
 
-class CommandRunnerNotFoundException(UndefinedException):
+class CommandRunnerNotFoundException(AppRuntimeException):
     """Exception raised when no suitable runner is found for a command.
 
     This exception is thrown when the system cannot find an appropriate runner
@@ -18,12 +19,11 @@ class CommandRunnerNotFoundException(UndefinedException):
         cause: Exception | None = None,
         previous: Exception | None = None,
     ) -> None:
-        # Store command_name as instance attribute
-        self.command_name = command_name
+        data: CommandRunnerNotFoundData = {"command_name": command_name}
 
-        # Call parent constructor with appropriate parameters
         super().__init__(
-            message=f'Not runner found supporting execution of command "{command_name}"',
+            message=f'No runner found supporting execution of command "{command_name}"',
+            data=data,
             cause=cause,
             previous=previous,
         )

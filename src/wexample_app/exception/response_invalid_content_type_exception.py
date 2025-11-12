@@ -2,12 +2,11 @@ from __future__ import annotations
 
 from typing import Any
 
-from wexample_helpers.exception.not_allowed_item_exception import (
-    NotAllowedItemException,
-)
+from wexample_app.exception.app_runtime_exception import AppRuntimeException
+from wexample_app.exception.exception_data import ResponseInvalidContentTypeData
 
 
-class ResponseInvalidContentTypeException(NotAllowedItemException):
+class ResponseInvalidContentTypeException(AppRuntimeException):
     """Exception raised when a response contains invalid content that cannot be properly processed."""
 
     error_code: str = "RESPONSE_INVALID_CONTENT"
@@ -28,16 +27,23 @@ class ResponseInvalidContentTypeException(NotAllowedItemException):
         content_str = string_truncate(str(content), 100)
 
         # Convert type objects to strings for the allowed values
-        allowed_values = [t.__name__ for t in allowed_content_types]
+        allowed_types = [t.__name__ for t in allowed_content_types]
 
-        # Use the parent class (NotAllowedItemException) initialization
+        data: ResponseInvalidContentTypeData = {
+            "content_type": content_type,
+            "content_value": content_str,
+            "allowed_types": allowed_types,
+        }
+
+        # Build a descriptive message
+        allowed_str = ", ".join(allowed_types)
+        message = (
+            f"Invalid content type '{content_type}'. Expected one of: {allowed_str}"
+        )
+
         super().__init__(
-            item_type="content type",
-            item_value=content_type,
-            allowed_values=allowed_values,
+            message=message,
+            data=data,
             cause=cause,
             previous=previous,
         )
-
-        # Store additional content info as instance attributes
-        self.content_value = content_str

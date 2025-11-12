@@ -1,20 +1,37 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import TYPE_CHECKING
 
-from wexample_app.common.service.service_mixin import ServiceMixin
+from wexample_helpers.classes.field import public_field
+from wexample_helpers.classes.private_field import private_field
+from wexample_helpers.decorator.base_class import base_class
 from wexample_helpers.service.registry import Registry
 
+from wexample_app.common.service.service_mixin import ServiceMixin
+from wexample_app.service.mixins.service_container_mixin import ServiceContainerMixin
 
+if TYPE_CHECKING:
+    from wexample_app.service.mixins.service_container_mixin import (
+        ServiceContainerMixin,
+    )
+
+
+@base_class
 class ServiceRegistry(Registry[type[ServiceMixin]]):
     """Registry for managing services of type ServiceMixin."""
 
-    _service_instances: dict[str, ServiceMixin] = {}
-    container: Any  # Will be ServiceMixinContainer at runtime
+    container: ServiceContainerMixin = public_field(description="The service container")
+    _service_instances: dict[str, ServiceMixin] = private_field(
+        description="The service container", factory=dict
+    )
 
-    def register(self, key: str, service_class: type[ServiceMixin]) -> None:
-        """Register a service class in the registry."""
-        self._items[key] = service_class
+    def all_classes(self) -> list[type[ServiceMixin]]:
+        """Return all registered service classes."""
+        return list(self._items.values())
+
+    def all_instances(self) -> dict[str, ServiceMixin]:
+        """Return all instantiated services."""
+        return self._service_instances.copy()
 
     def get(self, key: str | type[ServiceMixin], **kwargs) -> ServiceMixin | None:
         """
@@ -32,13 +49,6 @@ class ServiceRegistry(Registry[type[ServiceMixin]]):
         # Get service class and create new instance if exists
         service_class = self._items.get(key)
         if service_class:
-            # Rebuild model if it's a Pydantic model using HasClassDependencies mixin.
-            if hasattr(service_class, "import_dependencies_and_rebuild"):
-                service_class.import_dependencies_and_rebuild()
-            # Rebuild model if it's a Pydantic model
-            elif hasattr(service_class, "model_rebuild"):
-                service_class.model_rebuild()
-
             # Create instance with kernel
             instance = service_class(**kwargs).setup()
             self._service_instances[key] = instance
@@ -47,6 +57,14 @@ class ServiceRegistry(Registry[type[ServiceMixin]]):
         self._raise_error_if_expected(key, None)
 
         return None
+
+    def get_all(self) -> dict[str, ServiceMixin]:
+        """Get all instantiated services."""
+        return self._service_instances
+
+    def get_class(self, key: str) -> type[ServiceMixin] | None:
+        """Get the service class without instantiating it."""
+        return self._items.get(key)
 
     def instantiate_all(self, **kwargs) -> dict[str, ServiceMixin]:
         """
@@ -58,18 +76,6 @@ class ServiceRegistry(Registry[type[ServiceMixin]]):
                 self.get(key, **kwargs)
         return self.all_instances()
 
-    def get_class(self, key: str) -> type[ServiceMixin] | None:
-        """Get the service class without instantiating it."""
-        return self._items.get(key)
-
-    def all_classes(self) -> list[type[ServiceMixin]]:
-        """Return all registered service classes."""
-        return list(self._items.values())
-
-    def all_instances(self) -> dict[str, ServiceMixin]:
-        """Return all instantiated services."""
-        return self._service_instances.copy()
-
-    def get_all(self) -> dict[str, ServiceMixin]:
-        """Get all instantiated services."""
-        return self._service_instances
+    def register(self, key: str, service_class: type[ServiceMixin]) -> None:
+        """Register a service class in the registry."""
+        self._items[key] = service_class
