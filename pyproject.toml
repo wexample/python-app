@@ -15,7 +15,7 @@ dependencies = [
     "dotenv",
     "python-dotenv",
     "wexample-filestate==0.0.70",
-    "wexample-helpers-yaml==0.0.108",
+    "wexample-helpers-yaml==0.0.109",
 ]
 
 [project.readme]
