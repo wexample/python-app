@@ -14,7 +14,7 @@ dependencies = [
     "cattrs>=23.1.0",
     "dotenv",
     "python-dotenv",
-    "wexample-filestate==0.0.69",
+    "wexample-filestate==0.0.70",
     "wexample-helpers-yaml==0.0.108",
 ]
 
