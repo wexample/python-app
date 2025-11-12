@@ -1,6 +1,6 @@
 # wexample-app
 
-Version: 0.0.66
+Version: 0.0.67
 
 Helpers for building Python app or cli.
 
