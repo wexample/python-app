@@ -3,7 +3,9 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from wexample_app.workdir.mixin.with_config_mixin import WithConfigMixin
+from wexample_app.workdir.mixin.with_env_parameters_mixin import WithEnvParametersMixin
 from wexample_helpers.decorator.base_class import base_class
+from wexample_helpers.helpers.dict import dict_interpolate
 
 if TYPE_CHECKING:
     from wexample_config.config_value.nested_config_value import NestedConfigValue
@@ -11,7 +13,7 @@ if TYPE_CHECKING:
 
 
 @base_class
-class WithRuntimeConfigMixin(WithConfigMixin):
+class WithRuntimeConfigMixin(WithEnvParametersMixin, WithConfigMixin):
     def get_runtime_config_file(self) -> YamlFile:
         from wexample_wex_core.const.globals import CORE_DIR_NAME_TMP
         from wexample_app.const.globals import (
@@ -41,8 +43,11 @@ class WithRuntimeConfigMixin(WithConfigMixin):
         from wexample_helpers.helpers.dict import dict_merge
 
         return NestedConfigValue(
-            raw=dict_merge(
-                self.get_config().to_dict(),
-                self.get_config(env_name=self.get_app_env()).to_dict()
+            raw=dict_interpolate(
+                dict_merge(
+                    self.get_config().to_dict(),
+                    self.get_config(env_name=self.get_app_env()).to_dict_or_none() or {}
+                ),
+                self.get_env_parameters().to_dict()
             )
         )
