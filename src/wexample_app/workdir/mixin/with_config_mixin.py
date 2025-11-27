@@ -46,7 +46,7 @@ class WithConfigMixin(WithYamlFiles):
         from wexample_config.config_value.nested_config_value import NestedConfigValue
 
         config_file = self.get_config_file(env_name=env_name)
-        if config_file:
+        if config_file.get_path().exists():
             return config_file.read_config()
 
         return NestedConfigValue(raw={})
