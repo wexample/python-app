@@ -30,7 +30,6 @@ class WithRuntimeConfigMixin(WithConfigMixin):
     def get_runtime_config(self, rebuild: bool = False) -> NestedConfigValue:
         runtime_config_file = self.get_runtime_config_file()
         if rebuild or not runtime_config_file.get_path().exists():
-
             runtime_config_file.write_config(
                 self.build_runtime_config_value()
             )
@@ -39,9 +38,11 @@ class WithRuntimeConfigMixin(WithConfigMixin):
 
     def build_runtime_config_value(self) -> NestedConfigValue:
         from wexample_config.config_value.nested_config_value import NestedConfigValue
+        from wexample_helpers.helpers.dict import dict_merge
 
         return NestedConfigValue(
-            raw={
-                "global":2
-            }
+            raw=dict_merge(
+                self.get_config().to_dict(),
+                self.get_config(env_name=self.get_app_env()).to_dict()
+            )
         )
