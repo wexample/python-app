@@ -8,21 +8,27 @@ from wexample_helpers.classes.mixin.has_env_keys import HasEnvKeys
 from wexample_helpers.decorator.base_class import base_class
 
 if TYPE_CHECKING:
+    from wexample_filestate.item.file.env_file import EnvFile
     from wexample_config.config_value.nested_config_value import NestedConfigValue
 
 
 @base_class
 class WithEnvParametersMixin(HasEnvKeys):
+    def _get_env_file_path(self) -> Path:
+        """Get the path to the .env file."""
+        from wexample_filestate.item.file.env_file import EnvFile
+
+        return self.get_path() / WORKDIR_SETUP_DIR / EnvFile.EXTENSION_DOT_ENV
+
     @classmethod
     def get_env_parameters_from_path(cls, path: Path) -> NestedConfigValue:
         from wexample_filestate.item.file.env_file import EnvFile
+        from wexample_config.config_value.nested_config_value import NestedConfigValue
 
         env_path = path / WORKDIR_SETUP_DIR / EnvFile.EXTENSION_DOT_ENV
 
         if env_path.exists():
-            dot_env = EnvFile.create_from_path(
-                path=env_path,
-            )
+            dot_env = EnvFile.create_from_path(path=env_path)
             return dot_env.read_config()
 
         return NestedConfigValue(raw={})
@@ -70,19 +76,12 @@ class WithEnvParametersMixin(HasEnvKeys):
         # Update env_config in memory via parent class
         super().set_env_parameters(parameters)
 
-        env_path = self.get_path() / WORKDIR_SETUP_DIR / EnvFile.EXTENSION_DOT_ENV
-
-        # Ensure the directory exists
+        # Get env file path and ensure directory exists
+        env_path = self._get_env_file_path()
         env_path.parent.mkdir(parents=True, exist_ok=True)
 
-        # Load existing config or create new one
-        if env_path.exists():
-            dot_env = EnvFile.create_from_path(path=env_path)
-            config = dot_env.read_config()
-        else:
-            from wexample_config.config_value.nested_config_value import NestedConfigValue
-            config = NestedConfigValue(raw={})
-
+        # Load existing config and update with new parameters
+        config = self.get_env_parameters()
         config.update_nested(parameters)
 
         # Write back to file
