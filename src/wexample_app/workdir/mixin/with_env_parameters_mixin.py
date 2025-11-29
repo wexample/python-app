@@ -83,10 +83,8 @@ class WithEnvParametersMixin(HasEnvKeys):
             from wexample_config.config_value.nested_config_value import NestedConfigValue
             config = NestedConfigValue(raw={})
 
-        # Update with new parameters
-        for key, value in parameters.items():
-            config.set_config_item(key=key, value=value)
+        config.update_nested(parameters)
 
         # Write back to file
         dot_env = EnvFile.create_from_path(path=env_path)
-        dot_env.write_config(config=config)
+        dot_env.write_config(value=config)
