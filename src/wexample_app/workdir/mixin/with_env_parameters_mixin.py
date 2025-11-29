@@ -50,7 +50,7 @@ class WithEnvParametersMixin(HasEnvKeys):
 
     def set_env_parameter(self, key: str, value: str) -> None:
         """
-        Save a single environment parameter to the .env file.
+        Save a single environment parameter to the .env file and update env_config.
         
         Args:
             key: The environment variable key
@@ -60,12 +60,15 @@ class WithEnvParametersMixin(HasEnvKeys):
 
     def set_env_parameters(self, parameters: dict[str, str]) -> None:
         """
-        Save multiple environment parameters to the .env file in batch.
+        Save multiple environment parameters to the .env file in batch and update env_config.
         
         Args:
             parameters: Dictionary of key-value pairs to save
         """
         from wexample_filestate.item.file.env_file import EnvFile
+
+        # Update env_config in memory via parent class
+        super().set_env_parameters(parameters)
 
         env_path = self.get_path() / WORKDIR_SETUP_DIR / EnvFile.EXTENSION_DOT_ENV
 
