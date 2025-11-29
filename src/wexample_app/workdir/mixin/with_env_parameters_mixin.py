@@ -47,3 +47,43 @@ class WithEnvParametersMixin(HasEnvKeys):
             )
 
         return value
+
+    def set_env_parameter(self, key: str, value: str) -> None:
+        """
+        Save a single environment parameter to the .env file.
+        
+        Args:
+            key: The environment variable key
+            value: The value to set
+        """
+        self.set_env_parameters({key: value})
+
+    def set_env_parameters(self, parameters: dict[str, str]) -> None:
+        """
+        Save multiple environment parameters to the .env file in batch.
+        
+        Args:
+            parameters: Dictionary of key-value pairs to save
+        """
+        from wexample_filestate.item.file.env_file import EnvFile
+
+        env_path = self.get_path() / WORKDIR_SETUP_DIR / EnvFile.EXTENSION_DOT_ENV
+
+        # Ensure the directory exists
+        env_path.parent.mkdir(parents=True, exist_ok=True)
+
+        # Load existing config or create new one
+        if env_path.exists():
+            dot_env = EnvFile.create_from_path(path=env_path)
+            config = dot_env.read_config()
+        else:
+            from wexample_config.config_value.nested_config_value import NestedConfigValue
+            config = NestedConfigValue(raw={})
+
+        # Update with new parameters
+        for key, value in parameters.items():
+            config.set_config_item(key=key, value=value)
+
+        # Write back to file
+        dot_env = EnvFile.create_from_path(path=env_path)
+        dot_env.write_config(config=config)
