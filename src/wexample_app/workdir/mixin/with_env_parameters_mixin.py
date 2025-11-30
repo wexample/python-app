@@ -3,27 +3,21 @@ from __future__ import annotations
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-from wexample_app.const.globals import WORKDIR_SETUP_DIR
 from wexample_helpers.classes.mixin.has_env_keys import HasEnvKeys
 from wexample_helpers.decorator.base_class import base_class
 
+from wexample_app.const.globals import WORKDIR_SETUP_DIR
+
 if TYPE_CHECKING:
-    from wexample_filestate.item.file.env_file import EnvFile
     from wexample_config.config_value.nested_config_value import NestedConfigValue
 
 
 @base_class
 class WithEnvParametersMixin(HasEnvKeys):
-    def _get_env_file_path(self) -> Path:
-        """Get the path to the .env file."""
-        from wexample_filestate.item.file.env_file import EnvFile
-
-        return self.get_path() / WORKDIR_SETUP_DIR / EnvFile.EXTENSION_DOT_ENV
-
     @classmethod
     def get_env_parameters_from_path(cls, path: Path) -> NestedConfigValue:
-        from wexample_filestate.item.file.env_file import EnvFile
         from wexample_config.config_value.nested_config_value import NestedConfigValue
+        from wexample_filestate.item.file.env_file import EnvFile
 
         env_path = path / WORKDIR_SETUP_DIR / EnvFile.EXTENSION_DOT_ENV
 
@@ -32,11 +26,6 @@ class WithEnvParametersMixin(HasEnvKeys):
             return dot_env.read_config()
 
         return NestedConfigValue(raw={})
-
-    def get_env_parameters(self) -> NestedConfigValue:
-        return self.get_env_parameters_from_path(
-            path=self.get_path(),
-        )
 
     def get_env_parameter(self, key: str, default: str | None = None) -> str | None:
         # Search in .env.
@@ -54,10 +43,15 @@ class WithEnvParametersMixin(HasEnvKeys):
 
         return value
 
+    def get_env_parameters(self) -> NestedConfigValue:
+        return self.get_env_parameters_from_path(
+            path=self.get_path(),
+        )
+
     def set_env_parameter(self, key: str, value: str) -> None:
         """
         Save a single environment parameter to the .env file and update env_config.
-        
+
         Args:
             key: The environment variable key
             value: The value to set
@@ -67,7 +61,7 @@ class WithEnvParametersMixin(HasEnvKeys):
     def set_env_parameters(self, parameters: dict[str, str]) -> None:
         """
         Save multiple environment parameters to the .env file in batch and update env_config.
-        
+
         Args:
             parameters: Dictionary of key-value pairs to save
         """
@@ -87,3 +81,9 @@ class WithEnvParametersMixin(HasEnvKeys):
         # Write back to file
         dot_env = EnvFile.create_from_path(path=env_path)
         dot_env.write_config(value=config)
+
+    def _get_env_file_path(self) -> Path:
+        """Get the path to the .env file."""
+        from wexample_filestate.item.file.env_file import EnvFile
+
+        return self.get_path() / WORKDIR_SETUP_DIR / EnvFile.EXTENSION_DOT_ENV
