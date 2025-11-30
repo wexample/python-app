@@ -226,6 +226,14 @@ Community support is available through GitHub Discussions.
 
 We welcome contributions to the Wexample suite!
 
+### How to Contribute
+
+1. **Fork** the repository
+2. **Create** a feature branch
+3. **Make** your changes
+4. **Test** thoroughly
+5. **Submit** a pull request
+
 ## Maintainers & Authors
 
 Maintained by the Wexample team and community contributors.
@@ -249,6 +257,12 @@ Free to use in both personal and commercial projects.
 ## Integration in the Suite
 
 This package is part of the **Wexample Suite** — a collection of high-quality Python packages designed to work seamlessly together.
+
+### Related Packages
+
+The suite includes packages for configuration management, file handling, prompts, and more. Each package can be used independently or as part of the integrated suite.
+
+Visit the [Wexample Suite documentation](https://docs.wexample.com) for the complete package ecosystem.
 
 ## Compatibility Matrix
 
