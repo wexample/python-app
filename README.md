@@ -155,7 +155,7 @@ All the suite packages follow strict quality standards:
 - **Linting**: Comprehensive checks with custom scripts and tools
 - **Testing**: High test coverage requirements
 
-These standards ensure reliability ``and maintainability across the suite.
+These standards ensure reliability and maintainability across the suite.
 
 ## Versioning & Compatibility Policy
 
