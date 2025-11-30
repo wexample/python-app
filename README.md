@@ -28,10 +28,13 @@ Helpers for building Python app or cli.
 - [Contribution Guidelines](#contribution-guidelines)
 - [Maintainers](#maintainers)
 - [License](#license)
+- [Useful Links](#useful-links)
+- [Suite Integration](#suite-integration)
 - [Compatibility Matrix](#compatibility-matrix)
 - [Requirements](#requirements)
 - [Dependencies](#dependencies)
 - [Links](#links)
+- [Suite Signature](#suite-signature)
 
 
 ## Status & Compatibility
@@ -235,6 +238,18 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 Free to use in both personal and commercial projects.
 
+## Useful Links
+
+- **Homepage**: https://github.com/wexample/python-app
+- **Documentation**: [docs.wexample.com](https://docs.wexample.com)
+- **Issue Tracker**: https://github.com/wexample/python-app/issues
+- **Discussions**: https://github.com/wexample/python-app/discussions
+- **PyPI**: [pypi.org/project/wexample-app](https://pypi.org/project/wexample-app/)
+
+## Integration in the Suite
+
+This package is part of the **Wexample Suite** — a collection of high-quality Python packages designed to work seamlessly together.
+
 ## Compatibility Matrix
 
 This package is part of the Wexample suite and is compatible with other suite packages.
@@ -257,4 +272,12 @@ Refer to each package's documentation for specific version compatibility require
 ## Links
 
 - Homepage: https://github.com/wexample/python-app
+
+# About us
+
+Wexample stands as a cornerstone of the digital ecosystem — a collective of seasoned engineers, researchers, and creators driven by a relentless pursuit of technological excellence. More than a media platform, it has grown into a vibrant community where innovation meets craftsmanship, and where every line of code reflects a commitment to clarity, durability, and shared intelligence.
+
+This packages suite embodies this spirit. Trusted by professionals and enthusiasts alike, it delivers a consistent, high-quality foundation for modern development — open, elegant, and battle-tested. Its reputation is built on years of collaboration, refinement, and rigorous attention to detail, making it a natural choice for those who demand both robustness and beauty in their tools.
+
+Wexample cultivates a culture of mastery. Each package, each contribution carries the mark of a community that values precision, ethics, and innovation — a community proud to shape the future of digital craftsmanship.
 
