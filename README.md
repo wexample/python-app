@@ -18,7 +18,16 @@ Helpers for building Python app or cli.
 - [Tests](#tests)
 - [Code Quality](#code-quality)
 - [Versioning](#versioning)
+- [Changelog](#changelog)
+- [Migration Notes](#migration-notes)
+- [Roadmap](#roadmap)
 - [Troubleshooting](#troubleshooting)
+- [Security](#security)
+- [Privacy](#privacy)
+- [Support](#support)
+- [Contribution Guidelines](#contribution-guidelines)
+- [Maintainers](#maintainers)
+- [License](#license)
 - [Compatibility Matrix](#compatibility-matrix)
 - [Requirements](#requirements)
 - [Dependencies](#dependencies)
@@ -143,7 +152,7 @@ All the suite packages follow strict quality standards:
 - **Linting**: Comprehensive checks with custom scripts and tools
 - **Testing**: High test coverage requirements
 
-These standards ensure reliability and maintainability across the suite.
+These standards ensure reliability ``and maintainability across the suite.
 
 ## Versioning & Compatibility Policy
 
@@ -154,6 +163,24 @@ Wexample packages follow **Semantic Versioning** (SemVer):
 - **PATCH**: Bug fixes, backward compatible
 
 We maintain backward compatibility within major versions and provide clear migration guides for breaking changes.
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for detailed version history and release notes.
+
+Major changes are documented with migration guides when applicable.
+
+## Migration Notes
+
+When upgrading between major versions, refer to the migration guides in the documentation.
+
+Breaking changes are clearly documented with upgrade paths and examples.
+
+## Known Limitations & Roadmap
+
+Current limitations and planned features are tracked in the GitHub issues.
+
+See the [project roadmap](https://github.com/wexample/python-app/issues) for upcoming features and improvements.
 
 ## Troubleshooting & FAQ
 
@@ -166,6 +193,47 @@ A: Ensure you're using Python >=3.10 and have the latest pip version.
 A: Verify the package is installed: `pip show wexample-app`
 
 For more help, see the [Support Channels](#support-channels) section.
+
+## Security Policy
+
+### Reporting Vulnerabilities
+
+If you discover a security vulnerability, please email security@wexample.com.
+
+**Do not** open public issues for security vulnerabilities.
+
+We take security seriously and will respond promptly to verified reports.
+
+## Privacy & Telemetry
+
+This package does **not** collect any telemetry or usage data.
+
+Your privacy is respected — no data is transmitted to external services.
+
+## Support Channels
+
+- **GitHub Issues**: Bug reports and feature requests
+- **GitHub Discussions**: Questions and community support
+- **Documentation**: Comprehensive guides and API reference
+- **Email**: contact@wexample.com for general inquiries
+
+Community support is available through GitHub Discussions.
+
+## Contribution Guidelines
+
+We welcome contributions to the Wexample suite!
+
+## Maintainers & Authors
+
+Maintained by the Wexample team and community contributors.
+
+See [CONTRIBUTORS.md](CONTRIBUTORS.md) for the full list of contributors.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+Free to use in both personal and commercial projects.
 
 ## Compatibility Matrix
 
