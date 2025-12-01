@@ -7,12 +7,9 @@ Helpers for building Python app or cli.
 ## Table of Contents
 
 - [Status Compatibility](#status-compatibility)
-- [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Quickstart](#quickstart)
 - [Basic Usage](#basic-usage)
-- [Configuration](#configuration)
-- [Logging](#logging)
 - [Api Reference](#api-reference)
 - [Examples](#examples)
 - [Tests](#tests)
@@ -21,7 +18,6 @@ Helpers for building Python app or cli.
 - [Changelog](#changelog)
 - [Migration Notes](#migration-notes)
 - [Roadmap](#roadmap)
-- [Troubleshooting](#troubleshooting)
 - [Security](#security)
 - [Privacy](#privacy)
 - [Support](#support)
@@ -31,9 +27,7 @@ Helpers for building Python app or cli.
 - [Useful Links](#useful-links)
 - [Suite Integration](#suite-integration)
 - [Compatibility Matrix](#compatibility-matrix)
-- [Requirements](#requirements)
 - [Dependencies](#dependencies)
-- [Links](#links)
 - [Suite Signature](#suite-signature)
 
 
@@ -46,10 +40,6 @@ Helpers for building Python app or cli.
 **OS Support**: Linux, macOS, Windows
 
 **Status**: Actively maintained
-
-## Prerequisites
-
-No special system dependencies required beyond Python >=3.10.
 
 ## Installation
 
@@ -88,30 +78,6 @@ class MyApp(CommandRunnerKernel, CommandLineKernel, AbstractKernel):
 my_app = MyApp()
 ```
 
-## Configuration
-
-Configuration can be provided through environment variables or config files.
-
-### Environment Variables
-
-- `WEXAMPLE-APP_DEBUG`: Enable debug mode
-- `WEXAMPLE-APP_LOG_LEVEL`: Set logging level (DEBUG, INFO, WARNING, ERROR)
-
-## Logging & Verbosity Control
-
-Control logging output with environment variables:
-
-```bash
-export WEXAMPLE-APP_LOG_LEVEL=DEBUG
-```
-
-Or programmatically:
-
-```python
-import logging
-logging.getLogger('wexample-app').setLevel(logging.DEBUG)
-```
-
 ## API Reference
 
 Full API documentation is available in the source code docstrings.
@@ -134,17 +100,52 @@ More examples can be found in the `examples/` directory of the repository.
 
 ## Tests
 
-Run the test suite:
+This project uses `pytest` for testing and `pytest-cov` for code coverage analysis.
 
+### Installation
+
+First, install the required testing dependencies:
 ```bash
-pytest tests/
+.venv/bin/python -m pip install pytest pytest-cov
 ```
 
-With coverage:
+### Basic Usage
 
+Run all tests with coverage:
 ```bash
-pytest --cov=wexample-app tests/
+.venv/bin/python -m pytest --cov --cov-report=html
 ```
+
+### Common Commands
+```bash
+# Run tests with coverage for a specific module
+.venv/bin/python -m pytest --cov=your_module
+
+# Show which lines are not covered
+.venv/bin/python -m pytest --cov=your_module --cov-report=term-missing
+
+# Generate an HTML coverage report
+.venv/bin/python -m pytest --cov=your_module --cov-report=html
+
+# Combine terminal and HTML reports
+.venv/bin/python -m pytest --cov=your_module --cov-report=term-missing --cov-report=html
+
+# Run specific test file with coverage
+.venv/bin/python -m pytest tests/test_file.py --cov=your_module --cov-report=term-missing
+```
+
+### Viewing HTML Reports
+
+After generating an HTML report, open `htmlcov/index.html` in your browser to view detailed line-by-line coverage information.
+
+### Coverage Threshold
+
+To enforce a minimum coverage percentage:
+```bash
+.venv/bin/python -m pytest --cov=your_module --cov-fail-under=80
+```
+
+This will cause the test suite to fail if coverage drops below 80%.
 
 ## Code Quality & Typing
 
@@ -184,18 +185,6 @@ Breaking changes are clearly documented with upgrade paths and examples.
 Current limitations and planned features are tracked in the GitHub issues.
 
 See the [project roadmap](https://github.com/wexample/python-app/issues) for upcoming features and improvements.
-
-## Troubleshooting & FAQ
-
-### Common Issues
-
-**Q: Installation fails with dependency errors**  
-A: Ensure you're using Python >=3.10 and have the latest pip version.
-
-**Q: Import errors**  
-A: Verify the package is installed: `pip show wexample-app`
-
-For more help, see the [Support Channels](#support-channels) section.
 
 ## Security Policy
 
@@ -270,10 +259,6 @@ This package is part of the Wexample suite and is compatible with other suite pa
 
 Refer to each package's documentation for specific version compatibility requirements.
 
-## Requirements
-
-- Python >=3.10
-
 ## Dependencies
 
 - attrs: >=23.1.0
@@ -283,10 +268,6 @@ Refer to each package's documentation for specific version compatibility require
 - wexample-filestate: ==0.0.71
 - wexample-helpers-yaml: ==0.0.110
 
-
-## Links
-
-- Homepage: 
 
 # About us
 
