@@ -276,16 +276,17 @@ Refer to each package's documentation for specific version compatibility require
 
 ## Dependencies
 
-- attrs>=23.1.0
-- cattrs>=23.1.0
-- dotenv
-- python-dotenv
-- wexample-filestate==0.0.71
-- wexample-helpers-yaml==0.0.110
+- attrs: >=23.1.0
+- cattrs: >=23.1.0
+- dotenv: 
+- python-dotenv: 
+- wexample-filestate: ==0.0.71
+- wexample-helpers-yaml: ==0.0.110
+
 
 ## Links
 
-- Homepage: https://github.com/wexample/python-app
+- Homepage: 
 
 # About us
 
