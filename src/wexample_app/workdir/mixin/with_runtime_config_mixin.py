@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from wexample_app.const.path import APP_DIR_NAME_TMP
 from wexample_helpers.decorator.base_class import base_class
 from wexample_helpers.helpers.dict import dict_interpolate
 
@@ -38,8 +39,6 @@ class WithRuntimeConfigMixin(WithEnvParametersMixin, WithConfigMixin):
         return runtime_config_file.read_config()
 
     def get_runtime_config_file(self) -> YamlFile:
-        from wexample_wex_core.const.globals import CORE_DIR_NAME_TMP
-
         from wexample_app.const.globals import (
             APP_FILE_APP_RUNTIME_CONFIG,
             WORKDIR_SETUP_DIR,
@@ -49,7 +48,7 @@ class WithRuntimeConfigMixin(WithEnvParametersMixin, WithConfigMixin):
         return self.get_yaml_file_from_path(
             path=self.get_path()
             / WORKDIR_SETUP_DIR
-            / CORE_DIR_NAME_TMP
+            / APP_DIR_NAME_TMP
             / APP_FILE_APP_RUNTIME_CONFIG,
         )
 
