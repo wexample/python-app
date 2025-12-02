@@ -52,3 +52,7 @@ class WithRuntimeConfigMixin(WithEnvParametersMixin, WithConfigMixin):
             / CORE_DIR_NAME_TMP
             / APP_FILE_APP_RUNTIME_CONFIG,
         )
+
+    def write_config_value(self, *args, **kwargs) -> None:
+        self.get_config_file().write_config_value(*args, **kwargs)
+        self.get_runtime_config(rebuild=True)
