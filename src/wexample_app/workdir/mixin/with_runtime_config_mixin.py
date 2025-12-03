@@ -2,10 +2,10 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from wexample_app.const.path import APP_DIR_NAME_TMP
 from wexample_helpers.decorator.base_class import base_class
 from wexample_helpers.helpers.dict import dict_interpolate
 
+from wexample_app.const.path import APP_DIR_NAME_TMP
 from wexample_app.workdir.mixin.with_config_mixin import WithConfigMixin
 from wexample_app.workdir.mixin.with_env_parameters_mixin import WithEnvParametersMixin
 

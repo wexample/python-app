@@ -1,6 +1,6 @@
 # wexample-app
 
-Version: 0.0.69
+Version: 0.0.70
 
 Helpers for building Python app or cli.
 
@@ -245,7 +245,7 @@ Free to use in both personal and commercial projects.
 
 ## Integration in the Suite
 
-This package is part of the **Wexample Suite** — a collection of high-quality Python packages designed to work seamlessly together.
+This package is part of the Wexample Suite — a collection of high-quality, modular tools designed to work seamlessly together across multiple languages and environments.
 
 ### Related Packages
 
@@ -265,8 +265,8 @@ Refer to each package's documentation for specific version compatibility require
 - cattrs: >=23.1.0
 - dotenv: 
 - python-dotenv: 
-- wexample-filestate: ==0.0.72
-- wexample-helpers-yaml: ==0.0.111
+- wexample-filestate: ==0.0.73
+- wexample-helpers-yaml: ==0.0.112
 
 
 # About us
