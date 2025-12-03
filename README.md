@@ -1,6 +1,6 @@
 # wexample-app
 
-Version: 0.0.70
+Version: 0.0.71
 
 Helpers for building Python app or cli.
 
@@ -265,8 +265,8 @@ Refer to each package's documentation for specific version compatibility require
 - cattrs: >=23.1.0
 - dotenv: 
 - python-dotenv: 
-- wexample-filestate: ==0.0.73
-- wexample-helpers-yaml: ==0.0.112
+- wexample-filestate: ==0.0.74
+- wexample-helpers-yaml: ==0.0.113
 
 
 # About us
