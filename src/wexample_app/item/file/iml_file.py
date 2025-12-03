@@ -40,7 +40,7 @@ class ImlFile(XmlFile):
         # xmltodict does not emit a declaration when full_document=False; prepend one ourselves.
         return '<?xml version="1.0" encoding="UTF-8"?>\n' + xml_body
 
-    def loads(self, text: str, strict: bool = False) -> StructuredData:
+    def loads(self, text: str, strict: bool = True) -> StructuredData:
         parsed = super().loads(text, strict=strict)
         if not isinstance(parsed, dict):
             parsed = {}
