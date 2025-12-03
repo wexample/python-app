@@ -32,14 +32,12 @@ class WithConfigMixin(WithYamlFiles):
 
         return None
 
-    def get_config(
-        self, env_name: None | str = None, reload: bool = False
-    ) -> NestedConfigValue:
+    def get_config(self, env_name: None | str = None) -> NestedConfigValue:
         from wexample_config.config_value.nested_config_value import NestedConfigValue
 
         config_file = self.get_config_file(env_name=env_name)
         if config_file.get_path().exists():
-            return config_file.read_config(reload=reload)
+            return config_file.read_config()
 
         return NestedConfigValue(raw={})
 
