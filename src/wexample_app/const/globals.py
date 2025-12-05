@@ -9,7 +9,7 @@ WORKDIR_SETUP_DIR: Path = Path(f".{CORE_COMMAND_NAME}")
 # filestate: python-constant-sort
 APP_FILE_APP_CONFIG_NAME: str = "config"
 APP_FILE_APP_MANAGER: Path = Path("app-manager")
-APP_FILE_APP_RUNTIME_CONFIG: str = "config.runtime.yml"
+APP_FILE_APP_RUNTIME_CONFIG: str = "config.runtime.wex6.yml"
 APP_PATH_APP_MANAGER: Path = WORKDIR_SETUP_DIR / "python" / "app_manager"
 
 # Second path definition
